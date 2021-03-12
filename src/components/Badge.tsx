@@ -1,35 +1,20 @@
 import React from 'react';
 import classNames from "classnames";
-import {BootstrapBGColor, BootstrapTextColor} from "../types";
 
 export interface Props {
-    color?: BootstrapBGColor,
-    textColor?: BootstrapTextColor,
+    color: string,
     pill?: boolean,
     text?: string,
     className?: string | object,
     description?: string,
 }
 
-const Badge: React.FC<Props> = ({
-                                    color,
-                                    textColor,
-                                    pill,
-                                    text,
-                                    className,
-                                    description,
-                                    children
-                                }) => {
-    const styleClassName = {
-        [`bg-${color}`]: !!color,
-        [`text-${textColor}`]: !!textColor,
-        'text-dark': !textColor && !!color && ['warning', 'info', 'light'].includes(color),
-        'badge-pill': pill,
-    };
+const Badge: React.FC<Props> = ({color, pill, text, className, description, children}) => {
+    const styleClassName = `bg-${color}`;
 
-    const badgeClassNames = classNames('badge', styleClassName, className);
+    const badgeClassNames = classNames('badge', {'badge-pill': pill}, styleClassName, className);
     return (
-        <span className={badgeClassNames} title={description}>
+        <span className={badgeClassNames}>
             {text || children || ''}
             {!!description && (<span className="visually-hidden">{description}</span>)}
         </span>

@@ -1,4 +1,6 @@
 const path = require('path');
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
+
 
 module.exports = {
     entry: './src/index.ts',
@@ -35,6 +37,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     plugins: [
+        new BundleAnalyzerPlugin(),
     ],
     optimization: {
         splitChunks: {
