@@ -1,37 +1,33 @@
+import { AnyAction } from 'redux';
 import { RootStateOrAny } from "react-redux";
 import { ActionInterface } from "../types";
-import { BasicAlert } from "../../types";
-export interface Alert extends BasicAlert {
+export interface BasicAlertType {
+    title?: string;
+    message: string;
+    context?: string;
+    color?: string;
+    className?: string | object;
+}
+export interface AlertType extends BasicAlertType {
     id: number;
     count: number;
-    timestamp: number;
 }
-export declare const defaultAlert: BasicAlert;
 export interface AlertListState {
     counter: number;
-    list: Alert[];
+    list: AlertType[];
 }
-export interface AlertAction extends ActionInterface {
-    payload?: {
+interface AlertAction extends ActionInterface {
+    payload: {
         id?: number;
-        alert?: BasicAlert;
-        context?: string;
-        error?: Error;
+        alert?: BasicAlertType;
     };
 }
-interface RootState extends RootStateOrAny {
-    alerts: AlertListState;
-}
-export declare const alertAdded: string;
-export declare const alertDismissed: string;
-export declare const alertDismissedByContext: string;
-export declare const addAlertAction: (alert: BasicAlert) => AlertAction;
-export declare const dismissAlertAction: (id: number) => AlertAction;
-export declare const dismissContextAlert: (context: string) => AlertAction;
-export declare const onErrorAction: (err: Error, context?: string | undefined) => AlertAction;
-export declare const alertListSelector: (state: RootState) => Alert[];
-export declare const selectAlertList: (state: RootState) => Alert[];
-export declare const alertListByContextSelector: (context: string) => (state: RootState) => Alert[];
-export declare const alertContextFilter: (list: Alert[], context: string) => Alert[];
-declare const alertReducer: (state: AlertListState | undefined, action: AlertAction) => AlertListState;
-export default alertReducer;
+export default function reducer(state: AlertListState | undefined, action: AnyAction): {
+    counter: number;
+    list: any[];
+};
+export declare function addAlertAction(alert: BasicAlertType): AlertAction;
+export declare function dismissAlertAction(id: number): AlertAction;
+export declare const alertSelector: (state: RootStateOrAny) => AlertType[];
+export declare function onErrorAction(err: Error, context?: string): AlertAction;
+export {};

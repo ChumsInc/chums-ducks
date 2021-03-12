@@ -1,8 +1,6 @@
 import React from 'react';
-import { BootstrapBGColor, BootstrapTextColor } from "../types";
 export interface Props {
-    color?: BootstrapBGColor;
-    textColor?: BootstrapTextColor;
+    color: string;
     pill?: boolean;
     text?: string;
     className?: string | object;
