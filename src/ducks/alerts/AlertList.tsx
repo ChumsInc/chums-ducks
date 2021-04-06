@@ -12,7 +12,10 @@ const AlertList:React.FC<Props> = ({context}) => {
     const dispatch = useDispatch();
     return (
         <div>
-            {list.map(alert => <Alert key={alert.id} alert={alert} onDismiss={(id) => dispatch(dismissAlertAction(id))} />)}
+            {list.map(alert => <Alert key={alert.id}
+                                      color={alert.color} message={alert.message} className={alert.className}
+                                      context={alert.context} count={alert.count} title={alert.title}
+                                      onDismiss={(id) => dispatch(dismissAlertAction(id))} />)}
         </div>
     )
 }

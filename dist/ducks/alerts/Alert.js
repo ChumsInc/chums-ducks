@@ -3,8 +3,7 @@ import classNames from 'classnames';
 import numeral from "numeral";
 import Badge from "../../components/Badge";
 var Alert = function (_a) {
-    var alert = _a.alert, onDismiss = _a.onDismiss, children = _a.children;
-    var className = alert.className, color = alert.color, context = alert.context, count = alert.count, id = alert.id, message = alert.message, title = alert.title;
+    var message = _a.message, _b = _a.color, color = _b === void 0 ? 'primary' : _b, _c = _a.title, title = _c === void 0 ? null : _c, _d = _a.className, className = _d === void 0 ? '' : _d, _e = _a.context, context = _e === void 0 ? null : _e, _f = _a.count, count = _f === void 0 ? 0 : _f, onDismiss = _a.onDismiss, children = _a.children;
     var canDismiss = typeof onDismiss === 'function';
     var elClassName = {
         'alert-dismissible': canDismiss,
@@ -19,7 +18,7 @@ var Alert = function (_a) {
             ":")),
         message || children || null,
         !!count && count > 1 && (React.createElement(Badge, { color: color || 'danger', className: "mx-3" }, numeral(count).format('0,0'))),
-        typeof onDismiss === 'function' && React.createElement("span", { onClick: function () { return onDismiss(id); }, className: "btn-close" })));
+        typeof onDismiss === 'function' && React.createElement("span", { onClick: onDismiss, className: "btn-close" })));
 };
 export default Alert;
 //# sourceMappingURL=Alert.js.map

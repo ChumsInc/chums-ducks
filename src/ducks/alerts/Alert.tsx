@@ -1,15 +1,24 @@
 import * as React from "react";
 import classNames from 'classnames';
 import numeral from "numeral";
-import {AlertType} from './index';
+import {BasicAlertType} from './index';
 import Badge from "../../components/Badge";
 
-export interface Props {
-    alert: AlertType,
-    onDismiss?: (id: number) => void,
+export interface Props extends BasicAlertType {
+    count?: number,
+    onDismiss?: (args?:any) => void,
 }
-const Alert:React.FC<Props> = ({alert, onDismiss, children}) => {
-    const { className, color, context, count, id, message, title} = alert;
+
+const Alert: React.FC<Props> = ({
+                                    message,
+                                    color = 'primary',
+                                    title = null,
+                                    className = '',
+                                    context = null,
+                                    count = 0,
+                                    onDismiss,
+                                    children
+                                }) => {
     const canDismiss = typeof onDismiss === 'function';
     const elClassName = {
         'alert-dismissible': canDismiss,
@@ -20,8 +29,9 @@ const Alert:React.FC<Props> = ({alert, onDismiss, children}) => {
             {!!context && (<strong className="me-1">[{context}]</strong>)}
             {title && (<strong className="me-1">{title}:</strong>)}
             {message || children || null}
-            {!!count && count > 1 && (<Badge color={color || 'danger'} className="mx-3">{numeral(count).format('0,0')}</Badge>)}
-            {typeof onDismiss === 'function' && <span onClick={() => onDismiss(id)} className="btn-close"/>}
+            {!!count && count > 1 && (
+                <Badge color={color || 'danger'} className="mx-3">{numeral(count).format('0,0')}</Badge>)}
+            {typeof onDismiss === 'function' && <span onClick={onDismiss} className="btn-close"/>}
         </div>
     )
 }
