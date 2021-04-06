@@ -3,7 +3,7 @@ import { RootStateOrAny } from "react-redux";
 import { ActionInterface } from "../types";
 export interface BasicAlertType {
     title?: string;
-    message: string;
+    message?: string;
     context?: string;
     color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
     className?: string | object;
