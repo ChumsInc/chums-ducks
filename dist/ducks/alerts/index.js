@@ -61,7 +61,7 @@ export function onErrorAction(err, context) {
     return {
         type: alertsAlertAdded,
         payload: {
-            alert: { message: err.message, title: err.name, context: context }
+            alert: { message: err.message, title: err.name, context: context, color: 'danger' }
         }
     };
 }
