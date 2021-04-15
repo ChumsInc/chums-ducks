@@ -6,7 +6,7 @@ import Badge from "../../components/Badge";
 
 export interface Props extends BasicAlertType {
     count?: number,
-    onDismiss?: (args?:any) => void,
+    onDismiss?: (args?: any) => void,
 }
 
 const Alert: React.FC<Props> = ({
@@ -30,8 +30,11 @@ const Alert: React.FC<Props> = ({
             {title && (<strong className="me-1">{title}:</strong>)}
             {message || children || null}
             {!!count && count > 1 && (
-                <Badge color={color || 'danger'} className="mx-3">{numeral(count).format('0,0')}</Badge>)}
-            {typeof onDismiss === 'function' && <span onClick={onDismiss} className="btn-close"/>}
+                <Badge color={color || 'danger'} className="mx-3">{numeral(count).format('0,0')}</Badge>
+            )}
+            {typeof onDismiss === 'function' && (
+                <button type="button" aria-label="close" onClick={onDismiss} className="btn-close"/>
+            )}
         </div>
     )
 }

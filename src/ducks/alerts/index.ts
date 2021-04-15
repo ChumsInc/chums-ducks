@@ -88,7 +88,7 @@ export function onErrorAction(err:Error, context?: string): AlertAction {
     return {
         type: alertsAlertAdded,
         payload: {
-            alert: {message: err.message, title: err.name, context}
+            alert: {message: err.message, title: err.name, context, color: 'danger'}
         }
     }
 }

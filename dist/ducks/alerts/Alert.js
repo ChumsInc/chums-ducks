@@ -18,7 +18,7 @@ var Alert = function (_a) {
             ":")),
         message || children || null,
         !!count && count > 1 && (React.createElement(Badge, { color: color || 'danger', className: "mx-3" }, numeral(count).format('0,0'))),
-        typeof onDismiss === 'function' && React.createElement("span", { onClick: onDismiss, className: "btn-close" })));
+        typeof onDismiss === 'function' && (React.createElement("button", { type: "button", "aria-label": "close", onClick: onDismiss, className: "btn-close" }))));
 };
 export default Alert;
 //# sourceMappingURL=Alert.js.map
