@@ -1,10 +1,10 @@
-import * as React from "react";
+import React from "react";
 import classNames from 'classnames';
 import numeral from "numeral";
-import {BasicAlertType} from './index';
+import {BasicAlert} from './index';
 import Badge from "../../components/Badge";
 
-export interface Props extends BasicAlertType {
+export interface Props extends BasicAlert {
     count?: number,
     onDismiss?: (args?: any) => void,
 }
@@ -12,27 +12,28 @@ export interface Props extends BasicAlertType {
 const Alert: React.FC<Props> = ({
                                     message,
                                     color = 'primary',
-                                    title = null,
+                                    title,
                                     className = '',
-                                    context = null,
+                                    context,
                                     count = 0,
                                     onDismiss,
                                     children
                                 }) => {
     const canDismiss = typeof onDismiss === 'function';
     const elClassName = {
+        [`alert-${color}`]: !!color,
         'alert-dismissible': canDismiss,
     }
 
     return (
-        <div className={classNames('alert my-3', `alert-${color}`, className, elClassName)}>
+        <div className={classNames('alert my-3', elClassName, className)}>
             {!!context && (<strong className="me-1">[{context}]</strong>)}
-            {title && (<strong className="me-1">{title}:</strong>)}
+            {!!title && (<strong className="me-1">{title}:</strong>)}
             {message || children || null}
             {!!count && count > 1 && (
-                <Badge color={color || 'danger'} className="mx-3">{numeral(count).format('0,0')}</Badge>
+                <Badge color={color} className="mx-3">{numeral(count).format('0,0')}</Badge>
             )}
-            {typeof onDismiss === 'function' && (
+            {canDismiss && (
                 <button type="button" aria-label="close" onClick={onDismiss} className="btn-close"/>
             )}
         </div>

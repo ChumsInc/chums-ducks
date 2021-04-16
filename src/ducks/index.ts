@@ -1,15 +1,9 @@
 import {combineReducers} from 'redux';
 
-import alertsReducer from './alerts';
-// import ordersReducer from './orders';
-// import pageReducer from './page';
-// import customersReducer from './customers';
+import {default as alertsReducer, } from './alerts';
 
 const rootReducer = combineReducers({
     alerts: alertsReducer,
-    // orders: ordersReducer,
-    // page: pageReducer,
-    // customers: customersReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>

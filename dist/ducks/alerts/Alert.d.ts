@@ -1,6 +1,6 @@
-import * as React from "react";
-import { BasicAlertType } from './index';
-export interface Props extends BasicAlertType {
+import React from "react";
+import { BasicAlert } from './index';
+export interface Props extends BasicAlert {
     count?: number;
     onDismiss?: (args?: any) => void;
 }

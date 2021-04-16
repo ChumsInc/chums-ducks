@@ -1,94 +1,98 @@
-import {AnyAction, } from 'redux';
 import {RootStateOrAny} from "react-redux";
 import {ActionInterface} from "../types";
 
-const alertsAlertAdded: string = 'app/alerts/alertAdded';
-const alertsAlertDismissed: string = 'app/alerts/alertDismissed';
+export const alertAdded: string = 'app/alerts/alertAdded';
+export const alertDismissed: string = 'app/alerts/alertDismissed';
 
-export interface BasicAlertType {
+export interface BasicAlert {
     title?: string,
     message?: string,
     context?: string,
-    color?: 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'light'|'dark',
+    color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark',
     className?: string | object,
 }
 
-export interface AlertType extends BasicAlertType {
+export interface Alert extends BasicAlert {
     id: number,
     count: number,
 }
 
 export interface AlertListState {
     counter: number,
-    list: AlertType[],
+    list: Alert[],
 }
 
-interface AlertAction extends ActionInterface {
+export interface AlertAction extends ActionInterface {
     payload: {
         id?: number,
-        alert?: BasicAlertType,
+        alert?: BasicAlert,
     }
 }
+
+export const addAlertAction = (alert: BasicAlert): AlertAction =>
+    ({
+        type: alertAdded,
+        payload: {
+            alert: {
+                ...alert,
+                color: alert.color || 'danger'
+            }
+        }
+    });
+
+export const dismissAlertAction = (id: number): AlertAction => ({type: alertDismissed, payload: {id}})
+
+export const onErrorAction = (err: Error, context?: string): AlertAction =>
+    addAlertAction({message: err.message, title: err.name, context, color: 'danger'})
+
+
+export const selectAlertList = (state: RootStateOrAny): Alert[] => state.alerts.list;
+export const alertContextFilter = (list:Alert[], context:string):Alert[] => {
+    return list.filter(al => al.context === context);
+}
+
+
+
 
 const initialState: AlertListState = {counter: 0, list: []}
 
-export default function reducer(state: AlertListState = initialState, action: AnyAction) {
+const alertReducer = (state: AlertListState = initialState, action: AlertAction): AlertListState => {
     const {type, payload} = action;
     const {counter, list} = state;
     switch (type) {
-        case alertsAlertAdded: {
-            const {alert} = payload;
-            alert.id = counter;
-            alert.count = 0;
-
-            const [{id = alert.id, count = alert.count} = {}] = list.filter(a => a.context === alert.context);
-            return {
-                ...state,
-                counter: counter + 1,
-                list: [
-                    ...list.filter(a => a.context !== alert.context),
-                    {...alert, id, count: count + 1},
-                ]
-            }
-        }
-        case alertsAlertDismissed:
-            const {id} = payload;
-            return {
-                ...state,
-                list: list.filter(alert => alert.id !== id),
-            }
-        default:
+    case alertAdded: {
+        const {alert} = payload;
+        if (!alert) {
             return state;
-    }
-}
-
-export function addAlertAction(alert: BasicAlertType): AlertAction {
-    return {
-        type: alertsAlertAdded,
-        payload: {
-            alert: {...alert, color: alert.color || 'danger'}
-        },
-    }
-}
-
-export function dismissAlertAction(id:number): AlertAction {
-    return {
-        type: alertsAlertDismissed,
-        payload: {
-            id
         }
-    }
-}
-
-export const alertSelector = (state:RootStateOrAny):AlertType[] => {
-    return state.alerts.list;
-}
-
-export function onErrorAction(err:Error, context?: string): AlertAction {
-    return {
-        type: alertsAlertAdded,
-        payload: {
-            alert: {message: err.message, title: err.name, context, color: 'danger'}
+        const context = alert.context;
+        const [contextAlert] = context ? alertContextFilter(list, context) : [];
+        if (contextAlert) {
+            return {
+                counter,
+                list: [
+                    ...list.filter(al => al.id !== contextAlert.id),
+                    ...list.filter(al => al.id === contextAlert.id)
+                        .map(al => ({...al, count: al.count + 1})),
+                ],
+            }
         }
+        return {
+            counter: counter + 1,
+            list: [...list, {...alert, id: counter, count: 0}]
+        };
+    }
+    case alertDismissed:
+        if (payload.id === undefined) {
+            return state;
+        }
+        return {
+            counter,
+            list: [...list.filter(alert => alert.id !== payload.id)]
+        }
+    default:
+        return state;
     }
 }
+export default alertReducer;
+
