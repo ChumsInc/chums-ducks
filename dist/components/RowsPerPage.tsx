@@ -11,7 +11,7 @@ const RowsPerPage: React.FC<Props> = ({value, pageValues = defaultPageValues, on
     const changeHandler = (ev: ChangeEvent<HTMLSelectElement>) => onChange(Number(ev.target.value));
 
     return (
-        <select value={String(value)} onChange={changeHandler}>
+        <select value={String(value)} onChange={changeHandler} className="form-select form-select-sm">
             {pageValues.map(value => (
                 <option key={String(value)} value={String(value)}>{value}</option>
             ))}
