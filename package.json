@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "start": "webpack serve --config webpack.dev.js --progress",
-    "build": "webpack --config webpack.prod.js --progress"
+    "build": "rimraf dist/ && tsc && copyfiles -u -V src/**/*.* dist/"
   },
   "browserslist": {
     "production": [
@@ -56,5 +56,9 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"
   },
-  "main": "/dist/index.js"
+  "main": "/dist/index.js",
+  "dependencies": {
+    "copyfiles": "^2.4.1",
+    "rimraf": "^2.7.1"
+  }
 }
