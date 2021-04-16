@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import "./Pagination.scss";
 const noop = (any) => {
 };
 export const filterPage = (page, rowsPerPage) => (row, index) => Math.ceil((index + 1) / rowsPerPage) === page;
