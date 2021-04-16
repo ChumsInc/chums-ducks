@@ -9,8 +9,8 @@ export interface PageAction extends AnyAction {
     meta: string,
 }
 
-export const setPage = (page: number, root:string = 'app'): PageAction => ({type: currentPageChanged, payload: page, meta: root});
-export const setRowsPerPage = (rowsPerPage: number, root:string = 'app'): PageAction => ({type: rowsPerPageChanged, payload: rowsPerPage, meta: root});
+export const setPage = (page: number, root:string = 'app'): PageAction => ({type: `${root}/${currentPageChanged}`, payload: page, meta: root});
+export const setRowsPerPage = (rowsPerPage: number, root:string = 'app'): PageAction => ({type: `${root}/${rowsPerPageChanged}`, payload: rowsPerPage, meta: root});
 
 export interface PageState {
     current: number,
@@ -23,9 +23,9 @@ export const selectRowsPerPage = (state: RootStateOrAny): number => state.page.r
 const currentReducer = (state = 1, action: PageAction): number => {
     const {type, payload, meta} = action;
     switch (type) {
-    case `${meta}/currentPageChanged`:
+    case `${meta}/${currentPageChanged}`:
         return payload || 1;
-    case `${meta}/rowsPerPageChanged`:
+    case `${meta}/${rowsPerPageChanged}`:
         return 1;
     default:
         return state;
@@ -35,7 +35,7 @@ const currentReducer = (state = 1, action: PageAction): number => {
 const rowsPerPageReducer = (state = 25, action: PageAction): number => {
     const {type, payload, meta} = action;
     switch (type) {
-    case `${meta}/rowsPerPageChanged`:
+    case `${meta}/${rowsPerPageChanged}`:
         return payload;
     default:
         return state;
