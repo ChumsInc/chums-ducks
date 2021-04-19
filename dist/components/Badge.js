@@ -8,10 +8,9 @@ const Badge = ({ color, textColor, pill, text, className, description, children 
         'badge-pill': pill,
     };
     const badgeClassNames = classNames('badge', styleClassName, className);
-    return (<span className={badgeClassNames} title={description}>
-            {text || children || ''}
-            {!!description && (<span className="visually-hidden">{description}</span>)}
-        </span>);
+    return (React.createElement("span", { className: badgeClassNames, title: description },
+        text || children || '',
+        !!description && (React.createElement("span", { className: "visually-hidden" }, description))));
 };
 export default Badge;
 //# sourceMappingURL=Badge.js.map

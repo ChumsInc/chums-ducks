@@ -8,13 +8,17 @@ const Alert = ({ message, color = 'primary', title, className = '', context, cou
         [`alert-${color}`]: !!color,
         'alert-dismissible': canDismiss,
     };
-    return (<div className={classNames('alert my-3', elClassName, className)}>
-            {!!context && (<strong className="me-1">[{context}]</strong>)}
-            {!!title && (<strong className="me-1">{title}:</strong>)}
-            {message || children || null}
-            {!!count && count > 1 && (<Badge color={color} className="mx-3">{numeral(count).format('0,0')}</Badge>)}
-            {canDismiss && (<button type="button" aria-label="close" onClick={onDismiss} className="btn-close"/>)}
-        </div>);
+    return (React.createElement("div", { className: classNames('alert my-3', elClassName, className) },
+        !!context && (React.createElement("strong", { className: "me-1" },
+            "[",
+            context,
+            "]")),
+        !!title && (React.createElement("strong", { className: "me-1" },
+            title,
+            ":")),
+        message || children || null,
+        !!count && count > 1 && (React.createElement(Badge, { color: color, className: "mx-3" }, numeral(count).format('0,0'))),
+        canDismiss && (React.createElement("button", { type: "button", "aria-label": "close", onClick: onDismiss, className: "btn-close" }))));
 };
 export default Alert;
 //# sourceMappingURL=Alert.js.map

@@ -18,13 +18,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
-    "jsx": "react-native",
+    "jsx": "react",
     "outDir": "./dist/",
     "declaration": true,
     "noImplicitAny": true,
     "sourceMap": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
   ]
 }
