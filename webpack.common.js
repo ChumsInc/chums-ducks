@@ -1,6 +1,5 @@
 const path = require('path');
 
-
 module.exports = {
     entry: './src/index.ts',
     module: {
@@ -35,7 +34,8 @@ module.exports = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },
-    plugins: [],
+    plugins: [
+    ],
     optimization: {
         splitChunks: {
             cacheGroups: {
