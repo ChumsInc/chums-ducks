@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import "./Pagination.scss";
+import "./Pagination.css";
 
 const noop = (any: any) => {
 };
