@@ -1,10 +1,16 @@
 {
   "name": "chums-ducks",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "private": false,
+  "main": "dist/index.js",
+  "source": "src/index.ts",
   "scripts": {
     "start": "webpack serve --config webpack.dev.js --progress",
-    "build": "rimraf dist/ && copyfiles --verbose --up 1 src/**/*.* dist/ && tsc"
+    "test": "webpack serve --config webpack.test.js --progress",
+    "copy-css": "copyfiles --verbose --up 1 src/**/*.css dist/",
+    "clean": "rimraf dist/",
+    "compile": "tsc",
+    "build": "npm run clean && npm run compile && npm run copy-css"
   },
   "browserslist": {
     "production": [
@@ -27,7 +33,7 @@
     "@babel/preset-typescript": "^7.12.1",
     "@types/classnames": "^2.2.11",
     "@types/jest": "^26.0.20",
-    "@types/node": "^12.20.2",
+    "@types/node": "^14.14.41",
     "@types/numeral": "^2.0.0",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
@@ -35,11 +41,20 @@
     "babel-loader": "^8.1.0",
     "bootstrap": "^5.0.0-beta2",
     "bootstrap-icons": "^1.4.0",
+    "classnames": "*",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^5.0.2",
+    "numeral": "^2.0.6",
+    "react": "*",
+    "react-dom": "*",
+    "react-redux": "*",
+    "redux": "*",
+    "redux-thunk": "*",
+    "sass": "^1.32.10",
+    "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.1.1",
-    "ts-loader": "^8.0.17",
+    "ts-loader": "^9.0.0",
     "typescript": "^4.1.5",
     "webpack": "^5.23.0",
     "webpack-bundle-analyzer": "^4.4.0",
@@ -49,16 +64,16 @@
     "webpack-merge": "^5.7.3"
   },
   "peerDependencies": {
-    "classnames": "^2.2.6",
+    "classnames": "^2.3.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-redux": "^7.2.2",
+    "react-redux": "^7.2.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"
   },
-  "main": "/dist/index.js",
   "dependencies": {
     "copyfiles": "^2.4.1",
-    "rimraf": "^2.7.1"
+    "redux-devtools-extension": "^2.13.9",
+    "rimraf": "^3.0.2"
   }
 }
