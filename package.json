@@ -7,7 +7,10 @@
   "scripts": {
     "start": "webpack serve --config webpack.dev.js --progress",
     "test": "webpack serve --config webpack.test.js --progress",
-    "build": "rimraf dist/ && copyfiles --verbose --up 1 src/**/*.scss dist/ && tsc"
+    "copy-css": "copyfiles --verbose --up 1 src/**/*.css dist/",
+    "clean": "rimraf dist/",
+    "compile": "tsc",
+    "build": "npm run clean && npm run compile && npm run copy-css"
   },
   "browserslist": {
     "production": [
