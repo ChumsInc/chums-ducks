@@ -1,5 +1,6 @@
 import {RootStateOrAny} from "react-redux";
 import {ActionInterface} from "../types";
+import {BootstrapColor} from "../../types";
 
 export const alertAdded: string = 'app/alerts/alertAdded';
 export const alertDismissed: string = 'app/alerts/alertDismissed';
@@ -8,13 +9,14 @@ export interface BasicAlert {
     title?: string,
     message?: string,
     context?: string,
-    color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark',
+    color?: BootstrapColor,
     className?: string | object,
 }
 
 export interface Alert extends BasicAlert {
     id: number,
     count: number,
+    timestamp: number,
 }
 
 export interface AlertListState {
@@ -56,6 +58,8 @@ export const alertContextFilter = (list:Alert[], context:string):Alert[] => {
 
 const initialState: AlertListState = {counter: 0, list: []}
 
+const alertIDSort = (a:Alert, b:Alert) => a.id - b.id;
+
 const alertReducer = (state: AlertListState = initialState, action: AlertAction): AlertListState => {
     const {type, payload} = action;
     const {counter, list} = state;
@@ -73,13 +77,13 @@ const alertReducer = (state: AlertListState = initialState, action: AlertAction)
                 list: [
                     ...list.filter(al => al.id !== contextAlert.id),
                     ...list.filter(al => al.id === contextAlert.id)
-                        .map(al => ({...al, count: al.count + 1})),
-                ],
+                        .map(al => ({...al, count: al.count + 1, timestamp: new Date().valueOf()})),
+                ].sort(alertIDSort),
             }
         }
         return {
             counter: counter + 1,
-            list: [...list, {...alert, id: counter, count: 0}]
+            list: [...list, {...alert, id: counter, count: 1, timestamp: new Date().valueOf()}].sort(alertIDSort)
         };
     }
     case alertDismissed:
@@ -88,7 +92,7 @@ const alertReducer = (state: AlertListState = initialState, action: AlertAction)
         }
         return {
             counter,
-            list: [...list.filter(alert => alert.id !== payload.id)]
+            list: [...list.filter(alert => alert.id !== payload.id)].sort(alertIDSort)
         }
     default:
         return state;

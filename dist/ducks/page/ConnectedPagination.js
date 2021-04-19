@@ -25,7 +25,7 @@ const ConnectedPagination = (_a) => {
         dispatch(_setter(1));
     }
     const changeHandler = (value) => dispatch(_setter(value));
-    return (<Pagination page={page} pages={pages} onSelectPage={changeHandler} {...props}/>);
+    return (React.createElement(Pagination, Object.assign({ page: page, pages: pages, onSelectPage: changeHandler }, props)));
 };
 export default ConnectedPagination;
 //# sourceMappingURL=ConnectedPagination.js.map

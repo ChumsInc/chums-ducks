@@ -1,17 +1,19 @@
 import { RootStateOrAny } from "react-redux";
 import { ActionInterface } from "../types";
+import { BootstrapColor } from "../../types";
 export declare const alertAdded: string;
 export declare const alertDismissed: string;
 export interface BasicAlert {
     title?: string;
     message?: string;
     context?: string;
-    color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+    color?: BootstrapColor;
     className?: string | object;
 }
 export interface Alert extends BasicAlert {
     id: number;
     count: number;
+    timestamp: number;
 }
 export interface AlertListState {
     counter: number;

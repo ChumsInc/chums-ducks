@@ -9,7 +9,7 @@ const ConnectedRowsPerPage = ({ selector, setter, pageValues = [10, 25, 50, 100,
     const dispatch = useDispatch();
     const rowPerPage = useSelector(_selector);
     const changeHandler = (value) => dispatch(_setter(value));
-    return (<RowsPerPage value={rowPerPage} onChange={changeHandler}/>);
+    return (React.createElement(RowsPerPage, { value: rowPerPage, onChange: changeHandler }));
 };
 export default ConnectedRowsPerPage;
 //# sourceMappingURL=ConnectedRowsPerPage.js.map

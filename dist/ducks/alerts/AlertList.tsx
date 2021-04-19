@@ -9,7 +9,7 @@ export interface Props {
 
 const AlertList: React.FC<Props> = ({context}) => {
     const dispatch = useDispatch();
-    const list = useSelector(selectAlertList).filter(alert => !context || alert.context === context);
+    const list = useSelector(selectAlertList).filter(alert => !context || alert.context === context).sort((a,b) => b.timestamp - a.timestamp);
     const dismissHandler = (id: number) => dispatch(dismissAlertAction(id));
     return (
         <div>

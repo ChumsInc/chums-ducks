@@ -13,6 +13,7 @@ export const alertContextFilter = (list, context) => {
     return list.filter(al => al.context === context);
 };
 const initialState = { counter: 0, list: [] };
+const alertIDSort = (a, b) => a.id - b.id;
 const alertReducer = (state = initialState, action) => {
     const { type, payload } = action;
     const { counter, list } = state;
@@ -30,13 +31,13 @@ const alertReducer = (state = initialState, action) => {
                     list: [
                         ...list.filter(al => al.id !== contextAlert.id),
                         ...list.filter(al => al.id === contextAlert.id)
-                            .map(al => (Object.assign(Object.assign({}, al), { count: al.count + 1 }))),
-                    ],
+                            .map(al => (Object.assign(Object.assign({}, al), { count: al.count + 1, timestamp: new Date().valueOf() }))),
+                    ].sort(alertIDSort),
                 };
             }
             return {
                 counter: counter + 1,
-                list: [...list, Object.assign(Object.assign({}, alert), { id: counter, count: 0 })]
+                list: [...list, Object.assign(Object.assign({}, alert), { id: counter, count: 1, timestamp: new Date().valueOf() })].sort(alertIDSort)
             };
         }
         case alertDismissed:
@@ -45,7 +46,7 @@ const alertReducer = (state = initialState, action) => {
             }
             return {
                 counter,
-                list: [...list.filter(alert => alert.id !== payload.id)]
+                list: [...list.filter(alert => alert.id !== payload.id)].sort(alertIDSort)
             };
         default:
             return state;
