@@ -1,8 +1,8 @@
 import React from "react";
 import classNames from 'classnames';
 import numeral from "numeral";
-import {BasicAlert} from './index';
-import Badge from "../../components/Badge";
+import {BasicAlert} from '../types';
+import Badge from "./Badge";
 
 export interface Props extends BasicAlert {
     count?: number,

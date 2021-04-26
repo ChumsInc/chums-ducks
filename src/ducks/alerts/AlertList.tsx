@@ -1,7 +1,8 @@
 import React from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {dismissAlertAction, selectAlertList} from "./index";
-import Alert from './Alert';
+import Alert from "../../components/Alert";
+
 
 export interface Props {
     context?: string,

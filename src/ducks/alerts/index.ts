@@ -1,17 +1,9 @@
 import {RootStateOrAny} from "react-redux";
 import {ActionInterface} from "../types";
-import {BootstrapColor} from "../../types";
+import {BasicAlert} from "../../types";
 
 export const alertAdded: string = 'app/alerts/alertAdded';
 export const alertDismissed: string = 'app/alerts/alertDismissed';
-
-export interface BasicAlert {
-    title?: string,
-    message?: string,
-    context?: string,
-    color?: BootstrapColor,
-    className?: string | object,
-}
 
 export interface Alert extends BasicAlert {
     id: number,
