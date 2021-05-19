@@ -1,12 +1,13 @@
 import React, {createRef, KeyboardEvent, MouseEvent, useEffect, useState} from "react";
 import classNames from "classnames";
+import {BootstrapSize} from "../types";
 
-export type BootstrapSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '';
+
 
 const noop = () => {
 };
 
-interface ModalProps {
+export interface ModalProps {
     title?: string,
     size?: BootstrapSize,
     footer?: React.ReactNode,
