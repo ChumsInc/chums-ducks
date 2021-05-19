@@ -7,7 +7,7 @@ import {BootstrapColor} from "../types";
 export interface LoadingModalProps {
     title?: string,
     percent?: number,
-    color: BootstrapColor,
+    color?: BootstrapColor,
 }
 
 const LoadingModal: React.FC<LoadingModalProps> = ({
