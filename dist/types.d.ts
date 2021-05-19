@@ -8,3 +8,4 @@ export interface BasicAlert {
     color?: BootstrapColor;
     className?: string | object;
 }
+export declare type BootstrapSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
