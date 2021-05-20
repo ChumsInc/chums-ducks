@@ -1,6 +1,6 @@
 import React from "react";
-export declare type BootstrapSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '';
-interface ModalProps {
+import { BootstrapSize } from "../types";
+export interface ModalProps {
     title?: string;
     size?: BootstrapSize;
     footer?: React.ReactNode;

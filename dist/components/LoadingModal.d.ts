@@ -1,9 +1,9 @@
 import React from "react";
 import { BootstrapColor } from "../types";
-interface LoadingModalProps {
+export interface LoadingModalProps {
     title?: string;
     percent?: number;
-    color: BootstrapColor;
+    color?: BootstrapColor;
 }
 declare const LoadingModal: React.FC<LoadingModalProps>;
 export default LoadingModal;

@@ -4,7 +4,7 @@ const noop = () => {
 };
 const Modal = ({ title, size = 'md', footer, canClose = true, scrollable, centered, staticBackdrop, dialogClassName, onClose = noop, children, }) => {
     const modalRef = createRef();
-    const [fadeTimer, setFadeTimer] = useState(0);
+    let fadeTimer = 0;
     const [showModal, setShowModal] = useState(false);
     const showBackdrop = (state) => {
         var _a;
@@ -31,17 +31,17 @@ const Modal = ({ title, size = 'md', footer, canClose = true, scrollable, center
     };
     const delayShowingModal = () => {
         clearTimeout(fadeTimer);
-        setFadeTimer(window.setTimeout(() => {
+        fadeTimer = window.setTimeout(() => {
             console.log('executing fadeTimer');
             showBackdrop(true);
             setShowModal(true);
-        }, 300));
+        }, 300);
     };
     const delayClose = () => {
         clearTimeout(fadeTimer);
-        setFadeTimer(window.setTimeout(() => {
+        fadeTimer = window.setTimeout(() => {
             onClose();
-        }, 300));
+        }, 300);
     };
     useEffect(() => {
         document.querySelectorAll('body').forEach(body => {

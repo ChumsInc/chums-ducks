@@ -32,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({
                                          children,
                                      }) => {
     const modalRef = createRef<HTMLDivElement>()
-    const [fadeTimer, setFadeTimer] = useState(0);
+    let fadeTimer:number = 0;
     const [showModal, setShowModal] = useState(false);
 
 
@@ -65,23 +65,18 @@ const Modal: React.FC<ModalProps> = ({
 
     const delayShowingModal = () => {
         clearTimeout(fadeTimer);
-        setFadeTimer(
-            window.setTimeout(() => {
-                console.log('executing fadeTimer')
-                showBackdrop(true);
-                setShowModal(true);
-            }, 300)
-        );
+        fadeTimer = window.setTimeout(() => {
+            console.log('executing fadeTimer')
+            showBackdrop(true);
+            setShowModal(true);
+        }, 300)
     }
 
     const delayClose = () => {
         clearTimeout(fadeTimer);
-
-        setFadeTimer(
-            window.setTimeout(() => {
-                onClose();
-            }, 300)
-        );
+        fadeTimer = window.setTimeout(() => {
+            onClose();
+        }, 300)
     }
 
     useEffect(() => {
