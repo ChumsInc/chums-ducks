@@ -44,6 +44,9 @@ const Modal: React.FC<ModalProps> = ({
         if (!canClose) {
             return;
         }
+        if (ev) {
+            ev.preventDefault();
+        }
         showBackdrop(false);
         setShowModal(false);
         delayClose();
@@ -66,7 +69,6 @@ const Modal: React.FC<ModalProps> = ({
     const delayShowingModal = () => {
         clearTimeout(fadeTimer);
         fadeTimer = window.setTimeout(() => {
-            console.log('executing fadeTimer')
             showBackdrop(true);
             setShowModal(true);
         }, 300)
