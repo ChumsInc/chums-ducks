@@ -8,6 +8,15 @@ export interface BasicAlert {
     context?: string,
     color?: BootstrapColor,
     className?: string | object,
+    canDismiss?: boolean,
 }
 
 export type BootstrapSize = 'xs'|'sm'|'md'|'lg'|'xl';
+
+export interface Tab {
+    id: string,
+    title: string,
+    canClose?: boolean,
+    disabled?: boolean,
+    active?: boolean,
+}

@@ -1,6 +1,7 @@
 import {Action, combineReducers} from 'redux';
 import {RootState} from "../index";
-import {Tab} from "../../components/TabItem";
+import {Tab} from "../../types";
+
 
 export const tabListCreated = 'app/tabs/tabs-created';
 export const tabSelected = 'app/tabs/tab-selected';
@@ -29,11 +30,15 @@ export const selectedTabSelector = (state:RootState) => {
     const [id] = list.filter(tab => tab.id === selected).map(tab => tab.id);
     return id || '';
 }
+export const tabSelector = (id:string) => (state:RootState) => {
+    const [tab] = state.tabs.list.filter(tab => tab.id === id);
+    return tab;
+}
 
 
 const listReducer = (state:Tab[] = [], action:TabAction) => {
     const {type, payload} = action;
-    const {id, tab, list = []} = payload;
+    const {id, tab, list = []} = payload || {};
     switch (type) {
     case tabListCreated:
         return [...list];
@@ -71,6 +76,12 @@ const selectedReducer = (state:string = '', action:TabAction) => {
     case tabDisabled:
         if (payload.id === state) {
             return '';
+        }
+        return state;
+    case tabListCreated:
+        if (payload.list) {
+            const [id = ''] = payload.list.filter(tab => tab.active).map(tab => tab.id)
+            return id;
         }
         return state;
     default:

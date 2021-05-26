@@ -1,10 +1,10 @@
 import React from "react";
 import ProgressBar from "./ProgressBar";
-import Modal from "./Modal";
+import Modal, {ModalProps} from "./Modal";
 import Progress from "./Progress";
 import {BootstrapColor} from "../types";
 
-export interface LoadingModalProps {
+export interface LoadingModalProps extends ModalProps {
     title?: string,
     percent?: number,
     color?: BootstrapColor,
@@ -13,10 +13,12 @@ export interface LoadingModalProps {
 const LoadingModal: React.FC<LoadingModalProps> = ({
                                                        title = 'Loading',
                                                        percent = 100,
-                                                       color = 'secondary'
+                                                       color = 'secondary',
+                                                       canClose = false,
+                                                       ...rest
                                                    }) => {
     return (
-        <Modal title={title} canClose={false}>
+        <Modal title={title} canClose={canClose} {...rest}>
             <Progress>
                 <ProgressBar value={percent} animated color={color}/>
             </Progress>

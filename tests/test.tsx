@@ -7,7 +7,7 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 
 import reducer from '../src/ducks';
 import {Provider} from "react-redux";
-import PaginationTest from "./PaginationTest";
+import App from "./App";
 
 const composeEnhancers = composeWithDevTools({});
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
@@ -15,7 +15,7 @@ const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <PaginationTest />
+            <App/>
         </Provider>
     </React.StrictMode>,
     document.getElementById('app')

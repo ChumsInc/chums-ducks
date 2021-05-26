@@ -1,13 +1,7 @@
 import React, {MouseEvent} from "react";
 import classNames from "classnames";
+import {Tab} from "../types";
 
-export interface Tab {
-    id: string,
-    title: string,
-    canClose?: boolean,
-    disabled?: boolean,
-    active?: boolean,
-}
 
 export interface TabItemProps extends Tab {
     onSelect: (id: string) => void,

@@ -3,37 +3,49 @@ import classNames from "classnames";
 import {BootstrapSize} from "../types";
 
 
-
 const noop = () => {
 };
 
 export interface ModalProps {
     title?: string,
     size?: BootstrapSize,
+    header?: React.ReactNode,
     footer?: React.ReactNode,
     canClose?: boolean,
     scrollable?: boolean,
     centered?: boolean,
     staticBackdrop?: boolean,
     dialogClassName?: string | object,
+    visible?: boolean,
     onClose?: () => void,
 }
 
 const Modal: React.FC<ModalProps> = ({
                                          title,
                                          size = 'md',
+                                         header,
                                          footer,
-                                         canClose= true,
+                                         canClose = true,
                                          scrollable,
                                          centered,
                                          staticBackdrop,
                                          dialogClassName,
+                                         visible = true,
                                          onClose = noop,
                                          children,
                                      }) => {
     const modalRef = createRef<HTMLDivElement>()
-    let fadeTimer:number = 0;
+    let fadeTimer: number = 0;
     const [showModal, setShowModal] = useState(false);
+    const [display, setDisplay] = useState(visible ? 'block' : 'none');
+
+    useEffect(() => {
+        if (visible) {
+            delayShowingModal();
+        } else {
+            delayClose();
+        }
+    }, [visible]);
 
 
     const showBackdrop = (state: boolean) => {
@@ -47,8 +59,6 @@ const Modal: React.FC<ModalProps> = ({
         if (ev) {
             ev.preventDefault();
         }
-        showBackdrop(false);
-        setShowModal(false);
         delayClose();
     }
 
@@ -67,6 +77,13 @@ const Modal: React.FC<ModalProps> = ({
     }
 
     const delayShowingModal = () => {
+        setDisplay('block');
+        document.querySelectorAll('body').forEach(body => {
+            body.classList.toggle('modal-open', true);
+            const div = document.createElement('div');
+            div.className = 'modal-backdrop fade';
+            body.appendChild(div);
+        });
         clearTimeout(fadeTimer);
         fadeTimer = window.setTimeout(() => {
             showBackdrop(true);
@@ -76,19 +93,17 @@ const Modal: React.FC<ModalProps> = ({
 
     const delayClose = () => {
         clearTimeout(fadeTimer);
+        setShowModal(false);
+        showBackdrop(false);
         fadeTimer = window.setTimeout(() => {
+            document.querySelector('.modal-backdrop')?.remove();
+            document.querySelector('body')?.classList.toggle('modal-open', false);
+            setDisplay('none');
             onClose();
         }, 300)
     }
 
     useEffect(() => {
-        document.querySelectorAll('body').forEach(body => {
-            body.classList.toggle('modal-open', true);
-            const div = document.createElement('div');
-            div.className = 'modal-backdrop fade';
-            body.appendChild(div);
-        });
-        delayShowingModal();
         return () => {
             clearTimeout(fadeTimer);
             document.querySelector('body')?.classList.toggle('modal-open', false);
@@ -108,15 +123,18 @@ const Modal: React.FC<ModalProps> = ({
     }
     return (
         <div className={classNames("modal fade", {show: showModal})} tabIndex={-1} ref={modalRef}
-             style={{display: 'block'}} onClick={onClickBackdrop} onKeyDown={onEscape}>
+             style={{display: display}} onClick={onClickBackdrop} onKeyDown={onEscape}>
             <div className={classNames("modal-dialog", `modal-${size}`, className, dialogClassName)}>
                 <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">{title || 'Modal Title'}</h5>
-                        {canClose && (
-                            <button type="button" className="btn-close" onClick={closeHandler} aria-label="Close"/>
-                        )}
-                    </div>
+                    {!!header && header}
+                    {!header && (!!title || canClose) && (
+                        <div className="modal-header">
+                            <h5 className="modal-title">{title || 'Modal Title'}</h5>
+                            {canClose && (
+                                <button type="button" className="btn-close" onClick={closeHandler} aria-label="Close"/>
+                            )}
+                        </div>
+                    )}
                     <div className="modal-body">
                         {children || 'modal body goes here'}
                     </div>

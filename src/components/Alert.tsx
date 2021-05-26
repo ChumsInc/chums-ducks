@@ -16,10 +16,10 @@ const Alert: React.FC<Props> = ({
                                     className = '',
                                     context,
                                     count = 0,
+                                    canDismiss,
                                     onDismiss,
                                     children
                                 }) => {
-    const canDismiss = typeof onDismiss === 'function';
     const elClassName = {
         [`alert-${color}`]: !!color,
         'alert-dismissible': canDismiss,
@@ -33,7 +33,7 @@ const Alert: React.FC<Props> = ({
             {!!count && count > 1 && (
                 <Badge color={color} className="mx-3">{numeral(count).format('0,0')}</Badge>
             )}
-            {canDismiss && (
+            {canDismiss && typeof onDismiss === 'function' && (
                 <button type="button" aria-label="close" onClick={onDismiss} className="btn-close"/>
             )}
         </div>
