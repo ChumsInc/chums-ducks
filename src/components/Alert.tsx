@@ -16,7 +16,7 @@ const Alert: React.FC<Props> = ({
                                     className = '',
                                     context,
                                     count = 0,
-                                    canDismiss,
+                                    canDismiss = true,
                                     onDismiss,
                                     children
                                 }) => {
