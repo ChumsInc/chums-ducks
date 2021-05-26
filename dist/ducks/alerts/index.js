@@ -1,12 +1,18 @@
 export const alertAdded = 'app/alerts/alertAdded';
 export const alertDismissed = 'app/alerts/alertDismissed';
+export const alertDismissedByContext = 'app/alerts/alertDismissedByContext';
+export const defaultAlert = {
+    canDismiss: true,
+    color: "danger"
+};
 export const addAlertAction = (alert) => ({
     type: alertAdded,
     payload: {
-        alert: Object.assign(Object.assign({}, alert), { color: alert.color || 'danger' })
+        alert: Object.assign(Object.assign({}, defaultAlert), alert)
     }
 });
 export const dismissAlertAction = (id) => ({ type: alertDismissed, payload: { id } });
+export const dismissContextAlert = (context) => ({ type: alertDismissedByContext, payload: { context } });
 export const onErrorAction = (err, context) => addAlertAction({ message: err.message, title: err.name, context, color: 'danger' });
 export const selectAlertList = (state) => state.alerts.list;
 export const alertContextFilter = (list, context) => {
@@ -25,19 +31,24 @@ const alertReducer = (state = initialState, action) => {
             }
             const context = alert.context;
             const [contextAlert] = context ? alertContextFilter(list, context) : [];
-            if (contextAlert) {
+            if (!contextAlert) {
                 return {
-                    counter,
+                    counter: counter + 1,
                     list: [
-                        ...list.filter(al => al.id !== contextAlert.id),
-                        ...list.filter(al => al.id === contextAlert.id)
-                            .map(al => (Object.assign(Object.assign({}, al), { count: al.count + 1, timestamp: new Date().valueOf() }))),
-                    ].sort(alertIDSort),
+                        ...list,
+                        Object.assign(Object.assign({}, alert), { id: counter, count: 1, timestamp: new Date().valueOf() })
+                    ].sort(alertIDSort)
                 };
             }
             return {
-                counter: counter + 1,
-                list: [...list, Object.assign(Object.assign({}, alert), { id: counter, count: 1, timestamp: new Date().valueOf() })].sort(alertIDSort)
+                counter,
+                list: [
+                    ...list.filter(alert => alert.id !== contextAlert.id),
+                    ...list.filter(alert => alert.id === contextAlert.id)
+                        .map(alert => {
+                        return Object.assign(Object.assign(Object.assign({}, alert), payload.alert), { count: alert.count + 1, timestamp: new Date().valueOf() });
+                    }),
+                ].sort(alertIDSort),
             };
         }
         case alertDismissed:
@@ -47,6 +58,14 @@ const alertReducer = (state = initialState, action) => {
             return {
                 counter,
                 list: [...list.filter(alert => alert.id !== payload.id)].sort(alertIDSort)
+            };
+        case alertDismissedByContext:
+            if (!payload.context) {
+                return state;
+            }
+            return {
+                counter,
+                list: [...list.filter(alert => alert.context !== payload.context)].sort(alertIDSort)
             };
         default:
             return state;
