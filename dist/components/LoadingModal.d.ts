@@ -1,6 +1,7 @@
 import React from "react";
+import { ModalProps } from "./Modal";
 import { BootstrapColor } from "../types";
-export interface LoadingModalProps {
+export interface LoadingModalProps extends ModalProps {
     title?: string;
     percent?: number;
     color?: BootstrapColor;
