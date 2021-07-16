@@ -1,5 +1,5 @@
 import React from 'react';
-import './TabList.scss';
+import './TabList.css';
 export interface TabListProps {
     tabKey: string;
     className?: string;

@@ -3,7 +3,7 @@ import {tabRemovedAction, tabSelectedAction, selectedTabSelector, tabListSelecto
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
 import TabItem from "./TabItem";
-import './TabList.scss';
+import './TabList.css';
 
 
 export interface TabListProps {

@@ -3,7 +3,7 @@ import { tabRemovedAction, tabSelectedAction, selectedTabSelector, tabListSelect
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 import TabItem from "./TabItem";
-import './TabList.scss';
+import './TabList.css';
 const TabList = ({ tabKey, className, children }) => {
     const dispatch = useDispatch();
     const list = useSelector(tabListSelector(tabKey));
