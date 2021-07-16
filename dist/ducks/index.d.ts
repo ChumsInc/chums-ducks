@@ -6,6 +6,6 @@ declare const rootReducer: import("redux").Reducer<import("redux").CombinedState
     }>;
     sortableTables: import("./sortableTables").SortableTablesState;
     tabs: import("./tabs").TabsState;
-}>, import("./alerts").AlertAction | import("./sites").SiteAction | import("./page").PageAction | import("./sortableTables").SortableTablesAction | import("./tabs").TabAction>;
+}>, import("./page").PageAction | import("./alerts").AlertAction | import("./sites").SiteAction | import("./sortableTables").SortableTablesAction | import("./tabs").TabAction>;
 export declare type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;

@@ -1,6 +1,7 @@
 import {RootStateOrAny} from "react-redux";
 import {ActionInterface} from "../types";
 import {BasicAlert} from "../../types";
+import {RootState} from '../index';
 
 export interface Alert extends BasicAlert {
     id: number,
@@ -53,7 +54,9 @@ export const onErrorAction = (err: Error, context?: string): AlertAction =>
     addAlertAction(buildAlert(err, context));
 
 
-export const selectAlertList = (state: RootStateOrAny): Alert[] => state.alerts.list;
+export const alertListSelector = (state: RootState): Alert[] => state.alerts.list;
+export const selectAlertList = alertListSelector;
+export const alertListByContextSelector = (context: string) => (state:RootState):Alert[] => state.alerts.list.filter(alert => alert.context === context)
 export const alertContextFilter = (list:Alert[], context:string):Alert[] => {
     return list.filter(al => al.context === context);
 }

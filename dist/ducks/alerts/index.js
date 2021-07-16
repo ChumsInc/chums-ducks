@@ -16,7 +16,9 @@ const buildAlert = (err, context) => ({ message: err.message, title: err.name, c
 export const dismissAlertAction = (id) => ({ type: alertDismissed, payload: { id } });
 export const dismissContextAlert = (context) => ({ type: alertDismissedByContext, payload: { context } });
 export const onErrorAction = (err, context) => addAlertAction(buildAlert(err, context));
-export const selectAlertList = (state) => state.alerts.list;
+export const alertListSelector = (state) => state.alerts.list;
+export const selectAlertList = alertListSelector;
+export const alertListByContextSelector = (context) => (state) => state.alerts.list.filter(alert => alert.context === context);
 export const alertContextFilter = (list, context) => {
     return list.filter(al => al.context === context);
 };
