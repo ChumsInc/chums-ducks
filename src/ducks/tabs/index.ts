@@ -1,5 +1,6 @@
-import {RootState} from "../index";
+
 import {ActionInterface} from "../types";
+import {RootStateOrAny} from "react-redux";
 
 export interface Tab {
     id: string,
@@ -25,6 +26,10 @@ export interface TabAction extends ActionInterface {
 
 export interface TabsState {
     [key:string]: TabSet
+}
+
+interface RootState extends RootStateOrAny {
+    tabs: TabsState
 }
 
 const initialState:TabsState = {

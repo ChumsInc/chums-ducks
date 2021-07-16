@@ -1,13 +1,7 @@
-import React, {ReactElement} from "react";
+import React from "react";
 import classNames from "classnames";
+import {SortableTableField} from "./index";
 
-export interface SortableTableField {
-    field: string,
-    title: string,
-    sortable: boolean,
-    render?: (row:any) => ReactElement|Element|string,
-    className?: string|object|((any:any) => string|object),
-}
 
 export interface SortableTHProps {
     field: SortableTableField,
@@ -16,7 +10,7 @@ export interface SortableTHProps {
     onClick: (field: string, ascending: boolean) => void,
 }
 
-const SortableTH:React.FC<SortableTHProps> = ({field,sorted, ascending, onClick}) => {
+const SortableTH: React.FC<SortableTHProps> = ({field, sorted, ascending, onClick}) => {
     if (!field.sortable) {
         return (<th>{field.title}</th>)
     }

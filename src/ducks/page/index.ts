@@ -1,5 +1,6 @@
-import {RootState} from "../index";
+
 import {ActionInterface} from "../types";
+import {RootStateOrAny} from "react-redux";
 
 export interface PageSetAction {
     key: string,
@@ -19,7 +20,11 @@ export interface PageState {
     [key:string] : KeyedPageState
 }
 
-export const addPageSet = 'page/addPageSet';
+interface RootState extends RootStateOrAny {
+    pages: PageState,
+}
+
+export const addPageSet = 'page/pageSetAdded';
 export const currentPageChanged = 'page/currentPageChanged';
 export const rowsPerPageChanged = 'page/rowsPerPageChanged';
 
@@ -33,10 +38,10 @@ export const setRowsPerPageAction = ({rowsPerPage, key = 'app'}:PageSetAction): 
 export const addPageSetAction = ({key = 'app', current = 1, rowsPerPage = 25}:PageSetAction): PageAction => ({type: addPageSet, payload: {key, current, rowsPerPage}});
 
 
-export const currentPageSelector = (key:string) => (state: RootState): number => state.page[key]?.current ?? 1;
-export const rowsPerPageSelector = (key:string) => (state: RootState): number => state.page[key]?.rowsPerPage ?? 25;
+export const currentPageSelector = (key:string) => (state: RootState): number => state.pages[key]?.current ?? 1;
+export const rowsPerPageSelector = (key:string) => (state: RootState): number => state.pages[key]?.rowsPerPage ?? 25;
 export const pagedDataSelector = (key: string, data: any[]) => (state:RootState):any[] => {
-    const {current, rowsPerPage} = state.page[key] || {};
+    const {current, rowsPerPage} = state.pages[key] || {};
     return data.filter((row, index) => Math.ceil((index + 1) / rowsPerPage) === current);
 }
 

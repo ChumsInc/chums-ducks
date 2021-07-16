@@ -1,5 +1,5 @@
 import React from "react";
-import { SortableTableField } from "./SortableTH";
+import { SortableTableField } from "./index";
 export interface SortableTableHeadProps {
     tableKey: string;
     fields: SortableTableField[];

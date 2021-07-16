@@ -1,5 +1,7 @@
-import {RootState} from "../index";
+
 import {ActionInterface} from "../types";
+import {ReactElement} from "react";
+import {RootStateOrAny} from "react-redux";
 
 export interface SortableTable {
     key: string,
@@ -17,6 +19,18 @@ export interface SortableTablesAction extends ActionInterface {
 
 export interface SortableTablesState {
     [key:string]: SortableTable
+}
+
+export interface SortableTableField {
+    field: string,
+    title: string,
+    sortable: boolean,
+    render?: (row:any) => ReactElement|Element|string,
+    className?: string|object|((any:any) => string|object),
+}
+
+interface RootState extends RootStateOrAny {
+    sortableTables: SortableTablesState,
 }
 
 export const tablesSortChanged = 'tables/categorySortChanged';

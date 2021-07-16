@@ -1,5 +1,5 @@
 import React from 'react';
-import { SortableTableField } from "./SortableTH";
+import { SortableTableField } from "./index";
 interface SortableTRProps {
     className?: string | object | ((any: any) => string | object);
     selected?: boolean;

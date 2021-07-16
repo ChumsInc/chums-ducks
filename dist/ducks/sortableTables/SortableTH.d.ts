@@ -1,11 +1,5 @@
-import React, { ReactElement } from "react";
-export interface SortableTableField {
-    field: string;
-    title: string;
-    sortable: boolean;
-    render?: (row: any) => ReactElement | Element | string;
-    className?: string | object | ((any: any) => string | object);
-}
+import React from "react";
+import { SortableTableField } from "./index";
 export interface SortableTHProps {
     field: SortableTableField;
     sorted?: boolean;

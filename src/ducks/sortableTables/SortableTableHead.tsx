@@ -1,7 +1,7 @@
 import React from "react";
-import SortableTH, {SortableTableField} from "./SortableTH";
+import SortableTH from "./SortableTH";
 import {useSelector} from "react-redux";
-import {sortableTableSelector} from "./index";
+import {SortableTableField, sortableTableSelector} from "./index";
 
 
 export interface SortableTableHeadProps {

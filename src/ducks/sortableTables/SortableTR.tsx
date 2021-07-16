@@ -1,7 +1,7 @@
 import React, {MouseEvent} from 'react';
 import classNames from "classnames";
-import {SortableTableField} from "./SortableTH";
 import {noop} from "../../utils";
+import {SortableTableField} from "./index";
 
 interface SortableTRProps {
     className?: string | object | ((any: any) => string | object),

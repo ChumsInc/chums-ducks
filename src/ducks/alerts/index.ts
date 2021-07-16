@@ -1,7 +1,6 @@
 import {RootStateOrAny} from "react-redux";
 import {ActionInterface} from "../types";
 import {BasicAlert} from "../../types";
-import {RootState} from '../index';
 
 export interface Alert extends BasicAlert {
     id: number,
@@ -27,6 +26,11 @@ export interface AlertAction extends ActionInterface {
         error?: Error,
     }
 }
+
+interface RootState extends RootStateOrAny {
+    alerts: AlertListState
+}
+
 
 export const alertAdded: string = 'alerts/alertAdded';
 export const alertDismissed: string = 'alerts/alertDismissed';

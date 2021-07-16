@@ -1,5 +1,5 @@
-import { RootState } from "../index";
 import { ActionInterface } from "../types";
+import { RootStateOrAny } from "react-redux";
 export interface PageSetAction {
     key: string;
     current?: number;
@@ -15,7 +15,10 @@ export interface KeyedPageState {
 export interface PageState {
     [key: string]: KeyedPageState;
 }
-export declare const addPageSet = "page/addPageSet";
+interface RootState extends RootStateOrAny {
+    pages: PageState;
+}
+export declare const addPageSet = "page/pageSetAdded";
 export declare const currentPageChanged = "page/currentPageChanged";
 export declare const rowsPerPageChanged = "page/rowsPerPageChanged";
 export declare const defaultRowsPerPageValues: number[];

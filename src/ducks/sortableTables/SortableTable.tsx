@@ -1,10 +1,9 @@
 import React from 'react';
-import {SortableTableField} from "./SortableTH";
 import classNames from "classnames";
 import SortableTableHead from "./SortableTableHead";
 import SortableTR from "./SortableTR";
 import {useDispatch} from "react-redux";
-import {sortChangedAction} from "./index";
+import {SortableTableField, sortChangedAction} from "./index";
 import {noop} from "../../utils";
 
 export interface SortableTableProps {
