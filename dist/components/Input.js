@@ -16,7 +16,7 @@ import { getRegex } from "../utils/regex";
 const noop = () => {
 };
 const Input = (_a) => {
-    var { bsSize = 'sm', wait, fuzzyList, myRef, type = 'text', className, value, onChange = noop, onBlur } = _a, rest = __rest(_a, ["bsSize", "wait", "fuzzyList", "myRef", "type", "className", "value", "onChange", "onBlur"]);
+    var { bsSize = 'sm', wait = 350, fuzzyList, myRef, type = 'text', className, value, onChange = noop, onBlur } = _a, rest = __rest(_a, ["bsSize", "wait", "fuzzyList", "myRef", "type", "className", "value", "onChange", "onBlur"]);
     let _debounced;
     const delayedChange = useCallback(_debounced = debounce((ev) => onChange(ev), wait), []);
     const inputRef = useRef(null);
@@ -26,6 +26,9 @@ const Input = (_a) => {
             _debounced === null || _debounced === void 0 ? void 0 : _debounced.cancel();
         };
     }, []);
+    useEffect(() => {
+        setLocalValue(String(value));
+    }, [value]);
     const inputClassName = {
         'form-control': true,
         [`form-control-${bsSize}`]: !!bsSize,
@@ -49,7 +52,9 @@ const Input = (_a) => {
             onBlur(ev);
         }
     };
-    return (React.createElement("input", Object.assign({ type: type, className: classNames(inputClassName, className), value: localValue || '', onInput: changeHandler, onBlur: blurHandler, ref: myRef || inputRef }, rest)));
+    return (React.createElement("input", Object.assign({ type: type, className: classNames(inputClassName, className), value: localValue || '', 
+        // onInput={changeHandler}
+        onBlur: blurHandler, onChange: changeHandler, ref: myRef || inputRef }, rest)));
 };
 export default Input;
 //# sourceMappingURL=Input.js.map

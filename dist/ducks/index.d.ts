@@ -1,13 +1,11 @@
 declare const rootReducer: import("redux").Reducer<import("redux").CombinedState<{
     alerts: import("./alerts").AlertListState;
-    page: import("redux").CombinedState<{
-        current: number;
-        rowsPerPage: number;
+    page: import("./page").PageState;
+    sites: import("redux").CombinedState<{
+        selected: import("./sites").Site;
     }>;
-    tabs: import("redux").CombinedState<{
-        list: import("..").Tab[];
-        selected: string;
-    }>;
-}>, import("./alerts").AlertAction | import("./page").PageAction | import("./tabs").TabAction>;
+    sortableTables: import("./sortableTables").SortableTablesState;
+    tabs: import("./tabs").TabsState;
+}>, import("./alerts").AlertAction | import("./sites").SiteAction | import("./page").PageAction | import("./sortableTables").SortableTablesAction | import("./tabs").TabAction>;
 export declare type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;

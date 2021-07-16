@@ -2,10 +2,6 @@ import {RootStateOrAny} from "react-redux";
 import {ActionInterface} from "../types";
 import {BasicAlert} from "../../types";
 
-export const alertAdded: string = 'app/alerts/alertAdded';
-export const alertDismissed: string = 'app/alerts/alertDismissed';
-export const alertDismissedByContext: string = 'app/alerts/alertDismissedByContext';
-
 export interface Alert extends BasicAlert {
     id: number,
     count: number,
@@ -23,12 +19,18 @@ export interface AlertListState {
 }
 
 export interface AlertAction extends ActionInterface {
-    payload: {
+    payload?: {
         id?: number,
         alert?: BasicAlert,
         context?: string,
+        error?: Error,
     }
 }
+
+export const alertAdded: string = 'alerts/alertAdded';
+export const alertDismissed: string = 'alerts/alertDismissed';
+export const alertDismissedByContext: string = 'alerts/alertDismissedByContext';
+
 
 export const addAlertAction = (alert: BasicAlert): AlertAction =>
     ({
@@ -38,14 +40,17 @@ export const addAlertAction = (alert: BasicAlert): AlertAction =>
                 ...defaultAlert,
                 ...alert,
             }
-        }
+        },
+        meta: alert.context,
     });
+
+const buildAlert = (err: Error, context?: string):BasicAlert => ({message: err.message, title: err.name, context, color: 'danger'});
 
 export const dismissAlertAction = (id: number): AlertAction => ({type: alertDismissed, payload: {id}})
 export const dismissContextAlert = (context:string): AlertAction => ({type: alertDismissedByContext, payload: {context}})
 
 export const onErrorAction = (err: Error, context?: string): AlertAction =>
-    addAlertAction({message: err.message, title: err.name, context, color: 'danger'})
+    addAlertAction(buildAlert(err, context));
 
 
 export const selectAlertList = (state: RootStateOrAny): Alert[] => state.alerts.list;
@@ -58,62 +63,77 @@ const initialState: AlertListState = {counter: 0, list: []}
 
 const alertIDSort = (a:Alert, b:Alert) => a.id - b.id;
 
+const addAlert = (state:AlertListState, action:AlertAction):AlertListState => {
+    const {counter, list} = state;
+    const {payload} = action;
+    let {alert, error, context} = payload || {};
+    if (error && !alert) {
+        alert = buildAlert(error, context);
+    }
+    if (!alert) {
+        return state;
+    }
+    if (alert.context) {
+        context = alert.context;
+    }
+
+    const [contextAlert] = context ? alertContextFilter(list, context) : [];
+
+    if (!contextAlert) {
+        return {
+            counter: counter + 1,
+            list: [
+                ...list,
+                {...alert, id: counter, count: 1, timestamp: new Date().valueOf()}
+            ].sort(alertIDSort)
+        };
+    }
+    return {
+        counter,
+        list: [
+            ...list.filter(alert => alert.id !== contextAlert.id),
+            ...list.filter(alert => alert.id === contextAlert.id)
+                .map(alert => {
+                    return {
+                        ...alert,
+                        ...payload?.alert,
+                        count: alert.count + 1,
+                        timestamp: new Date().valueOf()
+                    }
+                }),
+        ].sort(alertIDSort),
+    }
+}
 
 const alertReducer = (state: AlertListState = initialState, action: AlertAction): AlertListState => {
     const {type, payload} = action;
     const {counter, list} = state;
     switch (type) {
     case alertAdded: {
-        const {alert} = payload;
-        if (!alert) {
-            return state;
-        }
-        const context = alert.context;
-        const [contextAlert] = context ? alertContextFilter(list, context) : [];
-        if (!contextAlert) {
-            return {
-                counter: counter + 1,
-                list: [
-                    ...list,
-                    {...alert, id: counter, count: 1, timestamp: new Date().valueOf()}
-                ].sort(alertIDSort)
-            };
-        }
-        return {
-            counter,
-            list: [
-                ...list.filter(alert => alert.id !== contextAlert.id),
-                ...list.filter(alert => alert.id === contextAlert.id)
-                    .map(alert => {
-                        return {
-                            ...alert,
-                            ...payload.alert,
-                            count: alert.count + 1,
-                            timestamp: new Date().valueOf()
-                        }
-                    }),
-            ].sort(alertIDSort),
-        }
+        return addAlert(state, action);
     }
     case alertDismissed:
-        if (payload.id === undefined) {
+        if (payload?.id === undefined) {
             return state;
         }
         return {
             counter,
-            list: [...list.filter(alert => alert.id !== payload.id)].sort(alertIDSort)
+            list: [...list.filter(alert => alert.id !== payload?.id)].sort(alertIDSort)
         }
     case alertDismissedByContext:
-        if (!payload.context) {
+        if (!payload?.context) {
             return state;
         }
         return {
             counter,
-            list: [...list.filter(alert => alert.context !== payload.context)].sort(alertIDSort)
+            list: [...list.filter(alert => alert.context !== payload?.context)].sort(alertIDSort)
         }
     default:
+        if (payload?.error) {
+            return addAlert(state, action);
+        }
         return state;
     }
 }
-export default alertReducer;
 
+export default alertReducer;

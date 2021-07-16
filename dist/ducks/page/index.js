@@ -1,32 +1,38 @@
-import { combineReducers } from "redux";
+export const addPageSet = 'page/addPageSet';
 export const currentPageChanged = 'page/currentPageChanged';
 export const rowsPerPageChanged = 'page/rowsPerPageChanged';
-export const setPage = (page, root = 'app') => ({ type: `${root}/${currentPageChanged}`, payload: page, meta: root });
-export const setRowsPerPage = (rowsPerPage, root = 'app') => ({ type: `${root}/${rowsPerPageChanged}`, payload: rowsPerPage, meta: root });
-export const selectCurrentPage = (state) => state.page.current;
-export const selectRowsPerPage = (state) => state.page.rowsPerPage;
-const currentReducer = (state = 1, action) => {
-    const { type, payload, meta } = action;
+export const defaultRowsPerPageValues = [10, 25, 50, 100, 250, 500, 1000];
+export const filterPage = (page, rowsPerPage) => (row, index) => Math.ceil((index + 1) / rowsPerPage) === page;
+export const calcPages = (rows, rowsPerPage) => Math.ceil(rows / rowsPerPage);
+export const setPageAction = ({ current, key = 'app' }) => ({ type: currentPageChanged, payload: { key, current } });
+export const setRowsPerPageAction = ({ rowsPerPage, key = 'app' }) => ({ type: rowsPerPageChanged, payload: { key, rowsPerPage } });
+export const addPageSetAction = ({ key = 'app', current = 1, rowsPerPage = 25 }) => ({ type: addPageSet, payload: { key, current, rowsPerPage } });
+export const currentPageSelector = (key) => (state) => { var _a, _b; return (_b = (_a = state.page[key]) === null || _a === void 0 ? void 0 : _a.current) !== null && _b !== void 0 ? _b : 1; };
+export const rowsPerPageSelector = (key) => (state) => { var _a, _b; return (_b = (_a = state.page[key]) === null || _a === void 0 ? void 0 : _a.rowsPerPage) !== null && _b !== void 0 ? _b : 25; };
+export const pagedDataSelector = (key, data) => (state) => {
+    const { current, rowsPerPage } = state.page[key] || {};
+    return data.filter((row, index) => Math.ceil((index + 1) / rowsPerPage) === current);
+};
+const pageReducer = (state = {}, action) => {
+    const { type, payload } = action;
+    const { key = 'app', current = 1, rowsPerPage = 25 } = payload || {};
     switch (type) {
-        case `${meta}/${currentPageChanged}`:
-            return payload || 1;
-        case `${meta}/${rowsPerPageChanged}`:
-            return 1;
-        default:
+        case currentPageChanged:
+            if (state[key]) {
+                const { rowsPerPage } = state[key];
+                return Object.assign(Object.assign({}, state), { [key]: { current, rowsPerPage } });
+            }
             return state;
+        case rowsPerPageChanged:
+            if (state[key]) {
+                const { current } = state[key];
+                return Object.assign(Object.assign({}, state), { [key]: { current, rowsPerPage } });
+            }
+            return state;
+        case addPageSet:
+            return Object.assign(Object.assign({}, state), { [key]: { current, rowsPerPage } });
+        default: return state;
     }
 };
-const rowsPerPageReducer = (state = 25, action) => {
-    const { type, payload, meta } = action;
-    switch (type) {
-        case `${meta}/${rowsPerPageChanged}`:
-            return payload;
-        default:
-            return state;
-    }
-};
-export default combineReducers({
-    current: currentReducer,
-    rowsPerPage: rowsPerPageReducer,
-});
+export default pageReducer;
 //# sourceMappingURL=index.js.map

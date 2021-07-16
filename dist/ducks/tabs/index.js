@@ -1,77 +1,90 @@
-import { combineReducers } from 'redux';
-export const tabListCreated = 'app/tabs/tabs-created';
-export const tabSelected = 'app/tabs/tab-selected';
-export const tabAdded = 'app/tabs/tab-added';
-export const tabRemoved = 'app/tabs/tab-removed';
-export const tabDisabled = 'app/tabs/tab-disabled';
-export const onTabListCreated = (list) => ({ type: tabListCreated, payload: { list } });
-export const onTabSelected = (id) => ({ type: tabSelected, payload: { id } });
-export const onTabAdded = (tab) => ({ type: tabAdded, payload: { tab } });
-export const onTabRemoved = (id) => ({ type: tabRemoved, payload: { id } });
-export const onTabDisabled = (id) => ({ type: tabDisabled, payload: { id } });
-export const tabListSelector = (state) => state.tabs.list;
-export const selectedTabSelector = (state) => {
-    const { list, selected } = state.tabs;
+const initialState = {
+    app: { list: [], selected: '' },
+};
+const defaultTabsKey = 'app';
+export const tabListCreated = 'tabs/tabs-created';
+export const tabSelected = 'tabs/tab-selected';
+export const tabAdded = 'tabs/tab-added';
+export const tabRemoved = 'tabs/tab-removed';
+export const tabDisabled = 'tabs/tab-disabled';
+export const tabListCreatedAction = (list, key = defaultTabsKey) => ({ type: tabListCreated, payload: { key, list } });
+export const tabSelectedAction = (id, key = defaultTabsKey) => ({ type: tabSelected, payload: { key, id } });
+export const tabAddedAction = (tab, key = defaultTabsKey) => ({ type: tabAdded, payload: { key, tab } });
+export const tabRemovedAction = (id, key = defaultTabsKey) => ({ type: tabRemoved, payload: { key, id } });
+export const tabDisabledAction = (id, key = defaultTabsKey) => ({ type: tabDisabled, payload: { key, id } });
+export const tabListSelector = (key = defaultTabsKey) => (state) => state.tabs[key].list;
+export const selectedTabSelector = (key = defaultTabsKey) => (state) => {
+    const { list, selected } = state.tabs[key];
     const [id] = list.filter(tab => tab.id === selected).map(tab => tab.id);
     return id || '';
 };
-export const tabSelector = (id) => (state) => {
-    const [tab] = state.tabs.list.filter(tab => tab.id === id);
+export const tabSelector = (id, key = defaultTabsKey) => (state) => {
+    const [tab] = state.tabs[key].list.filter(tab => tab.id === id);
     return tab;
 };
-const listReducer = (state = [], action) => {
+const nextTabId = (tabSet, id) => {
+    if (tabSet.selected === id) {
+        let found = false;
+        let newIndex = -1;
+        tabSet.list.forEach((tab, index) => {
+            if (found && newIndex === -1) {
+                newIndex = index;
+            }
+            if (tab.id === id) {
+                found = true;
+            }
+        });
+        if (newIndex === -1) {
+            newIndex = Math.max(tabSet.list.length - 1, 0);
+        }
+        return tabSet.list[newIndex].id;
+    }
+    return id;
+};
+const tabsReducer = (state = initialState, action) => {
     const { type, payload } = action;
-    const { id, tab, list = [] } = payload || {};
+    const { key = defaultTabsKey, tab, list = [], id = '' } = payload || {};
+    const tabSet = state[key];
     switch (type) {
         case tabListCreated:
-            return [...list];
+            return Object.assign(Object.assign({}, state), { [key]: {
+                    list: [...list],
+                    selected: list.length === 0 ? '' : list[0].id,
+                } });
         case tabAdded:
-            if (!tab) {
-                return state;
+            if (tabSet && tab) {
+                return Object.assign(Object.assign({}, state), { [key]: {
+                        list: [...tabSet.list, tab],
+                        selected: tabSet.selected,
+                    } });
             }
-            return [...state, tab];
-        case tabRemoved:
-            if (!id) {
-                return state;
-            }
-            return state.filter(tab => tab.id !== id);
-        case tabDisabled:
-            if (!id) {
-                return state;
-            }
-            return state.map(tab => (Object.assign(Object.assign({}, tab), { disabled: tab.id === id })));
-        default:
             return state;
-    }
-};
-const selectedReducer = (state = '', action) => {
-    const { type, payload } = action;
-    switch (type) {
+        case tabRemoved:
+            if (tabSet) {
+                const list = tabSet.list.filter(tab => tab.id !== id);
+                const selected = nextTabId(tabSet, id);
+                return Object.assign(Object.assign({}, state), { [key]: {
+                        list: [...list],
+                        selected: selected,
+                    } });
+            }
+            return state;
+        case tabDisabled:
+            if (tabSet) {
+                const selected = nextTabId(tabSet, id);
+                return Object.assign(Object.assign({}, state), { [key]: {
+                        list: list.map(tab => (Object.assign(Object.assign({}, tab), { disabled: tab.id === id }))),
+                        selected: selected,
+                    } });
+            }
+            return state;
         case tabSelected:
-            return payload.id || '';
-        case tabAdded:
-            if (!payload.tab) {
-                return state;
-            }
-            return payload.tab.id;
-        case tabRemoved:
-        case tabDisabled:
-            if (payload.id === state) {
-                return '';
+            if (tabSet) {
+                return Object.assign(Object.assign({}, state), { [key]: Object.assign(Object.assign({}, tabSet), { selected: id }) });
             }
             return state;
-        case tabListCreated:
-            if (payload.list) {
-                const [id = ''] = payload.list.filter(tab => tab.active).map(tab => tab.id);
-                return id;
-            }
-            return state;
-        default:
-            return state;
+        default: return state;
     }
 };
-export default combineReducers({
-    list: listReducer,
-    selected: selectedReducer,
-});
+export default tabsReducer;
 //# sourceMappingURL=index.js.map

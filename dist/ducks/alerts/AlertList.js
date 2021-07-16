@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { dismissAlertAction, selectAlertList } from "./index";
-import Alert from "../../components/Alert";
+import { Alert } from "../../index";
 const AlertList = ({ context }) => {
     const dispatch = useDispatch();
     const list = useSelector(selectAlertList).filter(alert => !context || alert.context === context).sort((a, b) => b.timestamp - a.timestamp);

@@ -24,7 +24,7 @@ export interface InputProps extends InputHTMLAttributes<any> {
 
 const Input: React.FC<InputProps> = ({
                                          bsSize = 'sm',
-                                         wait,
+                                         wait = 350,
                                          fuzzyList,
                                          myRef,
                                          type = 'text',
@@ -46,6 +46,9 @@ const Input: React.FC<InputProps> = ({
             _debounced?.cancel();
         }
     }, []);
+    useEffect(() => {
+        setLocalValue(String(value));
+    }, [value]);
 
     const inputClassName = {
         'form-control': true,
@@ -77,8 +80,9 @@ const Input: React.FC<InputProps> = ({
         <input type={type}
                className={classNames(inputClassName, className)}
                value={localValue || ''}
-               onInput={changeHandler}
+               // onInput={changeHandler}
                onBlur={blurHandler}
+               onChange={changeHandler}
                ref={myRef || inputRef} {...rest} />
     )
 }

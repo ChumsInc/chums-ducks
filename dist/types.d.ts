@@ -10,10 +10,7 @@ export interface BasicAlert {
     canDismiss?: boolean;
 }
 export declare type BootstrapSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export interface Tab {
-    id: string;
-    title: string;
-    canClose?: boolean;
-    disabled?: boolean;
-    active?: boolean;
+export interface InputField {
+    field: string;
+    value: string | number | boolean;
 }

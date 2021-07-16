@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Alert from "./Alert";
+import Alert from "../ducks/alerts/Alert";
 
 
 export default class ErrorBoundary extends Component {
