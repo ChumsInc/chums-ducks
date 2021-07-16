@@ -17,12 +17,12 @@ export {default as Spinner} from './components/Spinner';
 export {default as TextArea} from './components/TextArea';
 
 export * from './ducks/alerts';
-export {default as alertReducer}  from './ducks/alerts';
+export {default as alertsReducer}  from './ducks/alerts';
 export {default as Alert} from './ducks/alerts/Alert';
 export {default as AlertList} from './ducks/alerts/AlertList';
 
 export * from './ducks/page';
-export {default as pageReducer} from './ducks/page'
+export {default as pagesReducer} from './ducks/page'
 export {default as PageButton} from './ducks/page/PageButton';
 export {default as PagerDuck} from './ducks/page/PagerDuck';
 export {default as Pagination} from './ducks/page/Pagination';
