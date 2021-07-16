@@ -1,10 +1,7 @@
 import React, {createRef, KeyboardEvent, MouseEvent, useEffect, useState} from "react";
 import classNames from "classnames";
 import {BootstrapSize} from "../types";
-
-
-const noop = () => {
-};
+import {noop} from "../utils";
 
 export interface ModalProps {
     title?: string,
@@ -17,7 +14,7 @@ export interface ModalProps {
     staticBackdrop?: boolean,
     dialogClassName?: string | object,
     visible?: boolean,
-    onClose?: () => void,
+    onClose?: (any?:any) => any,
 }
 
 const Modal: React.FC<ModalProps> = ({

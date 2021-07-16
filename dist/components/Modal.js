@@ -1,7 +1,6 @@
 import React, { createRef, useEffect, useState } from "react";
 import classNames from "classnames";
-const noop = () => {
-};
+import { noop } from "../utils";
 const Modal = ({ title, size = 'md', header, footer, canClose = true, scrollable, centered, staticBackdrop, dialogClassName, visible = true, onClose = noop, children, }) => {
     const modalRef = createRef();
     let fadeTimer = 0;

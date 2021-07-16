@@ -11,7 +11,7 @@ export interface ModalProps {
     staticBackdrop?: boolean;
     dialogClassName?: string | object;
     visible?: boolean;
-    onClose?: () => void;
+    onClose?: (any?: any) => any;
 }
 declare const Modal: React.FC<ModalProps>;
 export default Modal;
