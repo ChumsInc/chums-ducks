@@ -1,3 +1,14 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -11,12 +22,13 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 import React from "react";
 import classNames from "classnames";
-const Select = (_a) => {
-    var { bsSize, className, children } = _a, rest = __rest(_a, ["bsSize", "className", "children"]);
-    const selectClassName = {
-        [`form-select-${bsSize}`]: !!bsSize
-    };
-    return (React.createElement("select", Object.assign({ className: classNames("form-select", selectClassName, className) }, rest), children));
+var Select = function (_a) {
+    var _b;
+    var bsSize = _a.bsSize, className = _a.className, children = _a.children, rest = __rest(_a, ["bsSize", "className", "children"]);
+    var selectClassName = (_b = {},
+        _b["form-select-" + bsSize] = !!bsSize,
+        _b);
+    return (React.createElement("select", __assign({ className: classNames("form-select", selectClassName, className) }, rest), children));
 };
 export default Select;
 //# sourceMappingURL=Select.js.map

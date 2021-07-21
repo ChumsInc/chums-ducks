@@ -1,3 +1,14 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -11,15 +22,17 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 import React from 'react';
 import classNames from "classnames";
-const Spinner = (_a) => {
-    var { type, bsSize, role = 'status', hiddenLabel, color, className } = _a, rest = __rest(_a, ["type", "bsSize", "role", "hiddenLabel", "color", "className"]);
-    const spinnerClassName = {
-        'spinner-border': type === 'border',
-        'spinner-grow': type === 'grow',
-        [`spinner-border-${bsSize}`]: !!bsSize,
-        [`text-${color}`]: !!color,
-    };
-    return (React.createElement("div", Object.assign({ className: classNames(spinnerClassName, className), role: role }, rest), !!hiddenLabel && (React.createElement("span", { className: "visually-hidden" }, hiddenLabel))));
+var Spinner = function (_a) {
+    var _b;
+    var type = _a.type, bsSize = _a.bsSize, _c = _a.role, role = _c === void 0 ? 'status' : _c, hiddenLabel = _a.hiddenLabel, color = _a.color, className = _a.className, rest = __rest(_a, ["type", "bsSize", "role", "hiddenLabel", "color", "className"]);
+    var spinnerClassName = (_b = {
+            'spinner-border': type === 'border',
+            'spinner-grow': type === 'grow'
+        },
+        _b["spinner-border-" + bsSize] = !!bsSize,
+        _b["text-" + color] = !!color,
+        _b);
+    return (React.createElement("div", __assign({ className: classNames(spinnerClassName, className), role: role }, rest), !!hiddenLabel && (React.createElement("span", { className: "visually-hidden" }, hiddenLabel))));
 };
 export default Spinner;
 //# sourceMappingURL=Spinner.js.map

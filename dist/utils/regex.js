@@ -6,8 +6,9 @@
  * @return {RegExp}     Regular expression based off input search string
  * @see https://git.io/v7LGt
  */
-export const getRegex = (str, flags = 'i') => {
-    const split = str.split('').map(char => {
+export var getRegex = function (str, flags) {
+    if (flags === void 0) { flags = 'i'; }
+    var split = str.split('').map(function (char) {
         //escape special chars
         if ('*' === char ||
             '.' === char ||
@@ -25,7 +26,7 @@ export const getRegex = (str, flags = 'i') => {
             char = '\\' + char;
         return '(' + char + ')';
     });
-    const string = '^(.*?)' + split.join('(.*?)') + '(.*?)(.*)$';
+    var string = '^(.*?)' + split.join('(.*?)') + '(.*?)(.*)$';
     return new RegExp(string, flags);
 };
 //# sourceMappingURL=regex.js.map

@@ -1,3 +1,14 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -12,40 +23,42 @@ var __rest = (this && this.__rest) || function (s, e) {
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import classNames from "classnames";
 import debounce from 'lodash.debounce';
-const noop = () => {
+var noop = function () {
 };
-const TextArea = (_a) => {
-    var { bsSize = 'sm', wait = 350, myRef, className, value, onChange = noop, onBlur } = _a, rest = __rest(_a, ["bsSize", "wait", "myRef", "className", "value", "onChange", "onBlur"]);
-    let _debounced;
-    const delayedChange = useCallback(debounce((ev) => {
+var TextArea = function (_a) {
+    var _b;
+    var _c = _a.bsSize, bsSize = _c === void 0 ? 'sm' : _c, _d = _a.wait, wait = _d === void 0 ? 350 : _d, myRef = _a.myRef, className = _a.className, value = _a.value, _e = _a.onChange, onChange = _e === void 0 ? noop : _e, onBlur = _a.onBlur, rest = __rest(_a, ["bsSize", "wait", "myRef", "className", "value", "onChange", "onBlur"]);
+    var _debounced;
+    var delayedChange = useCallback(debounce(function (ev) {
         console.log('useCallback (debounced)', ev.target, ev.target.value);
         onChange(ev);
     }, wait), []);
-    const inputRef = useRef(null);
-    const [localValue, setLocalValue] = useState(String(value));
-    useEffect(() => {
-        return () => {
+    var inputRef = useRef(null);
+    var _f = useState(String(value)), localValue = _f[0], setLocalValue = _f[1];
+    useEffect(function () {
+        return function () {
             _debounced === null || _debounced === void 0 ? void 0 : _debounced.cancel();
         };
     }, []);
-    useEffect(() => {
+    useEffect(function () {
         setLocalValue(String(value));
     }, [value]);
-    const inputClassName = {
-        'form-control': true,
-        [`form-control-${bsSize}`]: !!bsSize,
-    };
-    const changeHandler = (ev) => {
+    var inputClassName = (_b = {
+            'form-control': true
+        },
+        _b["form-control-" + bsSize] = !!bsSize,
+        _b);
+    var changeHandler = function (ev) {
         setLocalValue(ev.target.value);
         delayedChange(ev);
     };
-    const blurHandler = (ev) => {
+    var blurHandler = function (ev) {
         _debounced === null || _debounced === void 0 ? void 0 : _debounced.flush();
         if (onBlur) {
             onBlur(ev);
         }
     };
-    return (React.createElement("textarea", Object.assign({ className: classNames(inputClassName, className), value: localValue || '', 
+    return (React.createElement("textarea", __assign({ className: classNames(inputClassName, className), value: localValue || '', 
         // onInput={changeHandler}
         onBlur: blurHandler, onChange: changeHandler, ref: myRef || inputRef }, rest)));
 };

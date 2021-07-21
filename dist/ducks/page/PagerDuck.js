@@ -1,7 +1,8 @@
 import React from "react";
 import RowsPerPageDuck from "./RowsPerPageDuck";
 import PaginationDuck from "./PaginationDuck";
-const PagerDuck = ({ pageKey = 'app', dataLength = 0, filtered = false, }) => {
+var PagerDuck = function (_a) {
+    var _b = _a.pageKey, pageKey = _b === void 0 ? 'app' : _b, _c = _a.dataLength, dataLength = _c === void 0 ? 0 : _c, _d = _a.filtered, filtered = _d === void 0 ? false : _d;
     return (React.createElement("div", { className: "row g-3" },
         React.createElement("div", { className: "col-auto" },
             React.createElement(RowsPerPageDuck, { pageKey: pageKey })),

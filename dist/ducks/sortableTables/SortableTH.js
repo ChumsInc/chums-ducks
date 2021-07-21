@@ -1,14 +1,15 @@
 import React from "react";
 import classNames from "classnames";
-const SortableTH = ({ field, sorted, ascending, onClick }) => {
+var SortableTH = function (_a) {
+    var field = _a.field, sorted = _a.sorted, ascending = _a.ascending, onClick = _a.onClick;
     if (!field.sortable) {
         return (React.createElement("th", null, field.title));
     }
-    const iconClassName = {
+    var iconClassName = {
         'bi-sort-down': !!sorted && !!ascending,
         'bi-sort-up': !!sorted && !ascending,
     };
-    const clickHandler = () => {
+    var clickHandler = function () {
         onClick(field.field, !sorted ? true : !ascending);
     };
     return (React.createElement("th", { className: "sortable", onClick: clickHandler },

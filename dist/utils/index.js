@@ -1,3 +1,3 @@
 export * from './regex';
-export const noop = () => { };
+export var noop = function () { };
 //# sourceMappingURL=index.js.map

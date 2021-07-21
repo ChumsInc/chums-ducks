@@ -1,86 +1,128 @@
-const initialState = {
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
+var initialState = {
     app: { list: [], selected: '' },
 };
-const defaultTabsKey = 'app';
-export const tabListCreated = 'tabs/tabs-created';
-export const tabSelected = 'tabs/tab-selected';
-export const tabAdded = 'tabs/tab-added';
-export const tabRemoved = 'tabs/tab-removed';
-export const tabDisabled = 'tabs/tab-disabled';
-export const tabListCreatedAction = (list, key = defaultTabsKey) => ({ type: tabListCreated, payload: { key, list } });
-export const tabSelectedAction = (id, key = defaultTabsKey) => ({ type: tabSelected, payload: { key, id } });
-export const tabAddedAction = (tab, key = defaultTabsKey) => ({ type: tabAdded, payload: { key, tab } });
-export const tabRemovedAction = (id, key = defaultTabsKey) => ({ type: tabRemoved, payload: { key, id } });
-export const tabDisabledAction = (id, key = defaultTabsKey) => ({ type: tabDisabled, payload: { key, id } });
-export const tabListSelector = (key = defaultTabsKey) => (state) => state.tabs[key].list;
-export const selectedTabSelector = (key = defaultTabsKey) => (state) => {
-    const { list, selected } = state.tabs[key];
-    const [id] = list.filter(tab => tab.id === selected).map(tab => tab.id);
-    return id || '';
+var defaultTabsKey = 'app';
+export var tabListCreated = 'tabs/tabs-created';
+export var tabSelected = 'tabs/tab-selected';
+export var tabAdded = 'tabs/tab-added';
+export var tabRemoved = 'tabs/tab-removed';
+export var tabDisabled = 'tabs/tab-disabled';
+export var tabListCreatedAction = function (list, key) {
+    if (key === void 0) { key = defaultTabsKey; }
+    return ({ type: tabListCreated, payload: { key: key, list: list } });
 };
-export const tabSelector = (id, key = defaultTabsKey) => (state) => {
-    const [tab] = state.tabs[key].list.filter(tab => tab.id === id);
-    return tab;
+export var tabSelectedAction = function (id, key) {
+    if (key === void 0) { key = defaultTabsKey; }
+    return ({ type: tabSelected, payload: { key: key, id: id } });
 };
-const nextTabId = (tabSet, id) => {
+export var tabAddedAction = function (tab, key) {
+    if (key === void 0) { key = defaultTabsKey; }
+    return ({ type: tabAdded, payload: { key: key, tab: tab } });
+};
+export var tabRemovedAction = function (id, key) {
+    if (key === void 0) { key = defaultTabsKey; }
+    return ({ type: tabRemoved, payload: { key: key, id: id } });
+};
+export var tabDisabledAction = function (id, key) {
+    if (key === void 0) { key = defaultTabsKey; }
+    return ({ type: tabDisabled, payload: { key: key, id: id } });
+};
+export var tabListSelector = function (key) {
+    if (key === void 0) { key = defaultTabsKey; }
+    return function (state) { return state.tabs[key].list; };
+};
+export var selectedTabSelector = function (key) {
+    if (key === void 0) { key = defaultTabsKey; }
+    return function (state) {
+        var _a = state.tabs[key], list = _a.list, selected = _a.selected;
+        var id = list.filter(function (tab) { return tab.id === selected; }).map(function (tab) { return tab.id; })[0];
+        return id || '';
+    };
+};
+export var tabSelector = function (id, key) {
+    if (key === void 0) { key = defaultTabsKey; }
+    return function (state) {
+        var tab = state.tabs[key].list.filter(function (tab) { return tab.id === id; })[0];
+        return tab;
+    };
+};
+var nextTabId = function (tabSet, id) {
     if (tabSet.selected === id) {
-        let found = false;
-        let newIndex = -1;
-        tabSet.list.forEach((tab, index) => {
-            if (found && newIndex === -1) {
-                newIndex = index;
+        var found_1 = false;
+        var newIndex_1 = -1;
+        tabSet.list.forEach(function (tab, index) {
+            if (found_1 && newIndex_1 === -1) {
+                newIndex_1 = index;
             }
             if (tab.id === id) {
-                found = true;
+                found_1 = true;
             }
         });
-        if (newIndex === -1) {
-            newIndex = Math.max(tabSet.list.length - 1, 0);
+        if (newIndex_1 === -1) {
+            newIndex_1 = Math.max(tabSet.list.length - 1, 0);
         }
-        return tabSet.list[newIndex].id;
+        return tabSet.list[newIndex_1].id;
     }
     return id;
 };
-const tabsReducer = (state = initialState, action) => {
-    const { type, payload } = action;
-    const { key = defaultTabsKey, tab, list = [], id = '' } = payload || {};
-    const tabSet = state[key];
+var tabsReducer = function (state, action) {
+    var _a, _b, _c, _d, _e;
+    if (state === void 0) { state = initialState; }
+    var type = action.type, payload = action.payload;
+    var _f = payload || {}, _g = _f.key, key = _g === void 0 ? defaultTabsKey : _g, tab = _f.tab, _h = _f.list, list = _h === void 0 ? [] : _h, _j = _f.id, id = _j === void 0 ? '' : _j;
+    var tabSet = state[key];
     switch (type) {
         case tabListCreated:
-            return Object.assign(Object.assign({}, state), { [key]: {
-                    list: [...list],
-                    selected: list.length === 0 ? '' : list[0].id,
-                } });
+            return __assign(__assign({}, state), (_a = {}, _a[key] = {
+                list: __spreadArray([], list),
+                selected: list.length === 0 ? '' : list[0].id,
+            }, _a));
         case tabAdded:
             if (tabSet && tab) {
-                return Object.assign(Object.assign({}, state), { [key]: {
-                        list: [...tabSet.list, tab],
-                        selected: tabSet.selected,
-                    } });
+                return __assign(__assign({}, state), (_b = {}, _b[key] = {
+                    list: __spreadArray(__spreadArray([], tabSet.list), [tab]),
+                    selected: tabSet.selected,
+                }, _b));
             }
             return state;
         case tabRemoved:
             if (tabSet) {
-                const list = tabSet.list.filter(tab => tab.id !== id);
-                const selected = nextTabId(tabSet, id);
-                return Object.assign(Object.assign({}, state), { [key]: {
-                        list: [...list],
-                        selected: selected,
-                    } });
+                var list_1 = tabSet.list.filter(function (tab) { return tab.id !== id; });
+                var selected = nextTabId(tabSet, id);
+                return __assign(__assign({}, state), (_c = {}, _c[key] = {
+                    list: __spreadArray([], list_1),
+                    selected: selected,
+                }, _c));
             }
             return state;
         case tabDisabled:
             if (tabSet) {
-                const selected = nextTabId(tabSet, id);
-                return Object.assign(Object.assign({}, state), { [key]: {
-                        list: list.map(tab => (Object.assign(Object.assign({}, tab), { disabled: tab.id === id }))),
-                        selected: selected,
-                    } });
+                var selected = nextTabId(tabSet, id);
+                return __assign(__assign({}, state), (_d = {}, _d[key] = {
+                    list: list.map(function (tab) { return (__assign(__assign({}, tab), { disabled: tab.id === id })); }),
+                    selected: selected,
+                }, _d));
             }
             return state;
         case tabSelected:
             if (tabSet) {
-                return Object.assign(Object.assign({}, state), { [key]: Object.assign(Object.assign({}, tabSet), { selected: id }) });
+                return __assign(__assign({}, state), (_e = {}, _e[key] = __assign(__assign({}, tabSet), { selected: id }), _e));
             }
             return state;
         default: return state;

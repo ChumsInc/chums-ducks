@@ -1,7 +1,8 @@
 import React from "react";
 import classNames from "classnames";
-const TabItem = ({ id, title, active, canClose, disabled, onSelect, onClose }) => {
-    const clickHandler = (ev) => {
+var TabItem = function (_a) {
+    var id = _a.id, title = _a.title, active = _a.active, canClose = _a.canClose, disabled = _a.disabled, onSelect = _a.onSelect, onClose = _a.onClose;
+    var clickHandler = function (ev) {
         ev.preventDefault();
         ev.stopPropagation();
         if (disabled || active) {
@@ -9,7 +10,7 @@ const TabItem = ({ id, title, active, canClose, disabled, onSelect, onClose }) =
         }
         onSelect();
     };
-    const onClickClose = (ev) => {
+    var onClickClose = function (ev) {
         ev.preventDefault();
         ev.stopPropagation();
         if (canClose && !!onClose) {
@@ -17,7 +18,7 @@ const TabItem = ({ id, title, active, canClose, disabled, onSelect, onClose }) =
         }
     };
     return (React.createElement("li", { className: "nav-item" },
-        React.createElement("a", { className: classNames('nav-link', { active, disabled }), tabIndex: disabled ? -1 : 0, href: "#", onClick: clickHandler },
+        React.createElement("a", { className: classNames('nav-link', { active: active, disabled: disabled }), tabIndex: disabled ? -1 : 0, href: "#", onClick: clickHandler },
             title,
             canClose && (React.createElement("button", { type: "button", "aria-label": "Close", onClick: onClickClose, className: "btn-close" })))));
 };
