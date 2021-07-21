@@ -11,7 +11,7 @@ export interface SortableTableProps {
     keyField: string | ((any: any) => string),
     rowClassName?: string | object | ((any: any) => string | object),
     onSelectRow?: (any: any) => any | void,
-    selected?: string,
+    selected?: string|number|((any:any) => boolean),
     fields: SortableTableField[],
     data: any[],
     className?: string | object,
@@ -41,9 +41,10 @@ const SortableTable: React.FC<SortableTableProps> = ({
             <tbody>
             {data.map(row => {
                 const key = typeof keyField === "function" ? keyField(row) : row[keyField];
+                const isSelected = typeof selected === 'function' ? selected(row) : key === selected;
                 return (
                     <SortableTR key={key} onClick={() => onSelectRow(row)} className={rowClassName} fields={fields}
-                                row={row} selected={key === selected}/>
+                                row={row} selected={isSelected}/>
                 )
             })}
             </tbody>

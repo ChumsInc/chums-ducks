@@ -113,7 +113,7 @@ const addAlert = (state:AlertListState, action:AlertAction):AlertListState => {
 }
 
 const alertReducer = (state: AlertListState = initialState, action: AlertAction): AlertListState => {
-    const {type, payload} = action;
+    const {type, payload, error, meta} = action;
     const {counter, list} = state;
     switch (type) {
     case alertAdded: {
