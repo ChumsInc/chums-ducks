@@ -1,12 +1,13 @@
-import * as React from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { alertSelector, dismissAlertAction } from "./index";
-import Alert from './Alert';
+import React from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { dismissAlertAction, selectAlertList } from "./index";
+import Alert from "./Alert";
 var AlertList = function (_a) {
     var context = _a.context;
-    var list = useSelector(alertSelector).filter(function (alert) { return !context || alert.context === context; });
     var dispatch = useDispatch();
-    return (React.createElement("div", null, list.map(function (alert) { return React.createElement(Alert, { key: alert.id, alert: alert, onDismiss: function (id) { return dispatch(dismissAlertAction(id)); } }); })));
+    var list = useSelector(selectAlertList).filter(function (alert) { return !context || alert.context === context; }).sort(function (a, b) { return b.timestamp - a.timestamp; });
+    var dismissHandler = function (id) { return dispatch(dismissAlertAction(id)); };
+    return (React.createElement("div", null, list.map(function (alert) { return (React.createElement(Alert, { key: alert.id, color: alert.color, message: alert.message, className: alert.className, context: !!context ? undefined : alert.context, count: alert.count, title: alert.title, onDismiss: function () { return dismissHandler(alert.id); } })); })));
 };
 export default AlertList;
 //# sourceMappingURL=AlertList.js.map

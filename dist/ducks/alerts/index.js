@@ -14,55 +14,96 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
         to[j] = from[i];
     return to;
 };
-var alertsAlertAdded = 'app/alerts/alertAdded';
-var alertsAlertDismissed = 'app/alerts/alertDismissed';
+export var defaultAlert = {
+    canDismiss: true,
+    color: "danger"
+};
+export var alertAdded = 'alerts/alertAdded';
+export var alertDismissed = 'alerts/alertDismissed';
+export var alertDismissedByContext = 'alerts/alertDismissedByContext';
+export var addAlertAction = function (alert) {
+    return ({
+        type: alertAdded,
+        payload: {
+            alert: __assign(__assign({}, defaultAlert), alert)
+        },
+        meta: alert.context,
+    });
+};
+var buildAlert = function (err, context) { return ({ message: err.message, title: err.name, context: context, color: 'danger' }); };
+export var dismissAlertAction = function (id) { return ({ type: alertDismissed, payload: { id: id } }); };
+export var dismissContextAlert = function (context) { return ({ type: alertDismissedByContext, payload: { context: context } }); };
+export var onErrorAction = function (err, context) {
+    return addAlertAction(buildAlert(err, context));
+};
+export var alertListSelector = function (state) { return state.alerts.list; };
+export var selectAlertList = alertListSelector;
+export var alertListByContextSelector = function (context) { return function (state) { return state.alerts.list.filter(function (alert) { return alert.context === context; }); }; };
+export var alertContextFilter = function (list, context) {
+    return list.filter(function (al) { return al.context === context; });
+};
 var initialState = { counter: 0, list: [] };
-export default function reducer(state, action) {
+var alertIDSort = function (a, b) { return a.id - b.id; };
+var addAlert = function (state, action) {
+    var counter = state.counter, list = state.list;
+    var payload = action.payload;
+    var _a = payload || {}, alert = _a.alert, error = _a.error, context = _a.context;
+    if (error && !alert) {
+        alert = buildAlert(error, context);
+    }
+    if (!alert) {
+        return state;
+    }
+    if (alert.context) {
+        context = alert.context;
+    }
+    var contextAlert = (context ? alertContextFilter(list, context) : [])[0];
+    if (!contextAlert) {
+        return {
+            counter: counter + 1,
+            list: __spreadArray(__spreadArray([], list), [
+                __assign(__assign({}, alert), { id: counter, count: 1, timestamp: new Date().valueOf() })
+            ]).sort(alertIDSort)
+        };
+    }
+    return {
+        counter: counter,
+        list: __spreadArray(__spreadArray([], list.filter(function (alert) { return alert.id !== contextAlert.id; })), list.filter(function (alert) { return alert.id === contextAlert.id; })
+            .map(function (alert) {
+            return __assign(__assign(__assign({}, alert), payload === null || payload === void 0 ? void 0 : payload.alert), { count: alert.count + 1, timestamp: new Date().valueOf() });
+        })).sort(alertIDSort),
+    };
+};
+var alertReducer = function (state, action) {
     if (state === void 0) { state = initialState; }
-    var type = action.type, payload = action.payload;
+    var type = action.type, payload = action.payload, error = action.error, meta = action.meta;
     var counter = state.counter, list = state.list;
     switch (type) {
-        case alertsAlertAdded: {
-            var alert_1 = payload.alert;
-            alert_1.id = counter;
-            alert_1.count = 0;
-            var _a = list.filter(function (a) { return a.context === alert_1.context; })[0], _b = _a === void 0 ? {} : _a, _c = _b.id, id_1 = _c === void 0 ? alert_1.id : _c, _d = _b.count, count = _d === void 0 ? alert_1.count : _d;
-            return __assign(__assign({}, state), { counter: counter + 1, list: __spreadArray(__spreadArray([], list.filter(function (a) { return a.context !== alert_1.context; })), [
-                    __assign(__assign({}, alert_1), { id: id_1, count: count + 1 }),
-                ]) });
+        case alertAdded: {
+            return addAlert(state, action);
         }
-        case alertsAlertDismissed:
-            var id_2 = payload.id;
-            return __assign(__assign({}, state), { list: list.filter(function (alert) { return alert.id !== id_2; }) });
+        case alertDismissed:
+            if ((payload === null || payload === void 0 ? void 0 : payload.id) === undefined) {
+                return state;
+            }
+            return {
+                counter: counter,
+                list: __spreadArray([], list.filter(function (alert) { return alert.id !== (payload === null || payload === void 0 ? void 0 : payload.id); })).sort(alertIDSort)
+            };
+        case alertDismissedByContext:
+            if (!(payload === null || payload === void 0 ? void 0 : payload.context)) {
+                return state;
+            }
+            return {
+                counter: counter,
+                list: __spreadArray([], list.filter(function (alert) { return alert.context !== (payload === null || payload === void 0 ? void 0 : payload.context); })).sort(alertIDSort)
+            };
         default:
+            if (payload === null || payload === void 0 ? void 0 : payload.error) {
+                return addAlert(state, action);
+            }
             return state;
     }
-}
-export function addAlertAction(alert) {
-    return {
-        type: alertsAlertAdded,
-        payload: {
-            alert: __assign(__assign({}, alert), { color: alert.color || 'danger' })
-        },
-    };
-}
-export function dismissAlertAction(id) {
-    return {
-        type: alertsAlertDismissed,
-        payload: {
-            id: id
-        }
-    };
-}
-export var alertSelector = function (state) {
-    return state.alerts.list;
 };
-export function onErrorAction(err, context) {
-    return {
-        type: alertsAlertAdded,
-        payload: {
-            alert: { message: err.message, title: err.name, context: context }
-        }
-    };
-}
+export default alertReducer;
 //# sourceMappingURL=index.js.map

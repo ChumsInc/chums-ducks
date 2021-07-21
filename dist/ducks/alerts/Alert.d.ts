@@ -1,8 +1,8 @@
-import * as React from "react";
-import { AlertType } from './index';
-export interface Props {
-    alert: AlertType;
-    onDismiss?: (id: number) => void;
+import React from "react";
+import { BasicAlert } from '../../types';
+export interface Props extends BasicAlert {
+    count?: number;
+    onDismiss?: (args?: any) => void;
 }
 declare const Alert: React.FC<Props>;
 export default Alert;

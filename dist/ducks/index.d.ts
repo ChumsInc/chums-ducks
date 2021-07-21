@@ -1,8 +1,5 @@
 declare const rootReducer: import("redux").Reducer<import("redux").CombinedState<{
-    alerts: {
-        counter: number;
-        list: any[];
-    };
-}>, import("redux").AnyAction>;
+    alerts: import("./alerts").AlertListState;
+}>, import("./alerts").AlertAction>;
 export declare type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;
