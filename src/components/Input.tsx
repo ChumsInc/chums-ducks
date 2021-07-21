@@ -36,8 +36,8 @@ const Input: React.FC<InputProps> = ({
                                      }) => {
 
     let _debounced: ReturnType<typeof debounce> | undefined;
-    const delayedChange = useCallback((ev:ChangeEvent<HTMLInputElement>) => debounce(() => onChange(ev), wait), [])
-    // const delayedChange = useCallback(_debounced = debounce((ev: ChangeEvent<HTMLInputElement>) => onChange(ev), wait), []);
+
+    const delayedChange = useCallback(_debounced = debounce((ev: ChangeEvent<HTMLInputElement>) => onChange(ev), wait), []);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [localValue, setLocalValue] = useState(String(value) || '');

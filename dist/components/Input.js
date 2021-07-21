@@ -30,8 +30,7 @@ var Input = function (_a) {
     var _b;
     var _c = _a.bsSize, bsSize = _c === void 0 ? 'sm' : _c, _d = _a.wait, wait = _d === void 0 ? 350 : _d, fuzzyList = _a.fuzzyList, myRef = _a.myRef, _e = _a.type, type = _e === void 0 ? 'text' : _e, className = _a.className, value = _a.value, _f = _a.onChange, onChange = _f === void 0 ? noop : _f, onBlur = _a.onBlur, rest = __rest(_a, ["bsSize", "wait", "fuzzyList", "myRef", "type", "className", "value", "onChange", "onBlur"]);
     var _debounced;
-    var delayedChange = useCallback(function (ev) { return debounce(function () { return onChange(ev); }, wait); }, []);
-    // const delayedChange = useCallback(_debounced = debounce((ev: ChangeEvent<HTMLInputElement>) => onChange(ev), wait), []);
+    var delayedChange = useCallback(_debounced = debounce(function (ev) { return onChange(ev); }, wait), []);
     var inputRef = useRef(null);
     var _g = useState(String(value) || ''), localValue = _g[0], setLocalValue = _g[1];
     useEffect(function () {
