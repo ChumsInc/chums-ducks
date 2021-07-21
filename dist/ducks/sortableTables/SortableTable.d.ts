@@ -5,7 +5,7 @@ export interface SortableTableProps {
     keyField: string | ((any: any) => string);
     rowClassName?: string | object | ((any: any) => string | object);
     onSelectRow?: (any: any) => any | void;
-    selected?: string;
+    selected?: string | number | ((any: any) => boolean);
     fields: SortableTableField[];
     data: any[];
     className?: string | object;

@@ -23,3 +23,4 @@ export * from './tabs';
 export { default as tabsReducer } from './tabs';
 export { default as TabList } from './tabs/TabList';
 export { default as TabItem } from './tabs/TabItem';
+export * from './types';

@@ -15,7 +15,8 @@ const SortableTable = ({ tableKey, keyField, rowClassName, onSelectRow = noop, s
         React.createElement(SortableTableHead, { tableKey: tableKey, fields: fields, onChangeSort: sortChangeHandler }),
         React.createElement("tbody", null, data.map(row => {
             const key = typeof keyField === "function" ? keyField(row) : row[keyField];
-            return (React.createElement(SortableTR, { key: key, onClick: () => onSelectRow(row), className: rowClassName, fields: fields, row: row, selected: key === selected }));
+            const isSelected = typeof selected === 'function' ? selected(row) : key === selected;
+            return (React.createElement(SortableTR, { key: key, onClick: () => onSelectRow(row), className: rowClassName, fields: fields, row: row, selected: isSelected }));
         }))));
 };
 export default SortableTable;

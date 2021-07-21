@@ -59,7 +59,7 @@ const addAlert = (state, action) => {
     };
 };
 const alertReducer = (state = initialState, action) => {
-    const { type, payload } = action;
+    const { type, payload, error, meta } = action;
     const { counter, list } = state;
     switch (type) {
         case alertAdded: {
