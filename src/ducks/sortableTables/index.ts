@@ -24,7 +24,7 @@ export interface SortableTablesState {
 export interface SortableTableField {
     field: string,
     title: string,
-    sortable: boolean,
+    sortable?: boolean,
     render?: (row:any) => ReactElement|Element|string,
     className?: string|object|((any:any) => string|object),
 }
