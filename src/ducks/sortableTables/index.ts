@@ -3,7 +3,7 @@ import {ActionInterface} from "../types";
 import {ReactElement} from "react";
 import {RootStateOrAny} from "react-redux";
 
-export interface SortableTable {
+export interface SortableTableInterface {
     key: string,
     field: string,
     ascending: boolean,
@@ -18,7 +18,7 @@ export interface SortableTablesAction extends ActionInterface {
 }
 
 export interface SortableTablesState {
-    [key:string]: SortableTable
+    [key:string]: SortableTableInterface
 }
 
 export interface SortableTableField {
@@ -36,14 +36,14 @@ interface RootState extends RootStateOrAny {
 export const tablesSortChanged = 'tables/categorySortChanged';
 export const tablesTableAdded = 'tables/tableAdded';
 
-export const sortableTableSelector = (key:string) => (state:RootState):SortableTable => state.sortableTables[key] || {key, field: '', ascending: false};
+export const sortableTableSelector = (key:string) => (state:RootState):SortableTableInterface => state.sortableTables[key] || {key, field: '', ascending: false};
 
-export const sortChangedAction = ({key, field, ascending}:SortableTable):SortableTablesAction => ({
+export const sortChangedAction = ({key, field, ascending}:SortableTableInterface):SortableTablesAction => ({
     type: tablesSortChanged,
     payload: {key, field, ascending}
 });
 
-export const tableAddedAction = ({key, field, ascending}:SortableTable):SortableTablesAction => ({
+export const tableAddedAction = ({key, field, ascending}:SortableTableInterface):SortableTablesAction => ({
     type: tablesTableAdded,
     payload: {key, field, ascending}
 })
