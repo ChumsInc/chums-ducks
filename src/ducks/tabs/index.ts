@@ -51,15 +51,21 @@ export const tabAddedAction = (tab:Tab, key:string = defaultTabsKey):TabAction =
 export const tabRemovedAction = (id:string, key:string = defaultTabsKey):TabAction => ({type: tabRemoved, payload: {key, id}})
 export const tabDisabledAction = (id:string, key:string = defaultTabsKey):TabAction => ({type: tabDisabled, payload: {key, id}})
 
-export const tabListSelector = (key:string = defaultTabsKey) => (state:RootState) => state.tabs[key].list;
+export const tabListSelector = (key:string = defaultTabsKey) => (state:RootState) => state.tabs[key]?.list || [];
 
-export const selectedTabSelector = (key:string = defaultTabsKey) => (state:RootState) => {
-    const {list, selected} = state.tabs[key];
+export const selectedTabSelector = (key:string = defaultTabsKey) => (state:RootState):string => {
+    if (!state.tabs[key]) {
+        return '';
+    }
+    const {list = [], selected = ''} = state.tabs[key];
     const [id] = list.filter(tab => tab.id === selected).map(tab => tab.id);
     return id || '';
 }
 
-export const tabSelector = (id:string, key:string = defaultTabsKey) => (state:RootState) => {
+export const tabSelector = (id:string, key:string = defaultTabsKey) => (state:RootState):Tab => {
+    if (!state.tabs[key]) {
+        return {id: '', title: ''};
+    }
     const [tab] = state.tabs[key].list.filter(tab => tab.id === id);
     return tab;
 }

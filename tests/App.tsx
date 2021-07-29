@@ -1,19 +1,21 @@
 import * as React from "react";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {
-    ConnectedTabList,
     ErrorBoundary,
-    onTabAdded,
-    onTabListCreated,
+    FormCheck,
+    NavItem, NavList, PillList,
     selectedTabSelector,
     Tab,
-    TabItem,
+    tabAddedAction,
+    TabList,
+    tabListCreatedAction,
     tabSelector
 } from "../src";
 import {useDispatch, useSelector} from "react-redux";
 import PaginationTest from "./PaginationTest";
 import ModalTest from "./ModalTest";
 
+const tabSetId = 'test';
 const tabs: Tab[] = [
     {id: 'pagination', title: 'Pagination Test', active: false},
     {id: 'modal', title: 'Modal Test', active: true},
@@ -25,25 +27,52 @@ const tempTab: Tab = {id: 'temp-tab', title: 'Temporary Tab', active: true, canC
 const App: React.FC = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(onTabListCreated(tabs));
+        dispatch(tabListCreatedAction(tabs, tabSetId));
         // dispatch(onTabSelected(tabs[0].id))
     }, []);
 
-    const currentTab = useSelector(selectedTabSelector);
+    const currentTab = useSelector(selectedTabSelector(tabSetId));
     const hasTempTab = !!useSelector(tabSelector(tempTab.id));
     const onAddItem = () => {
-        dispatch(onTabAdded(tempTab));
+        dispatch(tabAddedAction(tempTab, tabSetId));
     }
+    const [navType, setNavType] = useState('tab');
+
     return (
         <div>
+
             <ErrorBoundary>
-                <ConnectedTabList className="mb-3">
-                    <TabItem onSelect={onAddItem} id="add-tab" title="+" disabled={hasTempTab}/>
-                </ConnectedTabList>
+                {navType === 'tab' && (
+                    <TabList className="mb-3 tab-pills" tabKey={tabSetId}>
+                        <NavItem onSelect={onAddItem} id="add-tab" title="+" disabled={hasTempTab}/>
+                    </TabList>
+                )}
+                {navType === 'pill' && (
+                    <PillList className="mb-3 tab-pills" tabKey={tabSetId}>
+                        <NavItem onSelect={onAddItem} id="add-tab" title="+" disabled={hasTempTab}/>
+                    </PillList>
+                )}
+                {navType === '' && (
+                    <NavList className="mb-3 tab-pills" tabKey={tabSetId}>
+                        <NavItem onSelect={onAddItem} id="add-tab" title="+" disabled={hasTempTab}/>
+                    </NavList>
+                )}
             </ErrorBoundary>
-            {currentTab === 'pagination' && <PaginationTest/>}
-            {currentTab === 'modal' && <ModalTest/>}
-            {currentTab === 'form' && <div/>}
+            <div className="row g-3 mb-3">
+                <div className="col-auto">
+                    Display Nav as:
+                </div>
+                <div className="col-auto">
+                    <FormCheck label="Tabs" checked={navType === 'tab'} onClick={() => setNavType('tab')} type="radio" inline/>
+                    <FormCheck label="Pills" checked={navType === 'pill'} onClick={() => setNavType('pill')} type="radio" inline/>
+                    <FormCheck label="Navs" checked={navType === ''} onClick={() => setNavType('')} type="radio" inline/>
+                </div>
+            </div>
+            <ErrorBoundary>
+                {currentTab === 'pagination' && <PaginationTest/>}
+                {currentTab === 'modal' && <ModalTest/>}
+                {currentTab === 'form' && <div/>}
+            </ErrorBoundary>
         </div>
     )
 }

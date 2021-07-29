@@ -1,43 +1,86 @@
 import * as React from "react";
 import {ChangeEvent, useEffect, useState} from "react";
-import ConnectedRowsPerPage from "../src/ducks/page/ConnectedRowsPerPage";
-import {default as ConnectedPagination, filterPage} from "../src/ducks/page/ConnectedPagination";
+import {
+    addAlertAction,
+    addPageSetAction,
+    AlertList,
+    dismissContextAlert,
+    pagedDataSelector,
+    PagerDuck, SortableTableField,
+    tableAddedAction, SorterProps, sortableTableSelector, SortableTableInterface
+} from "../src/ducks";
 import {useDispatch, useSelector} from "react-redux";
-import {addAlertAction, AlertList, dismissContextAlert, Input, selectCurrentPage, selectRowsPerPage} from "../src";
-import {BootstrapColor} from "../src/types";
+import {Input} from "../src/components";
+import {BootstrapColor, ErrorBoundary, SortableTable} from "../src";
 
 
-interface tableDataRow {
-    key: number,
-    value: number
+interface TableDataRow {
+    id: number,
+    value: number,
+    color: string,
+    bgColor: string,
+}
+
+export type TableDataRowField = keyof TableDataRow;
+
+export interface TestSorterProps extends SorterProps {
+    field: TableDataRowField,
+}
+
+const testTableSorter = ({field, ascending}:TestSorterProps) => (a:TableDataRow, b:TableDataRow) => {
+    return (
+        a[field] === b[field]
+        ? (a.id - b.id)
+        : ((a[field]??'') === (b[field]??'') ? 0 :((a[field]??'') > (b[field]??'') ? 1 : -1))
+    ) * (ascending ? 1 : -1);
 }
 
 const colors: BootstrapColor[] = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark',];
 
+const buildDataSet = ():TableDataRow[] => {
+    return new Array(1000)
+        .fill(null)
+        .map((el, index) => ({
+            id: index,
+            value: Math.random() * 100,
+            color:  colors[index % 8],
+            bgColor: colors[Math.floor(Math.random() * 8)]
+        }))
+}
+const pagerKey = 'test-pagination';
+
+const tableFields:SortableTableField[] = [
+    {field: 'id', title: 'ID', sortable: true},
+    {field: 'value', title: 'Value', sortable: true},
+    {field: 'color', title: 'Color', sortable: true, className: (row) => `text-${colors[Math.floor(row.id % 8)]}`},
+    {field: 'bgColor', title: 'Background Color', sortable: true, render: (row) => <span>table-{row.bgColor}</span>},
+];
+
+const rowColor = (row:TableDataRow) => `table-${row.bgColor}`;
+
 const PaginationTest: React.FC = () => {
     const dispatch = useDispatch();
     const [filter, setFilter] = useState(100);
-    const [tableData, setTableData] = useState([] as tableDataRow[]);
+    const [tableData, setTableData] = useState([] as TableDataRow[]);
     useEffect(() => {
-        const data = new Array(100).fill(null).map((el, index) => ({
-            key: index,
-            value: Math.floor(Math.random() * 100)
-        }))
+        const data = buildDataSet();
         setTableData(data);
+        dispatch(addPageSetAction({key: pagerKey, rowsPerPage: 25, current: 1}))
+        dispatch(tableAddedAction({key: pagerKey, field: 'id', ascending: true}))
     }, [])
 
-    const rowsPerPage = useSelector(selectRowsPerPage);
-    const page = useSelector(selectCurrentPage);
-
-    const filteredData = tableData.filter(row => row.value <= filter);
-    const pageData = filteredData.filter(filterPage(page, rowsPerPage));
+    const sort = useSelector(sortableTableSelector(pagerKey));
+    const filteredData = tableData
+    .sort(testTableSorter(sort as TestSorterProps))
+        .filter(row => row.value <= filter);
+    const pageData = useSelector(pagedDataSelector(pagerKey, filteredData));
 
     const [language, setLanguage] = useState('');
 
-    const tableClickHandler = (row: tableDataRow) => dispatch(addAlertAction({
+    const tableClickHandler = (row: TableDataRow) => dispatch(addAlertAction({
         message: JSON.stringify(row),
-        context: `context-${row.key}`,
-        color: colors[row.key % 8]
+        context: `context-${row.id}`,
+        color: colors[row.id % 8]
     }));
 
     useEffect(() => {
@@ -61,11 +104,9 @@ const PaginationTest: React.FC = () => {
         <div>
             <div className="row g-3">
                 <div className="col-auto">
-                    <ConnectedRowsPerPage/>
-                </div>
-                <div className="col-auto">
-                    <ConnectedPagination dataLength={filteredData.length}
-                                         filtered={filteredData.length < tableData.length}/>
+                    <ErrorBoundary>
+                        <PagerDuck pageKey={pagerKey} dataLength={filteredData.length} filtered={filteredData.length < tableData.length}/>
+                    </ErrorBoundary>
                 </div>
                 <div className="col-auto"><label className="form-label">Filter Values:</label></div>
                 <div className="col-auto">
@@ -96,27 +137,7 @@ const PaginationTest: React.FC = () => {
                     </datalist>
                 </div>
             </div>
-            <table className="table table-xs">
-                <thead>
-                <tr>
-                    <th>Index</th>
-                    <th>Random Value</th>
-                    <th>Color</th>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    pageData.map(row => (
-                        <tr key={row.key} onClick={() => tableClickHandler(row)}
-                            className={`table-${colors[Math.floor(row.value % 8)]}`}>
-                            <td>{row.key}</td>
-                            <td>{row.value}</td>
-                            <td className={`text-${colors[Math.floor(row.key % 8)]}`}>{colors[row.key % 8]}</td>
-                        </tr>
-                    ))
-                }
-                </tbody>
-            </table>
+            <SortableTable tableKey={pagerKey} keyField={"id"} fields={tableFields} data={pageData} rowClassName={rowColor} onSelectRow={tableClickHandler}/>
         </div>
     )
 }

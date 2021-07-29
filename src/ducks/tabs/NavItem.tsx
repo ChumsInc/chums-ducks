@@ -3,13 +3,13 @@ import classNames from "classnames";
 import {Tab} from "./index";
 
 
-export interface TabItemProps extends Tab {
+export interface NavItemProps extends Tab {
     className?: string | object,
     onSelect: (id?: string) => void,
     onClose?: (id?: string) => void,
 }
 
-const TabItem: React.FC<TabItemProps> = ({
+const NavItem: React.FC<NavItemProps> = ({
                                              id,
                                              title,
                                              active,
@@ -42,9 +42,11 @@ const TabItem: React.FC<TabItemProps> = ({
                tabIndex={disabled ? -1 : 0}
                href="#" onClick={clickHandler}>
                 {title}
-                {canClose && (<button type="button" aria-label="Close" onClick={onClickClose} className="btn-close"/>)}
+                {canClose && (
+                    <span aria-label="Close" onClick={onClickClose} className="ms-2 bi-x-lg"/>
+                )}
             </a>
         </li>
     )
 }
-export default TabItem;
+export default NavItem;
