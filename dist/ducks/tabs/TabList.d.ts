@@ -1,9 +1,4 @@
-import React from 'react';
-import './TabList.css';
-export interface TabListProps {
-    tabKey: string;
-    className?: string | object;
-    itemClassName?: string | object;
-}
-declare const TabList: React.FC<TabListProps>;
+import React from "react";
+import { NavListProps } from "./NavList";
+declare const TabList: React.FC<NavListProps>;
 export default TabList;

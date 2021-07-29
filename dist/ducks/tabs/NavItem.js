@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-var TabItem = function (_a) {
+var NavItem = function (_a) {
     var id = _a.id, title = _a.title, active = _a.active, canClose = _a.canClose, disabled = _a.disabled, className = _a.className, onSelect = _a.onSelect, onClose = _a.onClose;
     var clickHandler = function (ev) {
         ev.preventDefault();
@@ -20,7 +20,7 @@ var TabItem = function (_a) {
     return (React.createElement("li", { className: "nav-item" },
         React.createElement("a", { className: classNames('nav-link', className, { active: active, disabled: disabled }), tabIndex: disabled ? -1 : 0, href: "#", onClick: clickHandler },
             title,
-            canClose && (React.createElement("button", { type: "button", "aria-label": "Close", onClick: onClickClose, className: "btn-close" })))));
+            canClose && (React.createElement("span", { "aria-label": "Close", onClick: onClickClose, className: "ms-2 bi-x-lg" })))));
 };
-export default TabItem;
-//# sourceMappingURL=TabItem.js.map
+export default NavItem;
+//# sourceMappingURL=NavItem.js.map

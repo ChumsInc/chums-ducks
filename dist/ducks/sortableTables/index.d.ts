@@ -16,6 +16,10 @@ export interface SortableTablesAction extends ActionInterface {
 export interface SortableTablesState {
     [key: string]: SortableTableInterface;
 }
+export interface SorterProps {
+    field: string;
+    ascending: boolean;
+}
 export interface SortableTableField {
     field: string;
     title: string;

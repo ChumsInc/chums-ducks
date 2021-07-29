@@ -21,7 +21,9 @@ export { default as SortableTH } from './sortableTables/SortableTH';
 export { default as SortableTR } from './sortableTables/SortableTR';
 export * from './tabs';
 export { default as tabsReducer } from './tabs';
+export { default as NavList } from './tabs/NavList';
 export { default as TabList } from './tabs/TabList';
-export { default as TabItem } from './tabs/TabItem';
+export { default as PillList } from './tabs/PillList';
+export { default as NavItem } from './tabs/NavItem';
 export * from './types';
 //# sourceMappingURL=index.js.map
