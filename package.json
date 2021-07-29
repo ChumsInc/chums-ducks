@@ -75,6 +75,7 @@
     "@types/lodash.debounce": "^4.0.6",
     "copyfiles": "^2.4.1",
     "lodash.debounce": "^4.0.8",
+    "path-to-regexp": "^6.2.0",
     "redux-devtools-extension": "^2.13.9",
     "rimraf": "^3.0.2"
   }
