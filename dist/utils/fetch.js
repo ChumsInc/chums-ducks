@@ -70,14 +70,6 @@ export var fetchOptions = {
         return __assign(__assign({ credentials: 'same-origin', method: 'DELETE' }, options), { headers: __assign({}, headers) });
     }
 };
-var onErrorResponse = function (response) {
-    if (response.ok) {
-        return response;
-    }
-    else {
-        throw new Error(response.status + " " + response.statusText);
-    }
-};
 function handleJSONResponse(res) {
     return __awaiter(this, void 0, void 0, function () {
         var text, json;

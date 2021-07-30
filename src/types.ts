@@ -12,6 +12,7 @@ export interface BasicAlert {
 }
 
 export type BootstrapSize = 'xs'|'sm'|'md'|'lg'|'xl';
+export type BootstrapButtonSize = 'sm'|'lg';
 
 
 export interface InputField {

@@ -6,12 +6,15 @@ import {
     AlertList,
     dismissContextAlert,
     pagedDataSelector,
-    PagerDuck, SortableTableField,
-    tableAddedAction, SorterProps, sortableTableSelector, SortableTableInterface
+    PagerDuck,
+    SortableTableField,
+    sortableTableSelector,
+    SorterProps,
+    tableAddedAction
 } from "../src/ducks";
 import {useDispatch, useSelector} from "react-redux";
-import {Input} from "../src/components";
-import {BootstrapColor, ErrorBoundary, SortableTable} from "../src";
+import {Input, LoadingProgressBar} from "../src/components";
+import {BootstrapColor, ErrorBoundary, SortableTable, SpinnerButton} from "../src";
 
 
 interface TableDataRow {
@@ -27,53 +30,68 @@ export interface TestSorterProps extends SorterProps {
     field: TableDataRowField,
 }
 
-const testTableSorter = ({field, ascending}:TestSorterProps) => (a:TableDataRow, b:TableDataRow) => {
+const testTableSorter = ({field, ascending}: TestSorterProps) => (a: TableDataRow, b: TableDataRow) => {
     return (
         a[field] === b[field]
-        ? (a.id - b.id)
-        : ((a[field]??'') === (b[field]??'') ? 0 :((a[field]??'') > (b[field]??'') ? 1 : -1))
+            ? (a.id - b.id)
+            : ((a[field] ?? '') === (b[field] ?? '') ? 0 : ((a[field] ?? '') > (b[field] ?? '') ? 1 : -1))
     ) * (ascending ? 1 : -1);
 }
 
 const colors: BootstrapColor[] = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark',];
 
-const buildDataSet = ():TableDataRow[] => {
+const buildDataSet = (): TableDataRow[] => {
     return new Array(1000)
         .fill(null)
         .map((el, index) => ({
             id: index,
             value: Math.random() * 100,
-            color:  colors[index % 8],
+            color: colors[index % 8],
             bgColor: colors[Math.floor(Math.random() * 8)]
         }))
 }
 const pagerKey = 'test-pagination';
 
-const tableFields:SortableTableField[] = [
+const tableFields: SortableTableField[] = [
     {field: 'id', title: 'ID', sortable: true},
     {field: 'value', title: 'Value', sortable: true},
     {field: 'color', title: 'Color', sortable: true, className: (row) => `text-${colors[Math.floor(row.id % 8)]}`},
     {field: 'bgColor', title: 'Background Color', sortable: true, render: (row) => <span>table-{row.bgColor}</span>},
 ];
 
-const rowColor = (row:TableDataRow) => `table-${row.bgColor}`;
+const rowColor = (row: TableDataRow) => `table-${row.bgColor}`;
 
 const PaginationTest: React.FC = () => {
+    let timer: number;
     const dispatch = useDispatch();
     const [filter, setFilter] = useState(100);
     const [tableData, setTableData] = useState([] as TableDataRow[]);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         const data = buildDataSet();
         setTableData(data);
         dispatch(addPageSetAction({key: pagerKey, rowsPerPage: 25, current: 1}))
         dispatch(tableAddedAction({key: pagerKey, field: 'id', ascending: true}))
+        return () => {
+            window.clearTimeout(timer);
+        }
     }, [])
 
     const sort = useSelector(sortableTableSelector(pagerKey));
     const filteredData = tableData
-    .sort(testTableSorter(sort as TestSorterProps))
+        .sort(testTableSorter(sort as TestSorterProps))
         .filter(row => row.value <= filter);
     const pageData = useSelector(pagedDataSelector(pagerKey, filteredData));
+
+    const rebuildData = () => {
+        window.clearTimeout(timer);
+        setLoading(true);
+        timer = window.setTimeout(() => {
+            const data = buildDataSet();
+            setTableData(data);
+            setLoading(false);
+        }, 2500);
+    }
 
     const [language, setLanguage] = useState('');
 
@@ -105,7 +123,8 @@ const PaginationTest: React.FC = () => {
             <div className="row g-3">
                 <div className="col-auto">
                     <ErrorBoundary>
-                        <PagerDuck pageKey={pagerKey} dataLength={filteredData.length} filtered={filteredData.length < tableData.length}/>
+                        <PagerDuck pageKey={pagerKey} dataLength={filteredData.length}
+                                   filtered={filteredData.length < tableData.length}/>
                     </ErrorBoundary>
                 </div>
                 <div className="col-auto"><label className="form-label">Filter Values:</label></div>
@@ -116,7 +135,8 @@ const PaginationTest: React.FC = () => {
                     <small>filter = {filter}</small>
                 </div>
                 <div className="col-auto">
-                    <AlertList/>
+                    <SpinnerButton spinning={loading} onClick={rebuildData} size="sm" spinnerAfter>Reload
+                        Data</SpinnerButton>
                 </div>
                 <div className="col-auto">
                     <Input type="text" id="default" list="languages" fuzzyList value={language}
@@ -137,7 +157,10 @@ const PaginationTest: React.FC = () => {
                     </datalist>
                 </div>
             </div>
-            <SortableTable tableKey={pagerKey} keyField={"id"} fields={tableFields} data={pageData} rowClassName={rowColor} onSelectRow={tableClickHandler}/>
+            <AlertList/>
+            {loading && <LoadingProgressBar animated/>}
+            <SortableTable tableKey={pagerKey} keyField={"id"} fields={tableFields} data={pageData}
+                           rowClassName={rowColor} onSelectRow={tableClickHandler}/>
         </div>
     )
 }

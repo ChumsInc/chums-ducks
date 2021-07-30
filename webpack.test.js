@@ -19,6 +19,7 @@ module.exports = merge(common, {
     entry: './tests/test.tsx',
     mode: 'development',
     devServer: {
+        port: 8000,
         contentBase: [path.join(__dirname, 'public'), __dirname],
         hot: true,
         proxy: {

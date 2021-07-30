@@ -17,21 +17,11 @@ const localProxy = {
 module.exports = merge(common, {
     mode: 'development',
     devServer: {
+        port: 8000,
         contentBase: [path.join(__dirname, 'public'), __dirname],
         hot: true,
         proxy: {
             '/api': {...localProxy},
-            '/images/': {...localProxy},
-            '/timeclock/': {...localProxy},
-            '/pdf/': {...localProxy},
-            '/files/': {...localProxy},
-            '/node/': {...localProxy},
-            // '/node_modules/': {...localProxy},
-            '/node-chums/': {...localProxy},
-            '/node-dev/': {...localProxy},
-            '/node-sage/': {...localProxy},
-            '/sage/': {...localProxy},
-            '/version': {...localProxy},
         }
     },
     devtool: 'inline-source-map',
