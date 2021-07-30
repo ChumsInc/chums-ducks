@@ -15,6 +15,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {Input, LoadingProgressBar} from "../src/components";
 import {BootstrapColor, ErrorBoundary, SortableTable, SpinnerButton} from "../src";
+import numeral from "numeral";
 
 
 interface TableDataRow {
@@ -61,6 +62,16 @@ const tableFields: SortableTableField[] = [
 
 const rowColor = (row: TableDataRow) => `table-${row.bgColor}`;
 
+const TFoot = ({value}: { value: number }) => (
+    <tfoot>
+    <tr>
+        <th>Total</th>
+        <th>{numeral(value).format('0,0.000')}</th>
+        <td colSpan={2} />
+    </tr>
+    </tfoot>
+)
+
 const PaginationTest: React.FC = () => {
     let timer: number;
     const dispatch = useDispatch();
@@ -82,6 +93,7 @@ const PaginationTest: React.FC = () => {
         .sort(testTableSorter(sort as TestSorterProps))
         .filter(row => row.value <= filter);
     const pageData = useSelector(pagedDataSelector(pagerKey, filteredData));
+    const total = pageData.reduce((acc, row) => acc + row.value, 0);
 
     const rebuildData = () => {
         window.clearTimeout(timer);
@@ -117,6 +129,8 @@ const PaginationTest: React.FC = () => {
         console.log('filterChangeHandler()', ev.target.value);
         setFilter(Number(ev.target.value));
     }
+
+    const tfoot = (<TFoot value={total} />);
 
     return (
         <div>
@@ -159,8 +173,8 @@ const PaginationTest: React.FC = () => {
             </div>
             <AlertList/>
             {loading && <LoadingProgressBar animated/>}
-            <SortableTable tableKey={pagerKey} keyField={"id"} fields={tableFields} data={pageData}
-                           rowClassName={rowColor} onSelectRow={tableClickHandler}/>
+            <SortableTable tableKey={pagerKey} keyField={"id"} size="xs" fields={tableFields} data={pageData}
+                           rowClassName={rowColor} onSelectRow={tableClickHandler} tfoot={tfoot}/>
         </div>
     )
 }

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { TableHTMLAttributes } from "react";
 import { SortableTableField } from "./index";
-export interface SortableTableHeadProps {
+export interface SortableTableHeadProps extends TableHTMLAttributes<HTMLTableSectionElement> {
     tableKey: string;
     fields: SortableTableField[];
     onChangeSort: (field: string, asc: boolean) => void;
