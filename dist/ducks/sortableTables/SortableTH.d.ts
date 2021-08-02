@@ -4,6 +4,7 @@ export interface SortableTHProps {
     field: SortableTableField;
     sorted?: boolean;
     ascending?: boolean;
+    className?: string | object;
     onClick: (field: string, ascending: boolean) => void;
 }
 declare const SortableTH: React.FC<SortableTHProps>;
