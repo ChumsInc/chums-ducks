@@ -20,7 +20,9 @@ const SortableTableHead:React.FC<SortableTableHeadProps> = ({
         <thead>
             <tr>
                 {fields.map((tableField, index) => (
-                    <SortableTH key={index} field={tableField} sorted={field === tableField.field} ascending={ascending} onClick={onChangeSort} />
+                    <SortableTH key={index} field={tableField}
+                                sorted={field === tableField.field} ascending={ascending}
+                                className={tableField.className} onClick={onChangeSort} />
                 ))}
             </tr>
         </thead>

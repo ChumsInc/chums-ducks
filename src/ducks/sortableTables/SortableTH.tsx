@@ -6,11 +6,18 @@ import {SortableTableField} from "./index";
 export interface SortableTHProps {
     field: SortableTableField,
     sorted?: boolean,
-    ascending?: boolean
+    ascending?: boolean,
+    className?: string|object,
     onClick: (field: string, ascending: boolean) => void,
 }
 
-const SortableTH: React.FC<SortableTHProps> = ({field, sorted, ascending, onClick}) => {
+const SortableTH: React.FC<SortableTHProps> = ({
+                                                   field,
+                                                   sorted,
+                                                   ascending,
+                                                   className,
+                                                   onClick
+                                               }) => {
     if (!field.sortable) {
         return (<th>{field.title}</th>)
     }
@@ -23,7 +30,7 @@ const SortableTH: React.FC<SortableTHProps> = ({field, sorted, ascending, onClic
     }
 
     return (
-        <th className="sortable" onClick={clickHandler}>
+        <th className={classNames("sortable", className)} onClick={clickHandler}>
             {field.title}
             {!!sorted && (
                 <span className={classNames('ms-1', iconClassName)}/>
