@@ -4,18 +4,21 @@ import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
 import NavItem from "./NavItem";
 import './TabList.css';
+import {noop} from "../../utils";
 
 
 export interface NavListProps {
     tabKey: string,
     className?: string | object,
     itemClassName?: string | object,
+    onSelectTab?: (id?: string) => void,
 }
 
 const NavList: React.FC<NavListProps> = ({
                                              tabKey,
                                              className,
                                              itemClassName,
+                                             onSelectTab = noop,
                                              children
                                          }) => {
     const dispatch = useDispatch();
@@ -25,6 +28,7 @@ const NavList: React.FC<NavListProps> = ({
     const tabClickHandler = (id: string) => {
         console.log(id, tabKey);
         dispatch(tabSelectedAction(id, tabKey));
+        onSelectTab(id);
     }
     const tabCloseHandler = (id: string) => dispatch(tabRemovedAction(id, tabKey));
     return (
