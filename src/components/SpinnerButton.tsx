@@ -13,11 +13,12 @@ export interface SpinnerButtonProps extends ButtonHTMLAttributes<any> {
 const SpinnerButton: React.FC<SpinnerButtonProps> = ({
                                                          spinning = false,
                                                          spinnerType = 'border',
-    spinnerAfter = false,
+                                                         spinnerAfter = false,
                                                          color = 'primary',
                                                          size,
                                                          className,
                                                          children,
+                                                         disabled,
                                                          ...rest
                                                      }) => {
     const btnClassName = classNames(className, {
@@ -32,7 +33,7 @@ const SpinnerButton: React.FC<SpinnerButtonProps> = ({
         "ms-1": spinnerAfter
     })
     return (
-        <button className={btnClassName} {...rest} disabled={spinning}>
+        <button className={btnClassName} {...rest} disabled={spinning || disabled} {...rest}>
             {spinning && !spinnerAfter && <span className={spinnerClassName} role="status" aria-hidden="true"/>}
             {children}
             {spinning && spinnerAfter && <span className={spinnerClassName} role="status" aria-hidden="true"/>}

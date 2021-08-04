@@ -19,7 +19,7 @@ const SortableTH: React.FC<SortableTHProps> = ({
                                                    onClick
                                                }) => {
     if (!field.sortable) {
-        return (<th>{field.title}</th>)
+        return (<th className={classNames(className)}>{field.title}</th>)
     }
     const iconClassName = {
         'bi-sort-down': !!sorted && !!ascending,

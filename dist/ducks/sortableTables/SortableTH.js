@@ -3,7 +3,7 @@ import classNames from "classnames";
 var SortableTH = function (_a) {
     var field = _a.field, sorted = _a.sorted, ascending = _a.ascending, className = _a.className, onClick = _a.onClick;
     if (!field.sortable) {
-        return (React.createElement("th", null, field.title));
+        return (React.createElement("th", { className: classNames(className) }, field.title));
     }
     var iconClassName = {
         'bi-sort-down': !!sorted && !!ascending,

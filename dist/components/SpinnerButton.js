@@ -24,7 +24,7 @@ import React from "react";
 import classNames from "classnames";
 var SpinnerButton = function (_a) {
     var _b, _c;
-    var _d = _a.spinning, spinning = _d === void 0 ? false : _d, _e = _a.spinnerType, spinnerType = _e === void 0 ? 'border' : _e, _f = _a.spinnerAfter, spinnerAfter = _f === void 0 ? false : _f, _g = _a.color, color = _g === void 0 ? 'primary' : _g, size = _a.size, className = _a.className, children = _a.children, rest = __rest(_a, ["spinning", "spinnerType", "spinnerAfter", "color", "size", "className", "children"]);
+    var _d = _a.spinning, spinning = _d === void 0 ? false : _d, _e = _a.spinnerType, spinnerType = _e === void 0 ? 'border' : _e, _f = _a.spinnerAfter, spinnerAfter = _f === void 0 ? false : _f, _g = _a.color, color = _g === void 0 ? 'primary' : _g, size = _a.size, className = _a.className, children = _a.children, disabled = _a.disabled, rest = __rest(_a, ["spinning", "spinnerType", "spinnerAfter", "color", "size", "className", "children", "disabled"]);
     var btnClassName = classNames(className, (_b = {
             btn: true
         },
@@ -37,7 +37,7 @@ var SpinnerButton = function (_a) {
         _c["me-1"] = !spinnerAfter,
         _c["ms-1"] = spinnerAfter,
         _c));
-    return (React.createElement("button", __assign({ className: btnClassName }, rest, { disabled: spinning }),
+    return (React.createElement("button", __assign({ className: btnClassName }, rest, { disabled: spinning || disabled }, rest),
         spinning && !spinnerAfter && React.createElement("span", { className: spinnerClassName, role: "status", "aria-hidden": "true" }),
         children,
         spinning && spinnerAfter && React.createElement("span", { className: spinnerClassName, role: "status", "aria-hidden": "true" })));

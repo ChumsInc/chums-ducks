@@ -23,25 +23,40 @@ export var tabSelected = 'tabs/tab-selected';
 export var tabAdded = 'tabs/tab-added';
 export var tabRemoved = 'tabs/tab-removed';
 export var tabDisabled = 'tabs/tab-disabled';
-export var tabListCreatedAction = function (list, key) {
+export var tabListCreatedAction = function (list, key, selectedId) {
     if (key === void 0) { key = defaultTabsKey; }
-    return ({ type: tabListCreated, payload: { key: key, list: list } });
+    return ({
+        type: tabListCreated,
+        payload: { key: key, list: list, id: selectedId }
+    });
 };
 export var tabSelectedAction = function (id, key) {
     if (key === void 0) { key = defaultTabsKey; }
-    return ({ type: tabSelected, payload: { key: key, id: id } });
+    return ({
+        type: tabSelected,
+        payload: { key: key, id: id }
+    });
 };
 export var tabAddedAction = function (tab, key) {
     if (key === void 0) { key = defaultTabsKey; }
-    return ({ type: tabAdded, payload: { key: key, tab: tab } });
+    return ({
+        type: tabAdded,
+        payload: { key: key, tab: tab }
+    });
 };
 export var tabRemovedAction = function (id, key) {
     if (key === void 0) { key = defaultTabsKey; }
-    return ({ type: tabRemoved, payload: { key: key, id: id } });
+    return ({
+        type: tabRemoved,
+        payload: { key: key, id: id }
+    });
 };
 export var tabDisabledAction = function (id, key) {
     if (key === void 0) { key = defaultTabsKey; }
-    return ({ type: tabDisabled, payload: { key: key, id: id } });
+    return ({
+        type: tabDisabled,
+        payload: { key: key, id: id }
+    });
 };
 export var tabListSelector = function (key) {
     if (key === void 0) { key = defaultTabsKey; }
@@ -97,7 +112,7 @@ var tabsReducer = function (state, action) {
         case tabListCreated:
             return __assign(__assign({}, state), (_a = {}, _a[key] = {
                 list: __spreadArray([], list),
-                selected: list.length === 0 ? '' : list[0].id,
+                selected: id || list.length === 0 ? '' : list[0].id,
             }, _a));
         case tabAdded:
             if (tabSet && tab) {
@@ -131,7 +146,8 @@ var tabsReducer = function (state, action) {
                 return __assign(__assign({}, state), (_e = {}, _e[key] = __assign(__assign({}, tabSet), { selected: id }), _e));
             }
             return state;
-        default: return state;
+        default:
+            return state;
     }
 };
 export default tabsReducer;

@@ -55,9 +55,9 @@ const pagerKey = 'test-pagination';
 
 const tableFields: SortableTableField[] = [
     {field: 'id', title: 'ID', sortable: true},
-    {field: 'value', title: 'Value', sortable: true},
     {field: 'color', title: 'Color', sortable: true, className: (row) => `text-${colors[Math.floor(row.id % 8)]}`},
     {field: 'bgColor', title: 'Background Color', sortable: true, render: (row) => <span>table-{row.bgColor}</span>},
+    {field: 'value', title: 'Value', sortable: true, className: 'right', render: (row) => numeral(row.value).format('0,0.0000')},
 ];
 
 const rowColor = (row: TableDataRow) => `table-${row.bgColor}`;
@@ -66,8 +66,8 @@ const TFoot = ({value}: { value: number }) => (
     <tfoot>
     <tr>
         <th>Total</th>
-        <th>{numeral(value).format('0,0.000')}</th>
         <td colSpan={2} />
+        <th className="right">{numeral(value).format('0,0.0000')}</th>
     </tr>
     </tfoot>
 )
