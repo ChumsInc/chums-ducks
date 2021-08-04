@@ -118,7 +118,7 @@ const tabsReducer = (state: TabsState = initialState, action: TabAction): TabsSt
             ...state,
             [key]: {
                 list: [...list],
-                selected: id || list.length === 0 ? '' : list[0].id,
+                selected: id || (list.length === 0 ? '' : list[0].id),
             }
         }
     case tabAdded:

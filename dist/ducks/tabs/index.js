@@ -112,7 +112,7 @@ var tabsReducer = function (state, action) {
         case tabListCreated:
             return __assign(__assign({}, state), (_a = {}, _a[key] = {
                 list: __spreadArray([], list),
-                selected: id || list.length === 0 ? '' : list[0].id,
+                selected: id || (list.length === 0 ? '' : list[0].id),
             }, _a));
         case tabAdded:
             if (tabSet && tab) {

@@ -27,7 +27,7 @@ const tempTab: Tab = {id: 'temp-tab', title: 'Temporary Tab', active: true, canC
 const App: React.FC = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(tabListCreatedAction(tabs, tabSetId));
+        dispatch(tabListCreatedAction(tabs, tabSetId, 'modal'));
         // dispatch(onTabSelected(tabs[0].id))
     }, []);
 
