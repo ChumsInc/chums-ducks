@@ -4,6 +4,7 @@ import {RootStateOrAny} from "react-redux";
 export interface Tab {
     id: string,
     title: string,
+    to?: string|object|((any:any) => string|object),
     canClose?: boolean,
     disabled?: boolean,
     active?: boolean,

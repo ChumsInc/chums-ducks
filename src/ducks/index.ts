@@ -27,8 +27,12 @@ export {default as SortableTR} from './sortableTables/SortableTR';
 export * from './tabs';
 export {default as tabsReducer} from './tabs';
 export {default as NavList} from './tabs/NavList';
+export {default as NavRouterList} from './tabs/NavRouterList';
 export {default as TabList} from './tabs/TabList';
+export {default as TabRouterList} from './tabs/TabRouterList';
 export {default as PillList} from './tabs/PillList';
+export {default as PillRouterList} from './tabs/PillRouterList';
 export {default as NavItem} from './tabs/NavItem';
+export {default as NavRouterLink} from './tabs/NavRouterLink';
 
 export * from './types';
