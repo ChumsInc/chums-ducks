@@ -14,7 +14,6 @@ const NavRouterLink: React.FC<NavRouterLinkProps> = ({
                                              to,
                                              id,
                                              title,
-                                             active,
                                              canClose,
                                              disabled,
                                              className,
@@ -31,7 +30,7 @@ const NavRouterLink: React.FC<NavRouterLinkProps> = ({
     return (
         <li className="nav-item">
             <NavLink to={to} activeClassName="active"
-                     className={classNames('nav-link', className, {active, disabled})} tabIndex={disabled ? -1 : 0} >
+                     className={classNames('nav-link', className, {disabled})} tabIndex={disabled ? -1 : 0} >
                 {title}
                 {canClose && (
                     <span aria-label="Close" onClick={onClickClose} className="ms-2 bi-x-lg"/>
