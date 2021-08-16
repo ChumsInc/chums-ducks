@@ -3,6 +3,7 @@ import { RootStateOrAny } from "react-redux";
 export interface Tab {
     id: string;
     title: string;
+    icon?: string;
     to?: string | object | ((any: any) => string | object);
     canClose?: boolean;
     disabled?: boolean;

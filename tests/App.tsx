@@ -17,7 +17,7 @@ import ModalTest from "./ModalTest";
 
 const tabSetId = 'test';
 const tabs: Tab[] = [
-    {id: 'pagination', title: 'Pagination Test', active: false},
+    {id: 'pagination', title: 'Pagination Test', icon: 'bi-signpost-split-fill', active: false},
     {id: 'modal', title: 'Modal Test', active: true},
     {id: 'disabled-item', title: 'Disabled Item', disabled: true},
     {id: 'form', title: 'Form Test', canClose: true},
