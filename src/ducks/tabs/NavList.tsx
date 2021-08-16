@@ -35,6 +35,7 @@ const NavList: React.FC<NavListProps> = ({
         <ul className={classNames('nav', className)}>
             {list.map(tab => (
                 <NavItem key={tab.id} id={tab.id} title={tab.title} className={itemClassName}
+                         icon={tab.icon}
                          onSelect={() => tabClickHandler(tab.id)}
                          disabled={tab.disabled}
                          active={tab.id === selected}

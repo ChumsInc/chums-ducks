@@ -17,7 +17,7 @@ var NavList = function (_a) {
     };
     var tabCloseHandler = function (id) { return dispatch(tabRemovedAction(id, tabKey)); };
     return (React.createElement("ul", { className: classNames('nav', className) },
-        list.map(function (tab) { return (React.createElement(NavItem, { key: tab.id, id: tab.id, title: tab.title, className: itemClassName, onSelect: function () { return tabClickHandler(tab.id); }, disabled: tab.disabled, active: tab.id === selected, canClose: tab.canClose, onClose: function () { return tabCloseHandler(tab.id); } })); }),
+        list.map(function (tab) { return (React.createElement(NavItem, { key: tab.id, id: tab.id, title: tab.title, className: itemClassName, icon: tab.icon, onSelect: function () { return tabClickHandler(tab.id); }, disabled: tab.disabled, active: tab.id === selected, canClose: tab.canClose, onClose: function () { return tabCloseHandler(tab.id); } })); }),
         children));
 };
 export default NavList;
