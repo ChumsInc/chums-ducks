@@ -10,7 +10,7 @@ var NavList = function (_a) {
     var list = useSelector(tabListSelector(tabKey));
     var tabCloseHandler = function (id) { return dispatch(tabRemovedAction(id, tabKey)); };
     return (React.createElement("ul", { className: classNames('nav', className) },
-        list.map(function (tab) { return (React.createElement(NavRouterLink, { to: tab.to || '', key: tab.id, id: tab.id, title: tab.title, className: itemClassName, disabled: tab.disabled, canClose: tab.canClose, onClose: function () { return tabCloseHandler(tab.id); } })); }),
+        list.map(function (tab) { return (React.createElement(NavRouterLink, { to: tab.to || '', key: tab.id, id: tab.id, title: tab.title, className: itemClassName, icon: tab.icon, disabled: tab.disabled, canClose: tab.canClose, onClose: function () { return tabCloseHandler(tab.id); } })); }),
         children));
 };
 export default NavList;

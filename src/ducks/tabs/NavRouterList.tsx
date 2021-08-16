@@ -26,6 +26,7 @@ const NavList: React.FC<NavRouterListProps> = ({
         <ul className={classNames('nav', className)}>
             {list.map(tab => (
                 <NavRouterLink to={tab.to || ''} key={tab.id} id={tab.id} title={tab.title} className={itemClassName}
+                               icon={tab.icon}
                                disabled={tab.disabled}
                                canClose={tab.canClose} onClose={() => tabCloseHandler(tab.id)}/>
             ))}
