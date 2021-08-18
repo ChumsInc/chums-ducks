@@ -3,7 +3,7 @@ import { SortableTableField } from "./index";
 import { BootstrapSize } from "../../types";
 export interface SortableTableProps extends TableHTMLAttributes<HTMLTableElement> {
     tableKey: string;
-    keyField: string | ((any: any) => string);
+    keyField: string | number | ((any: any) => string | number);
     size?: BootstrapSize;
     rowClassName?: string | object | ((any: any) => string | object);
     onSelectRow?: (any: any) => any | void;
