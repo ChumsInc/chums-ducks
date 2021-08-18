@@ -32,6 +32,7 @@ const SortableTable: React.FC<SortableTableProps> = ({
                                                          className = '',
                                                          tfoot,
                                                          onChangeSort = noop,
+    children,
                                                      }) => {
     const dispatch = useDispatch();
     const sortChangeHandler = (field: string, ascending: boolean) => {
@@ -45,16 +46,19 @@ const SortableTable: React.FC<SortableTableProps> = ({
     return (
         <table className={tableClassName}>
             <SortableTableHead tableKey={tableKey} fields={fields} onChangeSort={sortChangeHandler}/>
-            <tbody>
-            {data.map(row => {
-                const key = typeof keyField === "function" ? keyField(row) : row[keyField];
-                const isSelected = typeof selected === 'function' ? selected(row) : key === selected;
-                return (
-                    <SortableTR key={key} onClick={() => onSelectRow(row)} className={rowClassName} fields={fields}
-                                row={row} selected={isSelected}/>
-                )
-            })}
-            </tbody>
+            {!!data.length && (
+                <tbody>
+                {data.map(row => {
+                    const key = typeof keyField === "function" ? keyField(row) : row[keyField];
+                    const isSelected = typeof selected === 'function' ? selected(row) : key === selected;
+                    return (
+                        <SortableTR key={key} onClick={() => onSelectRow(row)} className={rowClassName} fields={fields}
+                                    row={row} selected={isSelected}/>
+                    )
+                })}
+                </tbody>
+            )}
+            {children}
             {tfoot}
         </table>
     )

@@ -23,7 +23,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import classNames from "classnames";
 import debounce from 'lodash.debounce';
-import { getRegex } from "../utils/regex";
+import { getRegex } from "../utils";
 var noop = function () {
 };
 var Input = function (_a) {
