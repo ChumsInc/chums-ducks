@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import classNames from "classnames";
 import debounce from 'lodash.debounce'
-import {getRegex} from "../utils/regex";
+import {getRegex} from "../utils";
 
 const noop = () => {
 };
@@ -82,7 +82,7 @@ const Input: React.FC<InputProps> = ({
         <input type={type}
                className={classNames(inputClassName, className)}
                value={localValue || ''}
-               // onInput={changeHandler}
+            // onInput={changeHandler}
                onBlur={blurHandler}
                onChange={changeHandler}
                ref={myRef || inputRef} {...rest} />
