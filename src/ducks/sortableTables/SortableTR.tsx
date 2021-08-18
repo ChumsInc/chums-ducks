@@ -28,10 +28,10 @@ const SortableTR: React.FC<SortableTRProps> = ({
                 const fieldClassName = typeof field.className === 'function' ? field.className(row) : field.className;
                 if (typeof field.render === 'function') {
                     return (
-                        <td key={index} className={classNames(fieldClassName)}>{field.render(row)}</td>
+                        <td key={index} className={classNames(fieldClassName)} colSpan={field.colSpan}>{field.render(row)}</td>
                     );
                 }
-                return (<td key={index} className={classNames(fieldClassName)}>{row[field.field]}</td>);
+                return (<td key={index} className={classNames(fieldClassName)} colSpan={field.colSpan} >{row[field.field]}</td>);
             })}
         </tr>
     )

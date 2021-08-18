@@ -10,9 +10,9 @@ var SortableTR = function (_a) {
     return (React.createElement("tr", { className: classNames({ 'table-active': selected }, _className), onClick: clickHandler }, fields.map(function (field, index) {
         var fieldClassName = typeof field.className === 'function' ? field.className(row) : field.className;
         if (typeof field.render === 'function') {
-            return (React.createElement("td", { key: index, className: classNames(fieldClassName) }, field.render(row)));
+            return (React.createElement("td", { key: index, className: classNames(fieldClassName), colSpan: field.colSpan }, field.render(row)));
         }
-        return (React.createElement("td", { key: index, className: classNames(fieldClassName) }, row[field.field]));
+        return (React.createElement("td", { key: index, className: classNames(fieldClassName), colSpan: field.colSpan }, row[field.field]));
     })));
 };
 export default SortableTR;

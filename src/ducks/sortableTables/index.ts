@@ -32,6 +32,7 @@ export interface SortableTableField {
     sortable?: boolean,
     render?: (row:any) => ReactElement|Element|string,
     className?: string|object|((any:any) => string|object),
+    colSpan?: number,
 }
 
 interface RootState extends RootStateOrAny {
