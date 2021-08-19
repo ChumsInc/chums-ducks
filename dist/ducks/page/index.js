@@ -52,7 +52,10 @@ var pageReducer = function (state, action) {
             }
             return state;
         case addPageSet:
-            return __assign(__assign({}, state), (_c = {}, _c[key] = { current: current, rowsPerPage: rowsPerPage }, _c));
+            if (!state[key]) {
+                return __assign(__assign({}, state), (_c = {}, _c[key] = { current: current, rowsPerPage: rowsPerPage }, _c));
+            }
+            return state;
         default: return state;
     }
 };

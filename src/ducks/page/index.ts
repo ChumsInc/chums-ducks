@@ -69,10 +69,13 @@ const pageReducer = (state:PageState = {}, action: PageAction):PageState => {
         }
         return state;
     case addPageSet:
-        return {
-            ...state,
-            [key]: {current, rowsPerPage},
+        if (!state[key]) {
+            return {
+                ...state,
+                [key]: {current, rowsPerPage},
+            }
         }
+        return state;
     default: return state;
     }
 }

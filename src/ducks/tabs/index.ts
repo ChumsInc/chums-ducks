@@ -117,13 +117,16 @@ const tabsReducer = (state: TabsState = initialState, action: TabAction): TabsSt
     const tabSet: TabSet = state[key];
     switch (type) {
     case tabListCreated:
-        return {
-            ...state,
-            [key]: {
-                list: [...list],
-                selected: id || (list.length === 0 ? '' : list[0].id),
+        if (!state[key]) {
+            return {
+                ...state,
+                [key]: {
+                    list: [...list],
+                    selected: id || (list.length === 0 ? '' : list[0].id),
+                }
             }
         }
+        return state;
     case tabAdded:
         if (tabSet && tab) {
             return {
