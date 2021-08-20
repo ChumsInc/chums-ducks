@@ -52,7 +52,7 @@ const SortableTable: React.FC<SortableTableProps> = ({
                     const key = typeof keyField === "function" ? keyField(row) : row[keyField];
                     const isSelected = typeof selected === 'function' ? selected(row) : key === selected;
                     return (
-                        <SortableTR key={key} onClick={() => onSelectRow(row)} className={rowClassName} fields={fields}
+                        <SortableTR key={key} onClick={() => onSelectRow(row)} rowClassName={rowClassName} fields={fields}
                                     row={row} selected={isSelected}/>
                     )
                 })}

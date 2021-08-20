@@ -21,7 +21,7 @@ var SortableTable = function (_a) {
         !!data.length && (React.createElement("tbody", null, data.map(function (row) {
             var key = typeof keyField === "function" ? keyField(row) : row[keyField];
             var isSelected = typeof selected === 'function' ? selected(row) : key === selected;
-            return (React.createElement(SortableTR, { key: key, onClick: function () { return onSelectRow(row); }, className: rowClassName, fields: fields, row: row, selected: isSelected }));
+            return (React.createElement(SortableTR, { key: key, onClick: function () { return onSelectRow(row); }, rowClassName: rowClassName, fields: fields, row: row, selected: isSelected }));
         }))),
         children,
         tfoot));

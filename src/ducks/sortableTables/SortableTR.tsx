@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {TableHTMLAttributes} from 'react';
 import classNames from "classnames";
 import {noop} from "../../utils";
 import {SortableTableField} from "./index";
 
-export interface SortableTRProps {
-    className?: string | object | ((any: any) => string | object),
+export interface SortableTRProps extends TableHTMLAttributes<HTMLTableRowElement> {
+    rowClassName?: string | object | ((any: any) => string | object),
     selected?: boolean,
     fields: SortableTableField[],
     row: any,
@@ -14,18 +14,21 @@ export interface SortableTRProps {
 
 const SortableTR: React.FC<SortableTRProps> = ({
                                                    className,
+                                                   rowClassName,
                                                    selected,
                                                    fields,
                                                    row,
                                                    trRef,
-                                                   onClick = noop
+                                                   onClick = noop,
+                                                   ...rest
                                                }) => {
     const clickHandler = () => {
         return onClick ? onClick() : noop();
     }
-    const _className = typeof className === 'function' ? className(row) : className;
+    const _className = typeof rowClassName === 'function' ? rowClassName(row) : rowClassName;
     return (
-        <tr ref={trRef} className={classNames({'table-active': selected}, _className)} onClick={clickHandler}>
+        <tr ref={trRef} className={classNames({'table-active': selected}, className, _className)}
+            onClick={clickHandler} {...rest}>
             {fields.map((field, index) => {
                 const fieldClassName = typeof field.className === 'function' ? field.className(row) : field.className;
                 if (typeof field.render === 'function') {

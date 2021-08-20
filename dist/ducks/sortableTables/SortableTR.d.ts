@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { TableHTMLAttributes } from 'react';
 import { SortableTableField } from "./index";
-export interface SortableTRProps {
-    className?: string | object | ((any: any) => string | object);
+export interface SortableTRProps extends TableHTMLAttributes<HTMLTableRowElement> {
+    rowClassName?: string | object | ((any: any) => string | object);
     selected?: boolean;
     fields: SortableTableField[];
     row: any;
