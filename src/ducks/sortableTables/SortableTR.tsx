@@ -8,6 +8,7 @@ export interface SortableTRProps {
     selected?: boolean,
     fields: SortableTableField[],
     row: any,
+    trRef?: React.LegacyRef<HTMLTableRowElement>,
     onClick?: (any?: any) => any,
 }
 
@@ -16,6 +17,7 @@ const SortableTR: React.FC<SortableTRProps> = ({
                                                    selected,
                                                    fields,
                                                    row,
+                                                   trRef,
                                                    onClick = noop
                                                }) => {
     const clickHandler = () => {
@@ -23,7 +25,7 @@ const SortableTR: React.FC<SortableTRProps> = ({
     }
     const _className = typeof className === 'function' ? className(row) : className;
     return (
-        <tr className={classNames({'table-active': selected}, _className)} onClick={clickHandler}>
+        <tr ref={trRef} className={classNames({'table-active': selected}, _className)} onClick={clickHandler}>
             {fields.map((field, index) => {
                 const fieldClassName = typeof field.className === 'function' ? field.className(row) : field.className;
                 if (typeof field.render === 'function') {

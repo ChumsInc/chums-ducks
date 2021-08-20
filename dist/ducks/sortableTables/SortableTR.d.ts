@@ -5,6 +5,7 @@ export interface SortableTRProps {
     selected?: boolean;
     fields: SortableTableField[];
     row: any;
+    trRef?: React.LegacyRef<HTMLTableRowElement>;
     onClick?: (any?: any) => any;
 }
 declare const SortableTR: React.FC<SortableTRProps>;
