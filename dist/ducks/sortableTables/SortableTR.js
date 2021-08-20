@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { noop } from "../../utils";
 var SortableTR = function (_a) {
     var className = _a.className, selected = _a.selected, fields = _a.fields, row = _a.row, _b = _a.onClick, onClick = _b === void 0 ? noop : _b;
-    var clickHandler = function (event) {
+    var clickHandler = function () {
         return onClick ? onClick() : noop();
     };
     var _className = typeof className === 'function' ? className(row) : className;

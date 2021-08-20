@@ -1,9 +1,9 @@
-import React, {MouseEvent} from 'react';
+import React from 'react';
 import classNames from "classnames";
 import {noop} from "../../utils";
 import {SortableTableField} from "./index";
 
-interface SortableTRProps {
+export interface SortableTRProps {
     className?: string | object | ((any: any) => string | object),
     selected?: boolean,
     fields: SortableTableField[],
@@ -18,7 +18,7 @@ const SortableTR: React.FC<SortableTRProps> = ({
                                                    row,
                                                    onClick = noop
                                                }) => {
-    const clickHandler = (event:MouseEvent<HTMLTableRowElement>) => {
+    const clickHandler = () => {
         return onClick ? onClick() : noop();
     }
     const _className = typeof className === 'function' ? className(row) : className;
@@ -28,10 +28,12 @@ const SortableTR: React.FC<SortableTRProps> = ({
                 const fieldClassName = typeof field.className === 'function' ? field.className(row) : field.className;
                 if (typeof field.render === 'function') {
                     return (
-                        <td key={index} className={classNames(fieldClassName)} colSpan={field.colSpan}>{field.render(row)}</td>
+                        <td key={index} className={classNames(fieldClassName)}
+                            colSpan={field.colSpan}>{field.render(row)}</td>
                     );
                 }
-                return (<td key={index} className={classNames(fieldClassName)} colSpan={field.colSpan} >{row[field.field]}</td>);
+                return (<td key={index} className={classNames(fieldClassName)}
+                            colSpan={field.colSpan}>{row[field.field]}</td>);
             })}
         </tr>
     )

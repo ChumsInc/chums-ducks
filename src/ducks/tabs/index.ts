@@ -38,7 +38,7 @@ const initialState: TabsState = {
     app: {list: [], selected: ''},
 };
 
-const defaultTabsKey = 'app';
+const defaultTabsKey = '_';
 
 export const tabListCreated = 'tabs/tabs-created';
 export const tabSelected = 'tabs/tab-selected';

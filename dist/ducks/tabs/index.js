@@ -17,7 +17,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
 var initialState = {
     app: { list: [], selected: '' },
 };
-var defaultTabsKey = 'app';
+var defaultTabsKey = '_';
 export var tabListCreated = 'tabs/tabs-created';
 export var tabSelected = 'tabs/tab-selected';
 export var tabAdded = 'tabs/tab-added';

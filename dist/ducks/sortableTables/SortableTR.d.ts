@@ -1,6 +1,6 @@
 import React from 'react';
 import { SortableTableField } from "./index";
-interface SortableTRProps {
+export interface SortableTRProps {
     className?: string | object | ((any: any) => string | object);
     selected?: boolean;
     fields: SortableTableField[];
