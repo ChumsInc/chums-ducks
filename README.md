@@ -15,16 +15,14 @@ export interface Props {
     description?: string,
 }
 ```
-
-```js
-import {Badge} from 'chums-ducks';
-
+```tsx
 <Badge color="warning" pill>
     ipsum lorem
 </Badge>
-
+```
+```tsx
 <Badge color="warning" 
-       text="ASDF"
+       text="asdf"
        className="me-3"
        description="This is text for assistive technologies" />
 ```
@@ -75,19 +73,20 @@ export interface FieldInputProps {
 }
 ```
 ```tsx
-import FieldInput from 'chums-ducks';
 
 interface ChangeHandlerProps {
     field: keyof Obj,
     value: string|number,
 }
+
 const obj = useSelector(selectObject);
 
 const changeHandler = ({field, value}:ChangeHandlerProps) => {
     dispatch(updateObjectAction({...obj, [field]: value}));
 }
-
-<FieldInput field="dlCode" value={obj.dlCode} onChange={changeHandler} />
+return (
+    <FieldInput field="dlCode" value={obj.dlCode} onChange={changeHandler} />    
+)
 ```
 
 ### components/FieldTextArea.tsx
@@ -161,11 +160,10 @@ export interface InputProps extends InputHTMLAttributes<any> {
 ```
 
 Usage examples:
-```js
-import {Input} from 'chums-ducks';
-
+```tsx
 <Input value={numeral(laborCost + fixedCosts).format('$0.0000')} readOnly/>
-
+```
+```tsx
 <Input type="text" value={machine} onChange={changeHandler} 
        list="input-machine-list" form={formId}/>
 <datalist id="input-machine-list">
@@ -381,9 +379,9 @@ export interface Props {
     context?: string,
 }
 ```
-```tsx
-import {AlertList} from 'chums-ducks';
 
+typical usage:
+```tsx
 <AlertList />
 ```
 
@@ -538,15 +536,17 @@ const sort = useSelector(sortableTableSelector(tableKey));
 const list = useSelector(filteredListSelector(sort as OperationCodeSorterProps));
 const pagedList = useSelector(pagedDataSelector(tableKey, list));
 
-<div>
-    <SortableTable tableKey={tableKey} keyField={operationCodeKey}
-                   fields={fields} data={pagedList} size="xs"
-                   onSelectRow={onSelectRow}
-                   selected={keyValue(selected)}/>
-    <PagerDuck pageKey={tableKey}
-               dataLength={list.length}
-               filtered={list.length !== records}/>
-</div>
+return (
+    <div>
+        <SortableTable tableKey={tableKey} keyField={operationCodeKey}
+                       fields={fields} data={pagedList} size="xs"
+                       onSelectRow={onSelectRow}
+                       selected={keyValue(selected)}/>
+        <PagerDuck pageKey={tableKey}
+                   dataLength={list.length}
+                   filtered={list.length !== records}/>
+    </div>
+)
 ```
 
 #### ducks/sortableTables/SortableTableHead.tsx
