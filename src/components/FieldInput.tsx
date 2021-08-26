@@ -3,7 +3,7 @@ import Input from "./Input";
 import {InputField} from "../types";
 
 
-interface FieldInputProps {
+export interface FieldInputProps {
     field?: string,
     value?: string | ReadonlyArray<string> | number,
     placeholder?: string,

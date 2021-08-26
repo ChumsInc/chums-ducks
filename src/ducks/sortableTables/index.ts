@@ -30,7 +30,7 @@ export interface SortableTableField {
     field: string,
     title: string,
     sortable?: boolean,
-    render?: (row:any) => ReactElement|Element|string,
+    render?: (row:any) => ReactElement|Element|string|number,
     className?: string|object|((any:any) => string|object),
     colSpan?: number,
 }
