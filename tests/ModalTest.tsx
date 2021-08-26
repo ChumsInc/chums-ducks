@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {BootstrapSize, FormCheck, LoadingModal, Modal} from "../src";
+import {BootstrapSize, DateInput, FormCheck, InputGroup, LoadingModal, Modal} from "../src";
 import Select from "../src/components/Select";
 
 const ModalTest: React.FC = () => {
@@ -8,6 +8,7 @@ const ModalTest: React.FC = () => {
     const [staticBackdrop, setStaticBackdrop] = useState(false);
     const [size, setSize] = useState('sm' as BootstrapSize);
     const [centered, setCentered] = useState(false);
+    const [date, setDate] = useState<Date|string|number|null>('2021-03-01');
 
     let timer: number = -1;
 
@@ -58,6 +59,16 @@ const ModalTest: React.FC = () => {
                 <div className="col-auto">
                     <FormCheck label={"centered"} checked={centered}
                                onClick={() => setCentered(!centered)} type="checkbox"/>
+                </div>
+                <div className="col-auto">
+                    <InputGroup>
+                        <div className="input-group-text">Date Test</div>
+                        <DateInput date={date} onChangeDate={(d) => setDate(d)} />
+                    </InputGroup>
+
+                </div>
+                <div className="col-auto">
+                    {JSON.stringify(date)}
                 </div>
             </div>
         </div>

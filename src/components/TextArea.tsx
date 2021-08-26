@@ -1,8 +1,8 @@
 import React, {
     ChangeEvent,
     FocusEvent,
-    InputHTMLAttributes,
-    RefObject, TextareaHTMLAttributes,
+    RefObject,
+    TextareaHTMLAttributes,
     useCallback,
     useEffect,
     useRef,
@@ -10,7 +10,6 @@ import React, {
 } from 'react';
 import classNames from "classnames";
 import debounce from 'lodash.debounce'
-import {getRegex} from "../utils/regex";
 
 const noop = () => {
 };
@@ -22,15 +21,15 @@ export interface TextAreaProps extends TextareaHTMLAttributes<any> {
 }
 
 const TextArea: React.FC<TextAreaProps> = ({
-                                         bsSize = 'sm',
-                                         wait = 350,
-                                         myRef,
-                                         className,
-                                         value,
-                                         onChange = noop,
-                                         onBlur,
-                                         ...rest
-                                     }) => {
+                                               bsSize = 'sm',
+                                               wait = 350,
+                                               myRef,
+                                               className,
+                                               value,
+                                               onChange = noop,
+                                               onBlur,
+                                               ...rest
+                                           }) => {
 
     let _debounced: ReturnType<typeof debounce> | undefined;
     const delayedChange = useCallback(debounce((ev: ChangeEvent<HTMLTextAreaElement>) => {
@@ -69,12 +68,12 @@ const TextArea: React.FC<TextAreaProps> = ({
 
     return (
         <textarea
-               className={classNames(inputClassName, className)}
-               value={localValue || ''}
-               // onInput={changeHandler}
-               onBlur={blurHandler}
-               onChange={changeHandler}
-               ref={myRef || inputRef} {...rest} />
+            className={classNames(inputClassName, className)}
+            value={localValue || ''}
+            // onInput={changeHandler}
+            onBlur={blurHandler}
+            onChange={changeHandler}
+            ref={myRef || inputRef} {...rest} />
     )
 }
 export default TextArea;

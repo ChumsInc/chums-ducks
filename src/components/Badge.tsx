@@ -9,12 +9,22 @@ export interface Props {
     description?: string,
 }
 
-const Badge: React.FC<Props> = ({color, pill, text, className, description, children}) => {
-    const styleClassName = `bg-${color}`;
+const Badge: React.FC<Props> = ({
+                                    color,
+                                    pill,
+                                    text,
+                                    className,
+                                    description,
+                                    children
+                                }) => {
+    const _className = {
+        'badge': true,
+        'badge-pill': pill,
+        [`bg-${color}`]: !!color,
+    }
 
-    const badgeClassNames = classNames('badge', {'badge-pill': pill}, styleClassName, className);
     return (
-        <span className={badgeClassNames}>
+        <span className={classNames(_className, className)}>
             {text || children || ''}
             {!!description && (<span className="visually-hidden">{description}</span>)}
         </span>
