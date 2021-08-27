@@ -12,9 +12,9 @@ var NavRouterLink = function (_a) {
     };
     return (React.createElement("li", { className: "nav-item" },
         React.createElement(NavLink, { to: to, activeClassName: "active", className: classNames('nav-link', className, { disabled: disabled }), tabIndex: disabled ? -1 : 0 },
-            !!icon && React.createElement("span", { className: classNames('nav-item-icon', icon) }),
-            title,
-            canClose && (React.createElement("span", { "aria-label": "Close", onClick: onClickClose, className: "ms-2 bi-x-lg" })))));
+            !!icon && React.createElement("span", { className: classNames('nav-item-icon', 'me-1', icon) }),
+            React.createElement("span", { className: "nav-item-text " }, title),
+            canClose && (React.createElement("span", { "aria-label": "Close", onClick: onClickClose, className: "ms-2 bi-x-lg nav-item-close" })))));
 };
 export default NavRouterLink;
 //# sourceMappingURL=NavRouterLink.js.map
