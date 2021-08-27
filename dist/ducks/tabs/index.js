@@ -9,10 +9,14 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 var initialState = {
     app: { list: [], selected: '' },
@@ -112,7 +116,7 @@ var tabsReducer = function (state, action) {
         case tabListCreated:
             if (!state[key]) {
                 return __assign(__assign({}, state), (_a = {}, _a[key] = {
-                    list: __spreadArray([], list),
+                    list: __spreadArray([], list, true),
                     selected: id || (list.length === 0 ? '' : list[0].id),
                 }, _a));
             }
@@ -120,7 +124,7 @@ var tabsReducer = function (state, action) {
         case tabAdded:
             if (tabSet && tab) {
                 return __assign(__assign({}, state), (_b = {}, _b[key] = {
-                    list: __spreadArray(__spreadArray([], tabSet.list), [tab]),
+                    list: __spreadArray(__spreadArray([], tabSet.list, true), [tab], false),
                     selected: tabSet.selected,
                 }, _b));
             }
@@ -130,7 +134,7 @@ var tabsReducer = function (state, action) {
                 var list_1 = tabSet.list.filter(function (tab) { return tab.id !== id; });
                 var selected = nextTabId(tabSet, id);
                 return __assign(__assign({}, state), (_c = {}, _c[key] = {
-                    list: __spreadArray([], list_1),
+                    list: __spreadArray([], list_1, true),
                     selected: selected,
                 }, _c));
             }

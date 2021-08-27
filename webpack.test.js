@@ -20,7 +20,7 @@ module.exports = merge(common, {
     mode: 'development',
     devServer: {
         port: 8000,
-        contentBase: [path.join(__dirname, 'public'), __dirname],
+        static: [path.join(__dirname, 'public'), __dirname],
         hot: true,
         proxy: {
             '/api': {...localProxy},

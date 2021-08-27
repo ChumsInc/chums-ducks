@@ -1,4 +1,4 @@
-import { ActionInterface } from "../types";
+import { ActionInterface, ActionPayload } from "../types";
 import { ReactElement } from "react";
 import { RootStateOrAny } from "react-redux";
 export interface SortableTableInterface {
@@ -6,12 +6,13 @@ export interface SortableTableInterface {
     field: string;
     ascending: boolean;
 }
+export interface SortableTablesPayload extends ActionPayload {
+    key: string;
+    field: string;
+    ascending: boolean;
+}
 export interface SortableTablesAction extends ActionInterface {
-    payload: {
-        key: string;
-        field: string;
-        ascending: boolean;
-    };
+    payload: SortableTablesPayload;
 }
 export interface SortableTablesState {
     [key: string]: SortableTableInterface;
@@ -24,7 +25,7 @@ export interface SortableTableField {
     field: string;
     title: string;
     sortable?: boolean;
-    render?: (row: any) => ReactElement | Element | string;
+    render?: (row: any) => ReactElement | Element | string | number;
     className?: string | object | ((any: any) => string | object);
     colSpan?: number;
 }

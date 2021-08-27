@@ -9,10 +9,14 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 export var defaultAlert = {
     canDismiss: true,
@@ -61,22 +65,22 @@ var addAlert = function (state, action) {
     if (!contextAlert) {
         return {
             counter: counter + 1,
-            list: __spreadArray(__spreadArray([], list), [
+            list: __spreadArray(__spreadArray([], list, true), [
                 __assign(__assign({}, alert), { id: counter, count: 1, timestamp: new Date().valueOf() })
-            ]).sort(alertIDSort)
+            ], false).sort(alertIDSort)
         };
     }
     return {
         counter: counter,
-        list: __spreadArray(__spreadArray([], list.filter(function (alert) { return alert.id !== contextAlert.id; })), list.filter(function (alert) { return alert.id === contextAlert.id; })
+        list: __spreadArray(__spreadArray([], list.filter(function (alert) { return alert.id !== contextAlert.id; }), true), list.filter(function (alert) { return alert.id === contextAlert.id; })
             .map(function (alert) {
             return __assign(__assign(__assign({}, alert), payload === null || payload === void 0 ? void 0 : payload.alert), { count: alert.count + 1, timestamp: new Date().valueOf() });
-        })).sort(alertIDSort),
+        }), true).sort(alertIDSort),
     };
 };
 var alertReducer = function (state, action) {
     if (state === void 0) { state = initialState; }
-    var type = action.type, payload = action.payload, error = action.error, meta = action.meta;
+    var type = action.type, payload = action.payload;
     var counter = state.counter, list = state.list;
     switch (type) {
         case alertAdded: {
@@ -88,7 +92,7 @@ var alertReducer = function (state, action) {
             }
             return {
                 counter: counter,
-                list: __spreadArray([], list.filter(function (alert) { return alert.id !== (payload === null || payload === void 0 ? void 0 : payload.id); })).sort(alertIDSort)
+                list: __spreadArray([], list.filter(function (alert) { return alert.id !== (payload === null || payload === void 0 ? void 0 : payload.id); }), true).sort(alertIDSort)
             };
         case alertDismissedByContext:
             if (!(payload === null || payload === void 0 ? void 0 : payload.context)) {
@@ -96,7 +100,7 @@ var alertReducer = function (state, action) {
             }
             return {
                 counter: counter,
-                list: __spreadArray([], list.filter(function (alert) { return alert.context !== (payload === null || payload === void 0 ? void 0 : payload.context); })).sort(alertIDSort)
+                list: __spreadArray([], list.filter(function (alert) { return alert.context !== (payload === null || payload === void 0 ? void 0 : payload.context); }), true).sort(alertIDSort)
             };
         default:
             if (payload === null || payload === void 0 ? void 0 : payload.error) {

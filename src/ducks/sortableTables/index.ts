@@ -1,5 +1,5 @@
 
-import {ActionInterface} from "../types";
+import {ActionInterface, ActionPayload} from "../types";
 import {ReactElement} from "react";
 import {RootStateOrAny} from "react-redux";
 
@@ -9,12 +9,13 @@ export interface SortableTableInterface {
     ascending: boolean,
 }
 
+export interface SortableTablesPayload extends ActionPayload {
+    key: string,
+    field: string,
+    ascending: boolean,
+}
 export interface SortableTablesAction extends ActionInterface {
-    payload: {
-        key: string,
-        field: string,
-        ascending: boolean,
-    }
+    payload: SortableTablesPayload,
 }
 
 export interface SortableTablesState {

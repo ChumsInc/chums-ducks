@@ -108,8 +108,12 @@ export function fetchJSON(url, options) {
                 case 2: return [2 /*return*/, _a.sent()];
                 case 3:
                     err_1 = _a.sent();
-                    console.log("fetchJSON()", err_1.message);
-                    return [2 /*return*/, Promise.reject(err_1)];
+                    if (err_1 instanceof Error) {
+                        console.log("fetchJSON()", err_1.message);
+                        return [2 /*return*/, Promise.reject(err_1)];
+                    }
+                    console.error("fetchJSON()", err_1);
+                    return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }
         });
@@ -135,8 +139,12 @@ export function fetchHTML(url, options) {
                 case 4: return [2 /*return*/, _a.sent()];
                 case 5:
                     err_2 = _a.sent();
-                    console.log("fetchGET()", err_2.message);
-                    return [2 /*return*/, Promise.reject(err_2)];
+                    if (err_2 instanceof Error) {
+                        console.log("fetchHTML()", err_2.message);
+                        return [2 /*return*/, Promise.reject(err_2)];
+                    }
+                    console.error("fetchHTML()", err_2);
+                    return [3 /*break*/, 6];
                 case 6: return [2 /*return*/];
             }
         });
@@ -157,8 +165,12 @@ export function fetchPOST(url, body, options) {
                 case 2: return [2 /*return*/, _a.sent()];
                 case 3:
                     err_3 = _a.sent();
-                    console.log("fetchPOST()", err_3.message);
-                    return [2 /*return*/, Promise.reject(err_3)];
+                    if (err_3 instanceof Error) {
+                        console.log("fetchPOST()", err_3.message);
+                        return [2 /*return*/, Promise.reject(err_3)];
+                    }
+                    console.error('fetchPOST()', err_3);
+                    return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }
         });
@@ -179,8 +191,12 @@ export function fetchDELETE(url, options) {
                 case 2: return [2 /*return*/, _a.sent()];
                 case 3:
                     err_4 = _a.sent();
-                    console.log("fetchDELETE()", err_4.message);
-                    return [2 /*return*/, Promise.reject(err_4)];
+                    if (err_4 instanceof Error) {
+                        console.log("fetchDELETE()", err_4.message);
+                        return [2 /*return*/, Promise.reject(err_4)];
+                    }
+                    console.log('fetchDELETE', err_4);
+                    return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }
         });
@@ -191,9 +207,13 @@ export var buildPath = function (path, props) {
     try {
         return compile(path, { encode: encodeURIComponent })(props || {});
     }
-    catch (e) {
-        console.trace(e.message, path, props);
-        return path;
+    catch (err) {
+        if (err instanceof Error) {
+            console.trace(err.message, path, props);
+            return path;
+        }
+        console.error(err);
+        return '';
     }
 };
 //# sourceMappingURL=fetch.js.map

@@ -61,9 +61,12 @@ export async function fetchJSON(url:string, options:RequestInit = {}) {
     try {
         const res = await fetch(url, {credentials: 'same-origin', ...options});
         return await handleJSONResponse(res);
-    } catch(err) {
-        console.log("fetchJSON()", err.message);
-        return Promise.reject(err);
+    } catch(err:unknown) {
+        if (err instanceof Error) {
+            console.log("fetchJSON()", err.message);
+            return Promise.reject(err);
+        }
+        console.error("fetchJSON()", err);
     }
 }
 
@@ -75,9 +78,12 @@ export async function fetchHTML(url:string, options: RequestInit = {}) {
             return Promise.reject(new Error(text));
         }
         return await res.text();
-    } catch(err) {
-        console.log("fetchGET()", err.message);
-        return Promise.reject(err);
+    } catch(err:unknown) {
+        if (err instanceof Error) {
+            console.log("fetchHTML()", err.message);
+            return Promise.reject(err);
+        }
+        console.error("fetchHTML()", err)
     }
 }
 
@@ -85,9 +91,12 @@ export async function fetchPOST(url:string, body:Object, options: RequestInit = 
     try {
         const res = await fetch(url, fetchOptions.PostJSON(body, options));
         return await handleJSONResponse(res);
-    } catch(err) {
-        console.log("fetchPOST()", err.message);
-        return Promise.reject(err);
+    } catch(err:unknown) {
+        if (err instanceof Error) {
+            console.log("fetchPOST()", err.message);
+            return Promise.reject(err);
+        }
+        console.error('fetchPOST()', err);
     }
 }
 
@@ -95,18 +104,25 @@ export async function fetchDELETE(url:string, options: RequestInit = {}) {
     try {
         const res = await fetch(url, fetchOptions.Delete(options));
         return await handleJSONResponse(res);
-    } catch(err) {
-        console.log("fetchDELETE()", err.message);
-        return Promise.reject(err);
+    } catch(err:unknown) {
+        if (err instanceof Error) {
+            console.log("fetchDELETE()", err.message);
+            return Promise.reject(err);
+        }
+        console.log('fetchDELETE', err);
     }
 }
 
-export const buildPath = (path:string, props:object = {}) => {
+export const buildPath = (path:string, props:object = {}):string => {
     try {
         return compile(path, {encode: encodeURIComponent})(props || {});
-    } catch (e) {
-        console.trace(e.message, path, props);
-        return path;
+    } catch (err:unknown) {
+        if (err instanceof Error) {
+            console.trace(err.message, path, props);
+            return path;
+        }
+        console.error(err);
+        return '';
     }
 };
 

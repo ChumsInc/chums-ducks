@@ -1,8 +1,8 @@
 
-import {ActionInterface} from "../types";
+import {ActionInterface, ActionPayload} from "../types";
 import {RootStateOrAny} from "react-redux";
 
-export interface PageSetAction {
+export interface PageSetAction extends ActionPayload {
     key: string,
     current?: number,
     rowsPerPage?: number,

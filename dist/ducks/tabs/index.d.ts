@@ -1,4 +1,4 @@
-import { ActionInterface } from "../types";
+import { ActionInterface, ActionPayload } from "../types";
 import { RootStateOrAny } from "react-redux";
 export interface Tab {
     id: string;
@@ -13,13 +13,14 @@ export interface TabSet {
     list: Tab[];
     selected: string;
 }
+export interface TabPayload extends ActionPayload {
+    key: string;
+    id?: string;
+    tab?: Tab;
+    list?: Tab[];
+}
 export interface TabAction extends ActionInterface {
-    payload?: {
-        key: string;
-        id?: string;
-        tab?: Tab;
-        list?: Tab[];
-    };
+    payload?: TabPayload;
 }
 export interface TabsState {
     [key: string]: TabSet;
