@@ -96,11 +96,18 @@ function handleJSONResponse(res) {
 export function fetchJSON(url, options) {
     if (options === void 0) { options = {}; }
     return __awaiter(this, void 0, void 0, function () {
-        var res, err_1;
+        var headers, res, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 3, , 4]);
+                    if (!!(options === null || options === void 0 ? void 0 : options.method) && ['POST', 'PUT'].includes(options.method.toUpperCase())) {
+                        headers = (options === null || options === void 0 ? void 0 : options.headers) || {};
+                        if (options === null || options === void 0 ? void 0 : options.headers) {
+                            delete options.headers;
+                        }
+                        options.headers = __assign({ 'Accept': 'application/json', 'Content-Type': 'application/json' }, headers);
+                    }
                     return [4 /*yield*/, fetch(url, __assign({ credentials: 'same-origin' }, options))];
                 case 1:
                     res = _a.sent();

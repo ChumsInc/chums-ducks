@@ -59,6 +59,17 @@ async function handleJSONResponse(res:Response) {
 
 export async function fetchJSON(url:string, options:RequestInit = {}) {
     try {
+        if (!!options?.method && ['POST', 'PUT'].includes(options.method.toUpperCase())) {
+            const headers = options?.headers || {};
+            if (options?.headers) {
+                delete options.headers;
+            }
+            options.headers = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                ...headers,
+            }
+        }
         const res = await fetch(url, {credentials: 'same-origin', ...options});
         return await handleJSONResponse(res);
     } catch(err:unknown) {
