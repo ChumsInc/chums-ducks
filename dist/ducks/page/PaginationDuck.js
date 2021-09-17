@@ -20,7 +20,7 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { currentPageSelector, rowsPerPageSelector, setPageAction, calcPages } from "./index";
 import Pagination from "./Pagination";
@@ -31,9 +31,11 @@ var PaginationDuck = function (_a) {
     var rowsPerPage = useSelector(rowsPerPageSelector(pageKey));
     var pages = calcPages(dataLength, rowsPerPage) || 1;
     // if the current page has exceeded the number of pages, then reset to page 1
-    if (page > pages) {
-        dispatch(setPageAction({ key: pageKey, current: 1 }));
-    }
+    useEffect(function () {
+        if (page > pages) {
+            dispatch(setPageAction({ key: pageKey, current: 1 }));
+        }
+    }, [pages]);
     var changeHandler = function (value) { return dispatch(setPageAction({ key: pageKey, current: value })); };
     return (React.createElement(Pagination, __assign({ page: page, pages: pages, onSelectPage: changeHandler }, props)));
 };
