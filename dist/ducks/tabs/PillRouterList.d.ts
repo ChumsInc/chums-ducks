@@ -1,4 +1,4 @@
 import React from "react";
-import { NavListProps } from "./NavList";
-declare const PillRouterList: React.FC<NavListProps>;
+import { NavRouterListProps } from "./NavRouterList";
+declare const PillRouterList: React.FC<NavRouterListProps>;
 export default PillRouterList;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {tabListSelector, tabRemovedAction} from "./index";
+import {selectTabList, tabRemovedAction} from "./index";
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
 import './TabList.css';
@@ -12,14 +12,14 @@ export interface NavRouterListProps {
     itemClassName?: string | object,
 }
 
-const NavList: React.FC<NavRouterListProps> = ({
-                                                   tabKey,
-                                                   className,
-                                                   itemClassName,
-                                                   children
-                                               }) => {
+const NavRouterList: React.FC<NavRouterListProps> = ({
+                                                         tabKey,
+                                                         className,
+                                                         itemClassName,
+                                                         children
+                                                     }) => {
     const dispatch = useDispatch();
-    const list = useSelector(tabListSelector(tabKey));
+    const list = useSelector(selectTabList(tabKey));
 
     const tabCloseHandler = (id: string) => dispatch(tabRemovedAction(id, tabKey));
     return (
@@ -35,4 +35,4 @@ const NavList: React.FC<NavRouterListProps> = ({
     )
 }
 
-export default NavList;
+export default NavRouterList;

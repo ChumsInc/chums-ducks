@@ -1,4 +1,4 @@
 import React from "react";
-import { NavListProps } from "./NavList";
-declare const TabRouterList: React.FC<NavListProps>;
+import { NavRouterListProps } from "./NavRouterList";
+declare const TabRouterList: React.FC<NavRouterListProps>;
 export default TabRouterList;

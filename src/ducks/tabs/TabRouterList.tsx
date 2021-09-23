@@ -1,18 +1,18 @@
 import React from "react";
-import {default as NavList, NavListProps} from "./NavList";
 import classNames from "classnames";
+import NavRouterList , {NavRouterListProps} from "./NavRouterList";
 
 
-const TabRouterList: React.FC<NavListProps> = ({
-                                             tabKey,
-                                             className,
-                                             itemClassName,
-                                             children
-                                         }) => {
+const TabRouterList: React.FC<NavRouterListProps> = ({
+                                                         tabKey,
+                                                         className,
+                                                         itemClassName,
+                                                         children
+                                                     }) => {
     return (
-        <NavList tabKey={tabKey} className={classNames(className, 'nav-tabs')} itemClassName={itemClassName}>
+        <NavRouterList tabKey={tabKey} className={classNames(className, 'nav-tabs')} itemClassName={itemClassName}>
             {children}
-        </NavList>
+        </NavRouterList>
     )
 }
 

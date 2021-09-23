@@ -20,7 +20,7 @@ export interface TabPayload extends ActionPayload {
     list?: Tab[];
 }
 export interface TabAction extends ActionInterface {
-    payload?: TabPayload;
+    payload: TabPayload;
 }
 export interface TabsState {
     [key: string]: TabSet;
@@ -38,11 +38,11 @@ export declare const tabSelectedAction: (id: string, key?: string) => TabAction;
 export declare const tabAddedAction: (tab: Tab, key?: string) => TabAction;
 export declare const tabRemovedAction: (id: string, key?: string) => TabAction;
 export declare const tabDisabledAction: (id: string, key?: string) => TabAction;
-export declare const tabListSelector: (key?: string) => (state: RootState) => Tab[];
 export declare const selectTabList: (key?: string) => (state: RootState) => Tab[];
+export declare const tabListSelector: (key?: string) => (state: RootState) => Tab[];
+export declare const selectCurrentTab: (key?: string) => (state: RootState) => string;
 export declare const selectedTabSelector: (key?: string) => (state: RootState) => string;
-export declare const selectSelectedTab: (key?: string) => (state: RootState) => string;
-export declare const tabSelector: (id: string, key?: string) => (state: RootState) => Tab;
 export declare const selectTabById: (id: string, key?: string) => (state: RootState) => Tab;
+export declare const tabSelector: (id: string, key?: string) => (state: RootState) => Tab;
 declare const tabsReducer: (state: TabsState | undefined, action: TabAction) => TabsState;
 export default tabsReducer;

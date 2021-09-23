@@ -1,5 +1,5 @@
-import React from 'react';
-import {selectedTabSelector, tabListSelector, tabRemovedAction, tabSelectedAction} from "./index";
+import React, {useEffect} from 'react';
+import {selectCurrentTab, selectTabList, tabRemovedAction, tabSelectedAction} from "./index";
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
 import NavItem from "./NavItem";
@@ -22,15 +22,20 @@ const NavList: React.FC<NavListProps> = ({
                                              children
                                          }) => {
     const dispatch = useDispatch();
-    const list = useSelector(tabListSelector(tabKey))
-    const selected = useSelector(selectedTabSelector(tabKey));
+    const list = useSelector(selectTabList(tabKey))
+    const selected = useSelector(selectCurrentTab(tabKey));
+
+    useEffect(() => {
+
+    }, [])
 
     const tabClickHandler = (id: string) => {
-        console.log(id, tabKey);
         dispatch(tabSelectedAction(id, tabKey));
         onSelectTab(id);
     }
+
     const tabCloseHandler = (id: string) => dispatch(tabRemovedAction(id, tabKey));
+
     return (
         <ul className={classNames('nav', className)}>
             {list.map(tab => (

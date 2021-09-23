@@ -5,5 +5,5 @@ export interface NavRouterListProps {
     className?: string | object;
     itemClassName?: string | object;
 }
-declare const NavList: React.FC<NavRouterListProps>;
-export default NavList;
+declare const NavRouterList: React.FC<NavRouterListProps>;
+export default NavRouterList;

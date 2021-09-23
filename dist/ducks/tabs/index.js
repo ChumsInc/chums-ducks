@@ -21,7 +21,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 var initialState = {
     app: { list: [], selected: '' },
 };
-var defaultTabsKey = '_';
+var defaultTabsKey = 'app';
 export var tabListCreated = 'tabs/tabs-created';
 export var tabSelected = 'tabs/tab-selected';
 export var tabAdded = 'tabs/tab-added';
@@ -62,7 +62,7 @@ export var tabDisabledAction = function (id, key) {
         payload: { key: key, id: id }
     });
 };
-export var tabListSelector = function (key) {
+export var selectTabList = function (key) {
     if (key === void 0) { key = defaultTabsKey; }
     return function (state) {
         if (!state.tabs[key]) {
@@ -71,8 +71,8 @@ export var tabListSelector = function (key) {
         return state.tabs[key].list;
     };
 };
-export var selectTabList = tabListSelector;
-export var selectedTabSelector = function (key) {
+export var tabListSelector = selectTabList;
+export var selectCurrentTab = function (key) {
     if (key === void 0) { key = defaultTabsKey; }
     return function (state) {
         if (!state.tabs[key]) {
@@ -83,8 +83,8 @@ export var selectedTabSelector = function (key) {
         return id || '';
     };
 };
-export var selectSelectedTab = selectedTabSelector;
-export var tabSelector = function (id, key) {
+export var selectedTabSelector = selectCurrentTab;
+export var selectTabById = function (id, key) {
     if (key === void 0) { key = defaultTabsKey; }
     return function (state) {
         if (!state.tabs[key]) {
@@ -94,7 +94,7 @@ export var tabSelector = function (id, key) {
         return tab;
     };
 };
-export var selectTabById = tabSelector;
+export var tabSelector = selectTabById;
 var nextTabId = function (tabSet, id) {
     if (tabSet.selected === id) {
         var found_1 = false;
@@ -118,47 +118,49 @@ var tabsReducer = function (state, action) {
     var _a, _b, _c, _d, _e;
     if (state === void 0) { state = initialState; }
     var type = action.type, payload = action.payload;
-    var _f = payload || {}, _g = _f.key, key = _g === void 0 ? defaultTabsKey : _g, tab = _f.tab, _h = _f.list, list = _h === void 0 ? [] : _h, _j = _f.id, id = _j === void 0 ? '' : _j;
-    var tabSet = state[key];
     switch (type) {
         case tabListCreated:
-            if (!state[key]) {
-                return __assign(__assign({}, state), (_a = {}, _a[key] = {
+            if (!state[payload.key]) {
+                var _f = payload.list, list = _f === void 0 ? [] : _f, _g = payload.id, id = _g === void 0 ? '' : _g;
+                return __assign(__assign({}, state), (_a = {}, _a[payload.key] = {
                     list: __spreadArray([], list, true),
                     selected: id || (list.length === 0 ? '' : list[0].id),
                 }, _a));
             }
             return state;
         case tabAdded:
-            if (tabSet && tab) {
-                return __assign(__assign({}, state), (_b = {}, _b[key] = {
-                    list: __spreadArray(__spreadArray([], tabSet.list, true), [tab], false),
-                    selected: tabSet.selected,
+            if (state[payload.key] && (payload === null || payload === void 0 ? void 0 : payload.tab)) {
+                return __assign(__assign({}, state), (_b = {}, _b[payload.key] = {
+                    list: __spreadArray(__spreadArray([], state[payload.key].list, true), [payload.tab], false),
+                    selected: state[payload.key].selected,
                 }, _b));
             }
             return state;
         case tabRemoved:
-            if (tabSet) {
-                var list_1 = tabSet.list.filter(function (tab) { return tab.id !== id; });
-                var selected = nextTabId(tabSet, id);
-                return __assign(__assign({}, state), (_c = {}, _c[key] = {
-                    list: __spreadArray([], list_1, true),
+            if (state[payload.key] && (payload === null || payload === void 0 ? void 0 : payload.id)) {
+                var list = state[payload.key].list.filter(function (tab) { return tab.id !== payload.id; });
+                var selected = nextTabId(state[payload.key], payload.id);
+                return __assign(__assign({}, state), (_c = {}, _c[payload.key] = {
+                    list: __spreadArray([], list, true),
                     selected: selected,
                 }, _c));
             }
             return state;
         case tabDisabled:
-            if (tabSet) {
-                var selected = nextTabId(tabSet, id);
-                return __assign(__assign({}, state), (_d = {}, _d[key] = {
-                    list: list.map(function (tab) { return (__assign(__assign({}, tab), { disabled: tab.id === id })); }),
+            if (state[payload.key] && (payload === null || payload === void 0 ? void 0 : payload.id)) {
+                var selected = nextTabId(state[payload.key], payload.id);
+                return __assign(__assign({}, state), (_d = {}, _d[payload.key] = {
+                    list: state[payload.key].list.map(function (tab) { return (__assign(__assign({}, tab), { disabled: tab.id === payload.id })); }),
                     selected: selected,
                 }, _d));
             }
             return state;
         case tabSelected:
-            if (tabSet) {
-                return __assign(__assign({}, state), (_e = {}, _e[key] = __assign(__assign({}, tabSet), { selected: id }), _e));
+            if (state[payload.key] && (payload === null || payload === void 0 ? void 0 : payload.id)) {
+                return __assign(__assign({}, state), (_e = {}, _e[payload.key] = {
+                    list: state[payload.key].list,
+                    selected: payload.id
+                }, _e));
             }
             return state;
         default:

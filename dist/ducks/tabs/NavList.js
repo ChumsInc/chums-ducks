@@ -1,5 +1,5 @@
-import React from 'react';
-import { selectedTabSelector, tabListSelector, tabRemovedAction, tabSelectedAction } from "./index";
+import React, { useEffect } from 'react';
+import { selectCurrentTab, selectTabList, tabRemovedAction, tabSelectedAction } from "./index";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 import NavItem from "./NavItem";
@@ -8,10 +8,11 @@ import { noop } from "../../utils";
 var NavList = function (_a) {
     var tabKey = _a.tabKey, className = _a.className, itemClassName = _a.itemClassName, _b = _a.onSelectTab, onSelectTab = _b === void 0 ? noop : _b, children = _a.children;
     var dispatch = useDispatch();
-    var list = useSelector(tabListSelector(tabKey));
-    var selected = useSelector(selectedTabSelector(tabKey));
+    var list = useSelector(selectTabList(tabKey));
+    var selected = useSelector(selectCurrentTab(tabKey));
+    useEffect(function () {
+    }, []);
     var tabClickHandler = function (id) {
-        console.log(id, tabKey);
         dispatch(tabSelectedAction(id, tabKey));
         onSelectTab(id);
     };

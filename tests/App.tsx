@@ -36,7 +36,7 @@ const App: React.FC = () => {
     const onAddItem = () => {
         dispatch(tabAddedAction(tempTab, tabSetId));
     }
-    const [navType, setNavType] = useState('tab');
+    const [navType, setNavType] = useState('');
 
     return (
         <div>
