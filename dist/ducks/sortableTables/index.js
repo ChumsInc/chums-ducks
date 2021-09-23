@@ -12,6 +12,7 @@ var __assign = (this && this.__assign) || function () {
 export var tablesSortChanged = 'tables/categorySortChanged';
 export var tablesTableAdded = 'tables/tableAdded';
 export var sortableTableSelector = function (key) { return function (state) { return state.sortableTables[key] || { key: key, field: '', ascending: false }; }; };
+export var selectTableSort = sortableTableSelector;
 export var sortChangedAction = function (_a) {
     var key = _a.key, field = _a.field, ascending = _a.ascending;
     return ({

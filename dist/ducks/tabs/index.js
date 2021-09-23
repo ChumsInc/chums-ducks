@@ -64,8 +64,14 @@ export var tabDisabledAction = function (id, key) {
 };
 export var tabListSelector = function (key) {
     if (key === void 0) { key = defaultTabsKey; }
-    return function (state) { var _a; return ((_a = state.tabs[key]) === null || _a === void 0 ? void 0 : _a.list) || []; };
+    return function (state) {
+        if (!state.tabs[key]) {
+            return [];
+        }
+        return state.tabs[key].list;
+    };
 };
+export var selectTabList = tabListSelector;
 export var selectedTabSelector = function (key) {
     if (key === void 0) { key = defaultTabsKey; }
     return function (state) {
@@ -77,6 +83,7 @@ export var selectedTabSelector = function (key) {
         return id || '';
     };
 };
+export var selectSelectedTab = selectedTabSelector;
 export var tabSelector = function (id, key) {
     if (key === void 0) { key = defaultTabsKey; }
     return function (state) {
@@ -87,6 +94,7 @@ export var tabSelector = function (id, key) {
         return tab;
     };
 };
+export var selectTabById = tabSelector;
 var nextTabId = function (tabSet, id) {
     if (tabSet.selected === id) {
         var found_1 = false;

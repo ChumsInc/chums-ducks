@@ -35,6 +35,7 @@ interface RootState extends RootStateOrAny {
 export declare const tablesSortChanged = "tables/categorySortChanged";
 export declare const tablesTableAdded = "tables/tableAdded";
 export declare const sortableTableSelector: (key: string) => (state: RootState) => SortableTableInterface;
+export declare const selectTableSort: (key: string) => (state: RootState) => SortableTableInterface;
 export declare const sortChangedAction: ({ key, field, ascending }: SortableTableInterface) => SortableTablesAction;
 export declare const tableAddedAction: ({ key, field, ascending }: SortableTableInterface) => SortableTablesAction;
 declare const sortableTablesReducer: (state: SortableTablesState | undefined, action: SortableTablesAction) => SortableTablesState;

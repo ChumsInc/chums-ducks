@@ -45,6 +45,9 @@ export const pagedDataSelector = (key: string, data: any[]) => (state:RootState)
     return data.filter((row, index) => Math.ceil((index + 1) / rowsPerPage) === current);
 }
 
+export const selectCurrentPage = currentPageSelector;
+export const selectRowsPerPage = rowsPerPageSelector;
+export const selectPagedData = pagedDataSelector;
 
 const pageReducer = (state:PageState = {}, action: PageAction):PageState => {
     const {type, payload} = action;

@@ -74,7 +74,13 @@ export const tabDisabledAction = (id: string, key: string = defaultTabsKey): Tab
     payload: {key, id}
 })
 
-export const tabListSelector = (key: string = defaultTabsKey) => (state: RootState) => state.tabs[key]?.list || [];
+export const tabListSelector = (key: string = defaultTabsKey) => (state: RootState) => {
+    if (!state.tabs[key]) {
+        return [];
+    }
+    return state.tabs[key].list;
+}
+export const selectTabList = tabListSelector;
 
 export const selectedTabSelector = (key: string = defaultTabsKey) => (state: RootState): string => {
     if (!state.tabs[key]) {
@@ -84,6 +90,7 @@ export const selectedTabSelector = (key: string = defaultTabsKey) => (state: Roo
     const [id] = list.filter(tab => tab.id === selected).map(tab => tab.id);
     return id || '';
 }
+export const selectSelectedTab = selectedTabSelector;
 
 export const tabSelector = (id: string, key: string = defaultTabsKey) => (state: RootState): Tab => {
     if (!state.tabs[key]) {
@@ -92,6 +99,7 @@ export const tabSelector = (id: string, key: string = defaultTabsKey) => (state:
     const [tab] = state.tabs[key].list.filter(tab => tab.id === id);
     return tab;
 }
+export const selectTabById = tabSelector;
 
 const nextTabId = (tabSet: TabSet, id: string) => {
     if (tabSet.selected === id) {

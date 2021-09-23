@@ -44,6 +44,8 @@ export const tablesSortChanged = 'tables/categorySortChanged';
 export const tablesTableAdded = 'tables/tableAdded';
 
 export const sortableTableSelector = (key:string) => (state:RootState):SortableTableInterface => state.sortableTables[key] || {key, field: '', ascending: false};
+export const selectTableSort = sortableTableSelector;
+
 
 export const sortChangedAction = ({key, field, ascending}:SortableTableInterface):SortableTablesAction => ({
     type: tablesSortChanged,

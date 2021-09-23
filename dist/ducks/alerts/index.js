@@ -37,12 +37,14 @@ export var addAlertAction = function (alert) {
 var buildAlert = function (err, context) { return ({ message: err.message, title: err.name, context: context, color: 'danger' }); };
 export var dismissAlertAction = function (id) { return ({ type: alertDismissed, payload: { id: id } }); };
 export var dismissContextAlert = function (context) { return ({ type: alertDismissedByContext, payload: { context: context } }); };
+export var dismissContextAlertAction = function (context) { return ({ type: alertDismissedByContext, payload: { context: context } }); };
 export var onErrorAction = function (err, context) {
     return addAlertAction(buildAlert(err, context));
 };
 export var alertListSelector = function (state) { return state.alerts.list; };
 export var selectAlertList = alertListSelector;
 export var alertListByContextSelector = function (context) { return function (state) { return state.alerts.list.filter(function (alert) { return alert.context === context; }); }; };
+export var selectAlertListByContext = alertListByContextSelector;
 export var alertContextFilter = function (list, context) {
     return list.filter(function (al) { return al.context === context; });
 };

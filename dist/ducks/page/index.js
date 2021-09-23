@@ -33,6 +33,9 @@ export var pagedDataSelector = function (key, data) { return function (state) {
     var _a = state.pages[key] || {}, current = _a.current, rowsPerPage = _a.rowsPerPage;
     return data.filter(function (row, index) { return Math.ceil((index + 1) / rowsPerPage) === current; });
 }; };
+export var selectCurrentPage = currentPageSelector;
+export var selectRowsPerPage = rowsPerPageSelector;
+export var selectPagedData = pagedDataSelector;
 var pageReducer = function (state, action) {
     var _a, _b, _c;
     if (state === void 0) { state = {}; }

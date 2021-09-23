@@ -53,6 +53,7 @@ const buildAlert = (err: Error, context?: string):BasicAlert => ({message: err.m
 
 export const dismissAlertAction = (id: number): AlertAction => ({type: alertDismissed, payload: {id}})
 export const dismissContextAlert = (context:string): AlertAction => ({type: alertDismissedByContext, payload: {context}})
+export const dismissContextAlertAction = (context:string): AlertAction => ({type: alertDismissedByContext, payload: {context}})
 
 export const onErrorAction = (err: Error, context?: string): AlertAction =>
     addAlertAction(buildAlert(err, context));
@@ -60,7 +61,10 @@ export const onErrorAction = (err: Error, context?: string): AlertAction =>
 
 export const alertListSelector = (state: RootState): Alert[] => state.alerts.list;
 export const selectAlertList = alertListSelector;
+
 export const alertListByContextSelector = (context: string) => (state:RootState):Alert[] => state.alerts.list.filter(alert => alert.context === context)
+export const selectAlertListByContext = alertListByContextSelector;
+
 export const alertContextFilter = (list:Alert[], context:string):Alert[] => {
     return list.filter(al => al.context === context);
 }
