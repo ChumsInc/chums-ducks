@@ -1,12 +1,12 @@
 import React, {ButtonHTMLAttributes} from "react";
-import {BootstrapButtonSize, BootstrapColor} from "../types";
+import {BootstrapButtonColor, BootstrapButtonSize} from "../types";
 import classNames from "classnames";
 
 export interface SpinnerButtonProps extends ButtonHTMLAttributes<any> {
     spinning?: boolean,
     spinnerType?: 'border' | 'grow',
     spinnerAfter?: boolean,
-    color?: BootstrapColor,
+    color?: BootstrapButtonColor,
     size?: BootstrapButtonSize,
 }
 

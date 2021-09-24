@@ -1,6 +1,9 @@
-export type BootstrapColor = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'body';
+export type BootstrapColor = 'primary' | 'secondary' | 'success' | 'danger'
+    | 'warning' | 'info' | 'light' | 'dark' | 'body';
 export type BootstrapBGColor = BootstrapColor | 'transparent';
 export type BootstrapTextColor = BootstrapColor | 'muted' | 'white' | 'black-50' | 'white-50';
+export type BootstrapButtonColor = BootstrapColor | 'outline-primary' | 'outline-secondary' | 'outline-success'
+    | 'outline-danger' | 'outline-warning' | 'outline-info' | 'outline-light' | 'outline-dark'
 
 export interface BasicAlert {
     title?: string,
@@ -11,11 +14,11 @@ export interface BasicAlert {
     canDismiss?: boolean,
 }
 
-export type BootstrapSize = 'xs'|'sm'|'md'|'lg'|'xl';
-export type BootstrapButtonSize = 'sm'|'lg';
+export type BootstrapSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type BootstrapButtonSize = 'xs' | 'sm' | 'lg';
 
 
 export interface InputField {
     field: string,
-    value: string|number|boolean
+    value: string | number | boolean
 }

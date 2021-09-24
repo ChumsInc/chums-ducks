@@ -149,7 +149,7 @@ const PaginationTest: React.FC = () => {
                     <small>filter = {filter}</small>
                 </div>
                 <div className="col-auto">
-                    <SpinnerButton spinning={loading} onClick={rebuildData} size="sm" spinnerAfter>Reload
+                    <SpinnerButton spinning={loading} onClick={rebuildData} size="sm" spinnerAfter color="outline-success">Reload
                         Data</SpinnerButton>
                 </div>
                 <div className="col-auto">
