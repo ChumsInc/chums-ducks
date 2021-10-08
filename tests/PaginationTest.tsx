@@ -16,6 +16,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Input, LoadingProgressBar} from "../src/components";
 import {BootstrapColor, ErrorBoundary, SortableTable, SpinnerButton} from "../src";
 import numeral from "numeral";
+import {languages} from './languages'
 
 
 interface TableDataRow {
@@ -73,18 +74,23 @@ const TFoot = ({value}: { value: number }) => (
 )
 
 const PaginationTest: React.FC = () => {
-    let timer: number;
+    let rebuildTimer: number;
     const dispatch = useDispatch();
-    const [filter, setFilter] = useState(100);
+    const [filterValue, setFilterValue] = useState(100);
+    const [filter, setFilter] = useState(filterValue);
     const [tableData, setTableData] = useState([] as TableDataRow[]);
     const [loading, setLoading] = useState(false);
+    const [filterTimer, setFilterTimer] = useState(0);
+
+
     useEffect(() => {
         const data = buildDataSet();
         setTableData(data);
         dispatch(addPageSetAction({key: pagerKey, rowsPerPage: 25, current: 1}))
         dispatch(tableAddedAction({key: pagerKey, field: 'id', ascending: true}))
         return () => {
-            window.clearTimeout(timer);
+            window.clearTimeout(rebuildTimer);
+            window.clearTimeout(filterTimer);
         }
     }, [])
 
@@ -96,9 +102,9 @@ const PaginationTest: React.FC = () => {
     const total = pageData.reduce((acc, row) => acc + row.value, 0);
 
     const rebuildData = () => {
-        window.clearTimeout(timer);
+        window.clearTimeout(rebuildTimer);
         setLoading(true);
-        timer = window.setTimeout(() => {
+        rebuildTimer = window.setTimeout(() => {
             const data = buildDataSet();
             setTableData(data);
             setLoading(false);
@@ -127,7 +133,13 @@ const PaginationTest: React.FC = () => {
 
     const filterChangeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
         console.log('filterChangeHandler()', ev.target.value);
-        setFilter(Number(ev.target.value));
+        setFilterValue(Number(ev.target.value));
+
+        window.clearTimeout(filterTimer);
+        const t = window.setTimeout(() => {
+            setFilter(Number(ev.target.value));
+        }, 450);
+        setFilterTimer(t);
     }
 
     const tfoot = (<TFoot value={total} />);
@@ -144,8 +156,7 @@ const PaginationTest: React.FC = () => {
                 <div className="col-auto"><label className="form-label">Filter Values:</label></div>
                 <div className="col-auto">
                     <Input type="number" className="from-control form-control-sm"
-                           wait={250}
-                           value={filter} onChange={filterChangeHandler} min={0} max={100}/>
+                           value={filterValue} onChange={filterChangeHandler} min={0} max={100}/>
                     <small>filter = {filter}</small>
                 </div>
                 <div className="col-auto">
@@ -156,18 +167,7 @@ const PaginationTest: React.FC = () => {
                     <Input type="text" id="default" list="languages" fuzzyList value={language}
                            onChange={(ev) => setLanguage(ev.target.value)}/>
                     <datalist id="languages">
-                        <option value="HTML"/>
-                        <option value="CSS"/>
-                        <option value="JavaScript"/>
-                        <option value="Java"/>
-                        <option value="Ruby And Go"/>
-                        <option value="PHP And HTML"/>
-                        <option value="Go"/>
-                        <option value="Erlang"/>
-                        <option value="Python And C++"/>
-                        <option value="C"/>
-                        <option value="C#"/>
-                        <option value="C++"/>
+                        {languages.map(val => (<option value={val}/>))}
                     </datalist>
                 </div>
             </div>

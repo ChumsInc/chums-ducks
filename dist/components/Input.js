@@ -28,7 +28,7 @@ var noop = function () {
 var Input = function (_a) {
     var _b;
     var _c = _a.bsSize, bsSize = _c === void 0 ? 'sm' : _c, fuzzyList = _a.fuzzyList, myRef = _a.myRef, _d = _a.type, type = _d === void 0 ? 'text' : _d, className = _a.className, value = _a.value, _e = _a.onChange, onChange = _e === void 0 ? noop : _e, rest = __rest(_a, ["bsSize", "fuzzyList", "myRef", "type", "className", "value", "onChange"]);
-    var inputRef = useRef(null);
+    var inputRef = myRef || useRef(null);
     var inputClassName = (_b = {
             'form-control': true
         },
@@ -36,17 +36,13 @@ var Input = function (_a) {
         _b);
     var changeHandler = function (ev) {
         if (!!rest.list && fuzzyList) {
-            if (!!myRef && myRef.current) {
-                myRef.current.pattern = getRegex(ev.target.value).source;
-                return;
-            }
             if (inputRef.current) {
                 inputRef.current.pattern = getRegex(ev.target.value).source;
             }
         }
         onChange(ev);
     };
-    return (React.createElement("input", __assign({ type: type, className: classNames(inputClassName, className), value: value || '', onChange: changeHandler, ref: myRef || inputRef }, rest)));
+    return (React.createElement("input", __assign({ type: type, className: classNames(inputClassName, className), value: value || '', onChange: changeHandler, ref: inputRef }, rest)));
 };
 export default Input;
 //# sourceMappingURL=Input.js.map

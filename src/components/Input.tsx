@@ -21,7 +21,7 @@ const Input: React.FC<InputProps> = ({
                                          onChange = noop,
                                          ...rest
                                      }) => {
-    const inputRef = useRef<HTMLInputElement>(null);
+    const inputRef = myRef || useRef<HTMLInputElement>(null);
 
     const inputClassName = {
         'form-control': true,
@@ -30,10 +30,6 @@ const Input: React.FC<InputProps> = ({
 
     const changeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
         if (!!rest.list && fuzzyList) {
-            if (!!myRef && myRef.current) {
-                myRef.current.pattern = getRegex(ev.target.value).source;
-                return;
-            }
             if (inputRef.current) {
                 inputRef.current.pattern = getRegex(ev.target.value).source;
             }
@@ -46,7 +42,7 @@ const Input: React.FC<InputProps> = ({
                className={classNames(inputClassName, className)}
                value={value || ''}
                onChange={changeHandler}
-               ref={myRef || inputRef} {...rest} />
+               ref={inputRef} {...rest} />
     )
 }
 export default Input;
