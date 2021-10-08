@@ -7,7 +7,6 @@ export interface FieldInputProps {
     required?: boolean;
     readOnly?: boolean;
     disabled?: boolean;
-    wait?: number;
     onChange?: ({ field, value }: InputField) => void;
 }
 declare const FieldInput: React.FC<FieldInputProps>;

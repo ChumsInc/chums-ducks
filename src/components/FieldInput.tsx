@@ -10,7 +10,6 @@ export interface FieldInputProps {
     required?: boolean,
     readOnly?: boolean,
     disabled?: boolean,
-    wait?: number,
     onChange?: ({field, value}: InputField) => void,
 }
 
@@ -21,7 +20,6 @@ const FieldInput: React.FC<FieldInputProps> = ({
                                                    required,
                                                    readOnly,
                                                    disabled,
-    wait,
                                                    onChange
                                                }) => {
     const changeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +30,6 @@ const FieldInput: React.FC<FieldInputProps> = ({
     }
     return (
         <Input type="text" value={value} onChange={changeHandler} placeholder={placeholder} required={required}
-               wait={wait}
                readOnly={readOnly} disabled={disabled}/>
     )
 }

@@ -20,47 +20,22 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import classNames from "classnames";
-import debounce from 'lodash.debounce';
 var noop = function () {
 };
 var TextArea = function (_a) {
     var _b;
-    var _c = _a.bsSize, bsSize = _c === void 0 ? 'sm' : _c, _d = _a.wait, wait = _d === void 0 ? 350 : _d, myRef = _a.myRef, className = _a.className, value = _a.value, _e = _a.onChange, onChange = _e === void 0 ? noop : _e, onBlur = _a.onBlur, rest = __rest(_a, ["bsSize", "wait", "myRef", "className", "value", "onChange", "onBlur"]);
-    var _debounced;
-    var delayedChange = useCallback(debounce(function (ev) {
-        console.log('useCallback (debounced)', ev.target, ev.target.value);
-        onChange(ev);
-    }, wait), []);
+    var _c = _a.bsSize, bsSize = _c === void 0 ? 'sm' : _c, myRef = _a.myRef, className = _a.className, value = _a.value, _d = _a.onChange, onChange = _d === void 0 ? noop : _d, rest = __rest(_a, ["bsSize", "myRef", "className", "value", "onChange"]);
     var inputRef = useRef(null);
-    var _f = useState(String(value)), localValue = _f[0], setLocalValue = _f[1];
-    useEffect(function () {
-        return function () {
-            _debounced === null || _debounced === void 0 ? void 0 : _debounced.cancel();
-        };
-    }, []);
-    useEffect(function () {
-        setLocalValue(String(value));
-    }, [value]);
     var inputClassName = (_b = {
             'form-control': true
         },
         _b["form-control-" + bsSize] = !!bsSize,
         _b);
-    var changeHandler = function (ev) {
-        setLocalValue(ev.target.value);
-        delayedChange(ev);
-    };
-    var blurHandler = function (ev) {
-        _debounced === null || _debounced === void 0 ? void 0 : _debounced.flush();
-        if (onBlur) {
-            onBlur(ev);
-        }
-    };
-    return (React.createElement("textarea", __assign({ className: classNames(inputClassName, className), value: localValue || '', 
+    return (React.createElement("textarea", __assign({ className: classNames(inputClassName, className), value: value || '', 
         // onInput={changeHandler}
-        onBlur: blurHandler, onChange: changeHandler, ref: myRef || inputRef }, rest)));
+        onChange: onChange, ref: myRef || inputRef }, rest)));
 };
 export default TextArea;
 //# sourceMappingURL=TextArea.js.map

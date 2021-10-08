@@ -22,6 +22,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 import React from "react";
 import classNames from "classnames";
+import './SpinnerButton.css';
 var SpinnerButton = function (_a) {
     var _b, _c;
     var _d = _a.spinning, spinning = _d === void 0 ? false : _d, _e = _a.spinnerType, spinnerType = _e === void 0 ? 'border' : _e, _f = _a.spinnerAfter, spinnerAfter = _f === void 0 ? false : _f, _g = _a.color, color = _g === void 0 ? 'primary' : _g, size = _a.size, className = _a.className, children = _a.children, disabled = _a.disabled, rest = __rest(_a, ["spinning", "spinnerType", "spinnerAfter", "color", "size", "className", "children", "disabled"]);

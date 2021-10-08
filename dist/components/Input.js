@@ -20,34 +20,21 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import classNames from "classnames";
-import debounce from 'lodash.debounce';
 import { getRegex } from "../utils";
 var noop = function () {
 };
 var Input = function (_a) {
     var _b;
-    var _c = _a.bsSize, bsSize = _c === void 0 ? 'sm' : _c, _d = _a.wait, wait = _d === void 0 ? 350 : _d, fuzzyList = _a.fuzzyList, myRef = _a.myRef, _e = _a.type, type = _e === void 0 ? 'text' : _e, className = _a.className, value = _a.value, _f = _a.onChange, onChange = _f === void 0 ? noop : _f, onBlur = _a.onBlur, rest = __rest(_a, ["bsSize", "wait", "fuzzyList", "myRef", "type", "className", "value", "onChange", "onBlur"]);
-    var _debounced;
-    var delayedChange = useCallback(_debounced = debounce(function (ev) { return onChange(ev); }, wait), []);
+    var _c = _a.bsSize, bsSize = _c === void 0 ? 'sm' : _c, fuzzyList = _a.fuzzyList, myRef = _a.myRef, _d = _a.type, type = _d === void 0 ? 'text' : _d, className = _a.className, value = _a.value, _e = _a.onChange, onChange = _e === void 0 ? noop : _e, rest = __rest(_a, ["bsSize", "fuzzyList", "myRef", "type", "className", "value", "onChange"]);
     var inputRef = useRef(null);
-    var _g = useState(String(value) || ''), localValue = _g[0], setLocalValue = _g[1];
-    useEffect(function () {
-        return function () {
-            _debounced === null || _debounced === void 0 ? void 0 : _debounced.cancel();
-        };
-    }, []);
-    useEffect(function () {
-        setLocalValue(String(value));
-    }, [value]);
     var inputClassName = (_b = {
             'form-control': true
         },
         _b["form-control-" + bsSize] = !!bsSize,
         _b);
     var changeHandler = function (ev) {
-        setLocalValue(ev.target.value);
         if (!!rest.list && fuzzyList) {
             if (!!myRef && myRef.current) {
                 myRef.current.pattern = getRegex(ev.target.value).source;
@@ -57,17 +44,9 @@ var Input = function (_a) {
                 inputRef.current.pattern = getRegex(ev.target.value).source;
             }
         }
-        delayedChange(ev);
+        onChange(ev);
     };
-    var blurHandler = function (ev) {
-        _debounced === null || _debounced === void 0 ? void 0 : _debounced.flush();
-        if (onBlur) {
-            onBlur(ev);
-        }
-    };
-    return (React.createElement("input", __assign({ type: type, className: classNames(inputClassName, className), value: localValue || '', 
-        // onInput={changeHandler}
-        onBlur: blurHandler, onChange: changeHandler, ref: myRef || inputRef }, rest)));
+    return (React.createElement("input", __assign({ type: type, className: classNames(inputClassName, className), value: value || '', onChange: changeHandler, ref: myRef || inputRef }, rest)));
 };
 export default Input;
 //# sourceMappingURL=Input.js.map
