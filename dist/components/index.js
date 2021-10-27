@@ -18,5 +18,6 @@ export { default as Select } from './Select';
 export { default as Spinner } from './Spinner';
 export { default as SpinnerButton } from './SpinnerButton';
 export { default as TextArea } from './TextArea';
+export { default as ToggleButton } from './ToggleButton';
 export { default as DebouncedTextArea } from './DebouncedTextArea';
 //# sourceMappingURL=index.js.map
