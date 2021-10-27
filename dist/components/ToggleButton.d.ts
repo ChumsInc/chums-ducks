@@ -7,6 +7,7 @@ export interface ToggleButtonProps {
     color?: BootstrapButtonColor;
     size?: BootstrapButtonSize;
     className?: string;
+    onClick: () => void;
 }
 declare const ToggleButton: React.FC<ToggleButtonProps>;
 export default ToggleButton;

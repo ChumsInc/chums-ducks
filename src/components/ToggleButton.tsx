@@ -9,6 +9,7 @@ export interface ToggleButtonProps {
     color?: BootstrapButtonColor,
     size?: BootstrapButtonSize,
     className?: string,
+    onClick: () => void,
 }
 
 const ToggleButton: React.FC<ToggleButtonProps> = ({
@@ -18,6 +19,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
                                                        color = 'primary',
                                                        size,
                                                        className,
+                                                       onClick,
                                                        children,
                                                    }) => {
     const btnClassName = classNames(className, {
@@ -28,8 +30,8 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
     });
     return (
         <>
-            <input type={type} className="btn-check" id={id} autoComplete="off"/>
-            <label htmlFor={id} className={btnClassName}>{children}</label>
+            <input type={type} className="btn-check" id={id} autoComplete="off" onChange={() => onClick()}/>
+            <label htmlFor={id} className={btnClassName} onClick={onClick}>{children}</label>
         </>
     );
 }

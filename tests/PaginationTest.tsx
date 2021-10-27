@@ -13,7 +13,7 @@ import {
     tableAddedAction
 } from "../src/ducks";
 import {useDispatch, useSelector} from "react-redux";
-import {Input, LoadingProgressBar} from "../src/components";
+import {Input, LoadingProgressBar, ToggleButton} from "../src/components";
 import {BootstrapColor, ErrorBoundary, SortableTable, SpinnerButton} from "../src";
 import numeral from "numeral";
 import {languages} from './languages'
@@ -81,6 +81,7 @@ const PaginationTest: React.FC = () => {
     const [tableData, setTableData] = useState([] as TableDataRow[]);
     const [loading, setLoading] = useState(false);
     const [filterTimer, setFilterTimer] = useState(0);
+    const [toggleCheck, setToggleCheck] = useState(false);
 
 
     useEffect(() => {
@@ -169,6 +170,10 @@ const PaginationTest: React.FC = () => {
                     <datalist id="languages">
                         {languages.map(val => (<option value={val}/>))}
                     </datalist>
+                </div>
+                <div className="col-auto">
+                    <ToggleButton id={'test-toggle'} size="sm" color="success" checked={toggleCheck}
+                                  onClick={() => setToggleCheck(!toggleCheck)}>Toggle this muthafucka!</ToggleButton>
                 </div>
             </div>
             <AlertList/>
