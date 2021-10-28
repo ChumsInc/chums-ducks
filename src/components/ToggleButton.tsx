@@ -25,13 +25,12 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
     const btnClassName = classNames(className, {
         btn: true,
         [`btn-${size}`]: !!size,
-        [`btn-${color}`]: !!color && checked,
-        [`btn-outline-${color}`]: !!color && !checked,
+        [`btn-outline-${color}`]: !!color,
     });
     return (
         <>
-            <input type={type} className="btn-check" id={id} autoComplete="off" onChange={() => onClick()}/>
-            <label htmlFor={id} className={btnClassName} onClick={onClick}>{children}</label>
+            <input type={type} className="btn-check" id={id} autoComplete="off" onChange={onClick} checked={checked}/>
+            <label htmlFor={id} className={btnClassName}>{children}</label>
         </>
     );
 }

@@ -7,12 +7,11 @@ var ToggleButton = function (_a) {
             btn: true
         },
         _b["btn-" + size] = !!size,
-        _b["btn-" + color] = !!color && checked,
-        _b["btn-outline-" + color] = !!color && !checked,
+        _b["btn-outline-" + color] = !!color,
         _b));
     return (React.createElement(React.Fragment, null,
-        React.createElement("input", { type: type, className: "btn-check", id: id, autoComplete: "off", onChange: function () { return onClick(); } }),
-        React.createElement("label", { htmlFor: id, className: btnClassName, onClick: onClick }, children)));
+        React.createElement("input", { type: type, className: "btn-check", id: id, autoComplete: "off", onChange: onClick, checked: checked }),
+        React.createElement("label", { htmlFor: id, className: btnClassName }, children)));
 };
 export default ToggleButton;
 //# sourceMappingURL=ToggleButton.js.map

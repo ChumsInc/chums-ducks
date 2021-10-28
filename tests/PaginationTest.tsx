@@ -81,7 +81,7 @@ const PaginationTest: React.FC = () => {
     const [tableData, setTableData] = useState([] as TableDataRow[]);
     const [loading, setLoading] = useState(false);
     const [filterTimer, setFilterTimer] = useState(0);
-    const [toggleCheck, setToggleCheck] = useState(false);
+    const [toggleCheck, setToggleCheck] = useState(true);
 
 
     useEffect(() => {
@@ -145,6 +145,11 @@ const PaginationTest: React.FC = () => {
 
     const tfoot = (<TFoot value={total} />);
 
+    const onClickToggle = () => {
+        console.log('onClickToggle', toggleCheck, !toggleCheck)
+        setToggleCheck(!toggleCheck);
+    }
+
     return (
         <div>
             <div className="row g-3">
@@ -168,12 +173,12 @@ const PaginationTest: React.FC = () => {
                     <Input type="text" id="default" list="languages" fuzzyList value={language}
                            onChange={(ev) => setLanguage(ev.target.value)}/>
                     <datalist id="languages">
-                        {languages.map(val => (<option value={val}/>))}
+                        {languages.map((val, index) => (<option key={index} value={val}/>))}
                     </datalist>
                 </div>
                 <div className="col-auto">
                     <ToggleButton id={'test-toggle'} size="sm" color="success" checked={toggleCheck}
-                                  onClick={() => setToggleCheck(!toggleCheck)}>Toggle this muthafucka!</ToggleButton>
+                                  onClick={onClickToggle}>Toggle this muthafucka!</ToggleButton>
                 </div>
             </div>
             <AlertList/>
