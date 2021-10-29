@@ -41,6 +41,9 @@ export const addPageSetAction = ({key = 'app', current = 1, rowsPerPage = 25}:Pa
 export const currentPageSelector = (key:string) => (state: RootState): number => state.pages[key]?.current ?? 1;
 export const rowsPerPageSelector = (key:string) => (state: RootState): number => state.pages[key]?.rowsPerPage ?? 25;
 export const pagedDataSelector = (key: string, data: any[]) => (state:RootState):any[] => {
+    if (!state.pages[key]) {
+        return data;
+    }
     const {current, rowsPerPage} = state.pages[key] || {};
     return data.filter((row, index) => Math.ceil((index + 1) / rowsPerPage) === current);
 }

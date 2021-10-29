@@ -30,6 +30,9 @@ export var addPageSetAction = function (_a) {
 export var currentPageSelector = function (key) { return function (state) { var _a, _b; return (_b = (_a = state.pages[key]) === null || _a === void 0 ? void 0 : _a.current) !== null && _b !== void 0 ? _b : 1; }; };
 export var rowsPerPageSelector = function (key) { return function (state) { var _a, _b; return (_b = (_a = state.pages[key]) === null || _a === void 0 ? void 0 : _a.rowsPerPage) !== null && _b !== void 0 ? _b : 25; }; };
 export var pagedDataSelector = function (key, data) { return function (state) {
+    if (!state.pages[key]) {
+        return data;
+    }
     var _a = state.pages[key] || {}, current = _a.current, rowsPerPage = _a.rowsPerPage;
     return data.filter(function (row, index) { return Math.ceil((index + 1) / rowsPerPage) === current; });
 }; };
