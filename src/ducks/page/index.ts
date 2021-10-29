@@ -38,9 +38,9 @@ export const setRowsPerPageAction = ({rowsPerPage, key = 'app'}:PageSetAction): 
 export const addPageSetAction = ({key = 'app', current = 1, rowsPerPage = 25}:PageSetAction): PageAction => ({type: addPageSet, payload: {key, current, rowsPerPage}});
 
 
-export const currentPageSelector = (key:string) => (state: RootState): number => state.pages[key]?.current ?? 1;
-export const rowsPerPageSelector = (key:string) => (state: RootState): number => state.pages[key]?.rowsPerPage ?? 25;
-export const pagedDataSelector = (key: string, data: any[]) => (state:RootState):any[] => {
+export const selectCurrentPage = (key:string) => (state: RootState): number => state.pages[key]?.current ?? 1;
+export const selectRowsPerPage = (key:string) => (state: RootState): number => state.pages[key]?.rowsPerPage ?? 25;
+export const selectPagedData = (key: string, data: any[]) => (state:RootState):any[] => {
     if (!state.pages[key]) {
         return data;
     }
@@ -48,9 +48,9 @@ export const pagedDataSelector = (key: string, data: any[]) => (state:RootState)
     return data.filter((row, index) => Math.ceil((index + 1) / rowsPerPage) === current);
 }
 
-export const selectCurrentPage = currentPageSelector;
-export const selectRowsPerPage = rowsPerPageSelector;
-export const selectPagedData = pagedDataSelector;
+export const currentPageSelector = selectCurrentPage;
+export const rowsPerPageSelector = selectRowsPerPage;
+export const pagedDataSelector = selectPagedData;
 
 const pageReducer = (state:PageState = {}, action: PageAction):PageState => {
     const {type, payload} = action;
