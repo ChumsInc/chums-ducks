@@ -23,7 +23,7 @@ export interface SorterProps {
 }
 export interface SortableTableField {
     field: string;
-    title: string;
+    title: ReactElement | Element | string;
     sortable?: boolean;
     render?: (row: any) => ReactElement | Element | string | number;
     className?: string | object | ((any: any) => string | object);

@@ -54,11 +54,18 @@ const buildDataSet = (): TableDataRow[] => {
 }
 const pagerKey = 'test-pagination';
 
+const ValueTitle:React.FC = () => {
+    const now = new Date();
+    return (
+        <span>Value @ {now.toLocaleTimeString()}</span>
+    )
+}
+
 const tableFields: SortableTableField[] = [
     {field: 'id', title: 'ID', sortable: true},
     {field: 'color', title: 'Color', sortable: true, className: (row) => `text-${colors[Math.floor(row.id % 8)]}`},
     {field: 'bgColor', title: 'Background Color', sortable: true, render: (row) => <span>table-{row.bgColor}</span>},
-    {field: 'value', title: 'Value', sortable: true, className: 'right', render: (row) => numeral(row.value).format('0,0.0000')},
+    {field: 'value', title: (<ValueTitle />), sortable: true, className: 'right', render: (row) => numeral(row.value).format('0,0.0000')},
 ];
 
 const rowColor = (row: TableDataRow) => `table-${row.bgColor}`;
