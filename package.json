@@ -1,6 +1,6 @@
 {
   "name": "chums-ducks",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "private": false,
   "main": "dist/index.js",
   "source": "src/index.ts",
