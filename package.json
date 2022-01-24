@@ -69,6 +69,7 @@
   },
   "peerDependencies": {
     "classnames": "^2.3.1",
+    "lodash.debounce": "^4.0.8",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.3",
@@ -77,12 +78,14 @@
     "redux-thunk": "^2.3.0"
   },
   "peerDependenciesMeta": {
+    "lodash.debounce": {
+      "optional": true
+    },
     "react-router-dom": {
       "optional": true
     }
   },
   "dependencies": {
-    "lodash.debounce": "^4.0.8",
     "path-to-regexp": "^6.2.0",
     "whatwg-fetch": "^3.6.2"
   }
