@@ -1,5 +1,4 @@
 import React from 'react';
-import './TabList.css';
 export interface NavRouterListProps {
     tabKey: string;
     className?: string | object;

@@ -1,7 +1,13 @@
 import React, {ButtonHTMLAttributes} from "react";
 import {BootstrapButtonColor, BootstrapButtonSize} from "../types";
 import classNames from "classnames";
-import './SpinnerButton.css';
+// import './SpinnerButton.css';
+import styled from 'styled-components';
+
+const Spinner = styled.span`
+    height: 1em;
+    width: 1em;
+`;
 
 export interface SpinnerButtonProps extends ButtonHTMLAttributes<any> {
     spinning?: boolean,
@@ -32,12 +38,13 @@ const SpinnerButton: React.FC<SpinnerButtonProps> = ({
         [`spinner-${spinnerType}-sm`]: !size || ['sm'].includes(size),
         "me-1": !spinnerAfter,
         "ms-1": spinnerAfter
-    })
+    });
+
     return (
-        <button className={btnClassName} {...rest} disabled={spinning || disabled} {...rest}>
-            {spinning && !spinnerAfter && <span className={spinnerClassName} role="status" aria-hidden="true"/>}
+        <button className={btnClassName} disabled={spinning || disabled} {...rest}>
+            {spinning && !spinnerAfter && <Spinner className={spinnerClassName} role="status" aria-hidden="true"/>}
             {children}
-            {spinning && spinnerAfter && <span className={spinnerClassName} role="status" aria-hidden="true"/>}
+            {spinning && spinnerAfter && <Spinner className={spinnerClassName} role="status" aria-hidden="true"/>}
         </button>
     );
 }

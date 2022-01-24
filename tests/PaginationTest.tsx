@@ -173,8 +173,9 @@ const PaginationTest: React.FC = () => {
                     <small>filter = {filter}</small>
                 </div>
                 <div className="col-auto">
-                    <SpinnerButton spinning={loading} onClick={rebuildData} size="sm" spinnerAfter color="outline-success">Reload
-                        Data</SpinnerButton>
+                    <SpinnerButton spinning={loading} onClick={rebuildData} size="sm" spinnerAfter color="outline-success">
+                        Reload Data
+                    </SpinnerButton>
                 </div>
                 <div className="col-auto">
                     <Input type="text" id="default" list="languages" fuzzyList value={language}

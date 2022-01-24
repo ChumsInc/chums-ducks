@@ -2,9 +2,25 @@ import React from 'react';
 import {selectTabList, tabRemovedAction} from "./index";
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
-import './TabList.css';
 import NavRouterLink from "./NavRouterLink";
 
+import styled from "styled-components";
+
+const StyledNavList = styled.ul`
+    &.nav-tabs {
+      .nav-item {
+        .nav-link {
+          .btn-close {
+            width: 0.75rem;
+            height: 0.75rem;
+            margin-left: 0.25rem;
+            line-height: 0.75rem;
+            font-size: 0.75rem;
+          }
+        }
+      }
+    }
+`;
 
 export interface NavRouterListProps {
     tabKey: string,
@@ -23,7 +39,7 @@ const NavRouterList: React.FC<NavRouterListProps> = ({
 
     const tabCloseHandler = (id: string) => dispatch(tabRemovedAction(id, tabKey));
     return (
-        <ul className={classNames('nav', className)}>
+        <StyledNavList className={classNames('nav', className)}>
             {list.map(tab => (
                 <NavRouterLink to={tab.to || ''} key={tab.id} id={tab.id} title={tab.title} className={itemClassName}
                                icon={tab.icon}
@@ -31,7 +47,7 @@ const NavRouterList: React.FC<NavRouterListProps> = ({
                                canClose={tab.canClose} onClose={() => tabCloseHandler(tab.id)}/>
             ))}
             {children}
-        </ul>
+        </StyledNavList>
     )
 }
 

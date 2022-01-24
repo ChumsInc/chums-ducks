@@ -5,8 +5,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
 const classnames_1 = __importDefault(require("classnames"));
-require("./Pagination.css");
 const PageButton_1 = __importDefault(require("./PageButton"));
+const styled_components_1 = __importDefault(require("styled-components"));
+const PaginationList = styled_components_1.default.ul `
+    &.filtered {
+        .page-item.active {
+          .page-link {
+            background-color: var(--bs-warning);
+            border-color: var(--bs-warning);
+            color: var(--bs-dark);
+          }
+        }
+    }
+`;
 const PAGE_LABELS = {
     prev: '‹',
     ellipsis: '…',
@@ -40,7 +51,7 @@ const Pagination = ({ page, pages, filtered, className, maxButtons = DEFAULT_MAX
         }
     }
     return (react_1.default.createElement("nav", { "aria-label": "Page Navigation" },
-        react_1.default.createElement("ul", { className: (0, classnames_1.default)("pagination pagination-sm", className, { filtered }) },
+        react_1.default.createElement(PaginationList, { className: (0, classnames_1.default)("pagination pagination-sm", className, { filtered }) },
             hasMore && (react_1.default.createElement(PageButton_1.default, { page: page - 1, label: PAGE_LABELS.prev, disabled: page <= 1, onClick: onSelect })),
             react_1.default.createElement(PageButton_1.default, { page: 1, onClick: onSelect, isCurrent: page === 1 }),
             hasMore && firstEllipsis.length === 1 && (react_1.default.createElement(PageButton_1.default, { page: firstEllipsis[0], label: firstEllipsis[0] })),

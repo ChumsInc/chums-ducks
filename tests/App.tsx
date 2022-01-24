@@ -17,26 +17,26 @@ import ModalTest from "./ModalTest";
 
 const tabSetId = 'test';
 const tabs: Tab[] = [
-    {id: 'pagination', title: 'Pagination Test', icon: 'bi-signpost-split-fill', active: false},
-    {id: 'modal', title: 'Modal Test', active: true},
+    {id: 'pagination', title: 'Pagination Test', icon: 'bi-signpost-split-fill', active: true},
+    {id: 'modal', title: 'Modal Test', },
     {id: 'disabled-item', title: 'Disabled Item', disabled: true},
     {id: 'form', title: 'Form Test', canClose: true},
 ]
-const tempTab: Tab = {id: 'temp-tab', title: 'Temporary Tab', active: true, canClose: true};
+const tempTab: Tab = {id: 'temp-tab', title: 'Temporary Tab', active: false, canClose: true};
 
 const App: React.FC = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(tabListCreatedAction(tabs, tabSetId, 'modal'));
+        dispatch(tabListCreatedAction(tabs, tabSetId, 'pagination'));
         // dispatch(onTabSelected(tabs[0].id))
     }, []);
 
     const currentTab = useSelector(selectedTabSelector(tabSetId));
-    const hasTempTab = !!useSelector(tabSelector(tempTab.id));
+    const hasTempTab = useSelector(tabSelector(tempTab.id));
     const onAddItem = () => {
         dispatch(tabAddedAction(tempTab, tabSetId));
     }
-    const [navType, setNavType] = useState('');
+    const [navType, setNavType] = useState('tab');
 
     return (
         <div>
@@ -44,17 +44,17 @@ const App: React.FC = () => {
             <ErrorBoundary>
                 {navType === 'tab' && (
                     <TabList className="mb-3 tab-pills" tabKey={tabSetId}>
-                        <NavItem onSelect={onAddItem} id="add-tab" title="+" disabled={hasTempTab}/>
+                        <NavItem onSelect={onAddItem} id="add-tab" title="+" disabled={!!hasTempTab}/>
                     </TabList>
                 )}
                 {navType === 'pill' && (
                     <PillList className="mb-3 tab-pills" tabKey={tabSetId}>
-                        <NavItem onSelect={onAddItem} id="add-tab" title="+" disabled={hasTempTab}/>
+                        <NavItem onSelect={onAddItem} id="add-tab" title="+" disabled={!!hasTempTab}/>
                     </PillList>
                 )}
                 {navType === '' && (
                     <NavList className="mb-3 tab-pills" tabKey={tabSetId}>
-                        <NavItem onSelect={onAddItem} id="add-tab" title="+" disabled={hasTempTab}/>
+                        <NavItem onSelect={onAddItem} id="add-tab" title="+" disabled={!!hasTempTab}/>
                     </NavList>
                 )}
             </ErrorBoundary>
