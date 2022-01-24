@@ -1,37 +1,27 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-import { combineReducers } from "redux";
-export var sites = [
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.currentSiteSelector = exports.siteSelectedAction = exports.siteSelected = exports.defaultSite = exports.sites = void 0;
+const redux_1 = require("redux");
+exports.sites = [
     { name: 'b2b', domain: 'b2b.chums.com' },
     { name: 'safety', domain: 'chumssafety.com' }
 ];
-export var defaultSite = sites[0];
-export var siteSelected = 'site/selected';
-export var siteSelectedAction = function (site) {
-    if (site === void 0) { site = defaultSite; }
-    return ({ type: siteSelected, payload: { site: site } });
-};
-export var currentSiteSelector = function (state) { return state.sites.selected; };
-var selected = function (state, action) {
-    if (state === void 0) { state = __assign({}, defaultSite); }
-    var type = action.type, payload = action.payload;
+exports.defaultSite = exports.sites[0];
+exports.siteSelected = 'site/selected';
+const siteSelectedAction = (site = exports.defaultSite) => ({ type: exports.siteSelected, payload: { site } });
+exports.siteSelectedAction = siteSelectedAction;
+const currentSiteSelector = (state) => state.sites.selected;
+exports.currentSiteSelector = currentSiteSelector;
+const selected = (state = { ...exports.defaultSite }, action) => {
+    const { type, payload } = action;
     switch (type) {
-        case siteSelected:
-            return payload.site || defaultSite;
+        case exports.siteSelected:
+            return payload.site || exports.defaultSite;
         default:
             return state;
     }
 };
-export default combineReducers({
-    selected: selected,
+exports.default = (0, redux_1.combineReducers)({
+    selected,
 });
 //# sourceMappingURL=index.js.map

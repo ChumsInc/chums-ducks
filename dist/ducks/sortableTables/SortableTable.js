@@ -1,30 +1,33 @@
-import React from 'react';
-import classNames from "classnames";
-import SortableTableHead from "./SortableTableHead";
-import SortableTR from "./SortableTR";
-import { useDispatch } from "react-redux";
-import { sortChangedAction } from "./index";
-import { noop } from "../../utils";
-var SortableTable = function (_a) {
-    var _b;
-    var tableKey = _a.tableKey, keyField = _a.keyField, _c = _a.size, size = _c === void 0 ? '' : _c, rowClassName = _a.rowClassName, _d = _a.onSelectRow, onSelectRow = _d === void 0 ? noop : _d, _e = _a.selected, selected = _e === void 0 ? '' : _e, fields = _a.fields, data = _a.data, _f = _a.className, className = _f === void 0 ? '' : _f, tfoot = _a.tfoot, _g = _a.onChangeSort, onChangeSort = _g === void 0 ? noop : _g, children = _a.children;
-    var dispatch = useDispatch();
-    var sortChangeHandler = function (field, ascending) {
-        dispatch(sortChangedAction({ key: tableKey, field: field, ascending: ascending }));
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
+const classnames_1 = __importDefault(require("classnames"));
+const SortableTableHead_1 = __importDefault(require("./SortableTableHead"));
+const SortableTR_1 = __importDefault(require("./SortableTR"));
+const react_redux_1 = require("react-redux");
+const index_1 = require("./index");
+const utils_1 = require("../../utils");
+const SortableTable = ({ tableKey, keyField, size = '', rowClassName, onSelectRow = utils_1.noop, selected = '', fields, data, className = '', tfoot, onChangeSort = utils_1.noop, children, }) => {
+    const dispatch = (0, react_redux_1.useDispatch)();
+    const sortChangeHandler = (field, ascending) => {
+        dispatch((0, index_1.sortChangedAction)({ key: tableKey, field, ascending }));
         onChangeSort();
     };
-    var tableClassName = classNames('table', className, (_b = {},
-        _b["table-" + size] = !!size,
-        _b));
-    return (React.createElement("table", { className: tableClassName },
-        React.createElement(SortableTableHead, { tableKey: tableKey, fields: fields, onChangeSort: sortChangeHandler }),
-        !!data.length && (React.createElement("tbody", null, data.map(function (row) {
-            var key = typeof keyField === "function" ? keyField(row) : row[keyField];
-            var isSelected = typeof selected === 'function' ? selected(row) : key === selected;
-            return (React.createElement(SortableTR, { key: key, onClick: function () { return onSelectRow(row); }, rowClassName: rowClassName, fields: fields, row: row, selected: isSelected }));
+    const tableClassName = (0, classnames_1.default)('table', className, {
+        [`table-${size}`]: !!size,
+    });
+    return (react_1.default.createElement("table", { className: tableClassName },
+        react_1.default.createElement(SortableTableHead_1.default, { tableKey: tableKey, fields: fields, onChangeSort: sortChangeHandler }),
+        !!data.length && (react_1.default.createElement("tbody", null, data.map(row => {
+            const key = typeof keyField === "function" ? keyField(row) : row[keyField];
+            const isSelected = typeof selected === 'function' ? selected(row) : key === selected;
+            return (react_1.default.createElement(SortableTR_1.default, { key: key, onClick: () => onSelectRow(row), rowClassName: rowClassName, fields: fields, row: row, selected: isSelected }));
         }))),
         children,
         tfoot));
 };
-export default SortableTable;
+exports.default = SortableTable;
 //# sourceMappingURL=SortableTable.js.map

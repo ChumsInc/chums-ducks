@@ -1,12 +1,16 @@
-import React from "react";
-import SortableTH from "./SortableTH";
-import { useSelector } from "react-redux";
-import { sortableTableSelector } from "./index";
-var SortableTableHead = function (_a) {
-    var tableKey = _a.tableKey, fields = _a.fields, onChangeSort = _a.onChangeSort;
-    var _b = useSelector(sortableTableSelector(tableKey)), field = _b.field, ascending = _b.ascending;
-    return (React.createElement("thead", null,
-        React.createElement("tr", null, fields.map(function (tableField, index) { return (React.createElement(SortableTH, { key: index, field: tableField, sorted: field === tableField.field, ascending: ascending, className: tableField.className, onClick: onChangeSort })); }))));
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-export default SortableTableHead;
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
+const SortableTH_1 = __importDefault(require("./SortableTH"));
+const react_redux_1 = require("react-redux");
+const index_1 = require("./index");
+const SortableTableHead = ({ tableKey, fields, onChangeSort, }) => {
+    const { field, ascending } = (0, react_redux_1.useSelector)((0, index_1.sortableTableSelector)(tableKey));
+    return (react_1.default.createElement("thead", null,
+        react_1.default.createElement("tr", null, fields.map((tableField, index) => (react_1.default.createElement(SortableTH_1.default, { key: index, field: tableField, sorted: field === tableField.field, ascending: ascending, className: tableField.className, onClick: onChangeSort }))))));
+};
+exports.default = SortableTableHead;
 //# sourceMappingURL=SortableTableHead.js.map

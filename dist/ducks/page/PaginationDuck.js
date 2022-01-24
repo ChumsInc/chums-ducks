@@ -1,43 +1,44 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { currentPageSelector, rowsPerPageSelector, setPageAction, calcPages } from "./index";
-import Pagination from "./Pagination";
-var PaginationDuck = function (_a) {
-    var _b = _a.pageKey, pageKey = _b === void 0 ? 'app' : _b, dataLength = _a.dataLength, props = __rest(_a, ["pageKey", "dataLength"]);
-    var dispatch = useDispatch();
-    var page = useSelector(currentPageSelector(pageKey));
-    var rowsPerPage = useSelector(rowsPerPageSelector(pageKey));
-    var pages = calcPages(dataLength, rowsPerPage) || 1;
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importStar(require("react"));
+const react_redux_1 = require("react-redux");
+const index_1 = require("./index");
+const Pagination_1 = __importDefault(require("./Pagination"));
+const PaginationDuck = ({ pageKey = 'app', dataLength, ...props }) => {
+    const dispatch = (0, react_redux_1.useDispatch)();
+    const page = (0, react_redux_1.useSelector)((0, index_1.currentPageSelector)(pageKey));
+    const rowsPerPage = (0, react_redux_1.useSelector)((0, index_1.rowsPerPageSelector)(pageKey));
+    const pages = (0, index_1.calcPages)(dataLength, rowsPerPage) || 1;
     // if the current page has exceeded the number of pages, then reset to page 1
-    useEffect(function () {
+    (0, react_1.useEffect)(() => {
         if (page > pages) {
-            dispatch(setPageAction({ key: pageKey, current: 1 }));
+            dispatch((0, index_1.setPageAction)({ key: pageKey, current: 1 }));
         }
     }, [pages]);
-    var changeHandler = function (value) { return dispatch(setPageAction({ key: pageKey, current: value })); };
-    return (React.createElement(Pagination, __assign({ page: page, pages: pages, onSelectPage: changeHandler }, props)));
+    const changeHandler = (value) => dispatch((0, index_1.setPageAction)({ key: pageKey, current: value }));
+    return (react_1.default.createElement(Pagination_1.default, { page: page, pages: pages, onSelectPage: changeHandler, ...props }));
 };
-export default PaginationDuck;
+exports.default = PaginationDuck;
 //# sourceMappingURL=PaginationDuck.js.map

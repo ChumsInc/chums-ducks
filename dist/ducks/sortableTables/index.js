@@ -1,47 +1,40 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-export var tablesSortChanged = 'tables/categorySortChanged';
-export var tablesTableAdded = 'tables/tableAdded';
-export var sortableTableSelector = function (key) { return function (state) { return state.sortableTables[key] || { key: key, field: '', ascending: false }; }; };
-export var selectTableSort = sortableTableSelector;
-export var sortChangedAction = function (_a) {
-    var key = _a.key, field = _a.field, ascending = _a.ascending;
-    return ({
-        type: tablesSortChanged,
-        payload: { key: key, field: field, ascending: ascending }
-    });
-};
-export var tableAddedAction = function (_a) {
-    var key = _a.key, field = _a.field, ascending = _a.ascending;
-    return ({
-        type: tablesTableAdded,
-        payload: { key: key, field: field, ascending: ascending }
-    });
-};
-var sortableTablesReducer = function (state, action) {
-    var _a, _b;
-    if (state === void 0) { state = {}; }
-    var type = action.type, payload = action.payload;
-    var _c = payload || {}, key = _c.key, field = _c.field, ascending = _c.ascending;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.tableAddedAction = exports.sortChangedAction = exports.selectTableSort = exports.sortableTableSelector = exports.tablesTableAdded = exports.tablesSortChanged = void 0;
+exports.tablesSortChanged = 'tables/categorySortChanged';
+exports.tablesTableAdded = 'tables/tableAdded';
+const sortableTableSelector = (key) => (state) => state.sortableTables[key] || { key, field: '', ascending: false };
+exports.sortableTableSelector = sortableTableSelector;
+exports.selectTableSort = exports.sortableTableSelector;
+const sortChangedAction = ({ key, field, ascending }) => ({
+    type: exports.tablesSortChanged,
+    payload: { key, field, ascending }
+});
+exports.sortChangedAction = sortChangedAction;
+const tableAddedAction = ({ key, field, ascending }) => ({
+    type: exports.tablesTableAdded,
+    payload: { key, field, ascending }
+});
+exports.tableAddedAction = tableAddedAction;
+const sortableTablesReducer = (state = {}, action) => {
+    const { type, payload } = action;
+    const { key, field, ascending } = payload || {};
     switch (type) {
-        case tablesSortChanged:
-            return __assign(__assign({}, state), (_a = {}, _a[key] = { key: key, field: field, ascending: ascending }, _a));
-        case tablesTableAdded:
+        case exports.tablesSortChanged:
+            return {
+                ...state,
+                [key]: { key, field, ascending }
+            };
+        case exports.tablesTableAdded:
             if (!state[key]) {
-                return __assign(__assign({}, state), (_b = {}, _b[key] = { key: key, field: field, ascending: ascending }, _b));
+                return {
+                    ...state,
+                    [key]: { key, field, ascending }
+                };
             }
             return state;
         default: return state;
     }
 };
-export default sortableTablesReducer;
+exports.default = sortableTablesReducer;
 //# sourceMappingURL=index.js.map

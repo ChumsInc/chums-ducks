@@ -1,18 +1,22 @@
-import React from "react";
-import RowsPerPageDuck from "./RowsPerPageDuck";
-import PaginationDuck from "./PaginationDuck";
-var PagerDuck = function (_a) {
-    var _b = _a.pageKey, pageKey = _b === void 0 ? 'app' : _b, _c = _a.dataLength, dataLength = _c === void 0 ? 0 : _c, _d = _a.filtered, filtered = _d === void 0 ? false : _d, onChangeRowsPerPage = _a.onChangeRowsPerPage;
-    var changeRowsPerPageHandler = function (value) {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
+const RowsPerPageDuck_1 = __importDefault(require("./RowsPerPageDuck"));
+const PaginationDuck_1 = __importDefault(require("./PaginationDuck"));
+const PagerDuck = ({ pageKey = 'app', dataLength = 0, filtered = false, onChangeRowsPerPage, }) => {
+    const changeRowsPerPageHandler = (value) => {
         if (typeof onChangeRowsPerPage === 'function') {
             onChangeRowsPerPage(value);
         }
     };
-    return (React.createElement("div", { className: "row g-3" },
-        React.createElement("div", { className: "col-auto" },
-            React.createElement(RowsPerPageDuck, { pageKey: pageKey, onChange: changeRowsPerPageHandler })),
-        React.createElement("div", { className: "col-auto" },
-            React.createElement(PaginationDuck, { pageKey: pageKey, dataLength: dataLength, filtered: filtered }))));
+    return (react_1.default.createElement("div", { className: "row g-3" },
+        react_1.default.createElement("div", { className: "col-auto" },
+            react_1.default.createElement(RowsPerPageDuck_1.default, { pageKey: pageKey, onChange: changeRowsPerPageHandler })),
+        react_1.default.createElement("div", { className: "col-auto" },
+            react_1.default.createElement(PaginationDuck_1.default, { pageKey: pageKey, dataLength: dataLength, filtered: filtered }))));
 };
-export default PagerDuck;
+exports.default = PagerDuck;
 //# sourceMappingURL=PagerDuck.js.map

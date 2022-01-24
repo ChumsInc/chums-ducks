@@ -1,17 +1,21 @@
-import React from 'react';
-import { selectTabList, tabRemovedAction } from "./index";
-import { useDispatch, useSelector } from "react-redux";
-import classNames from "classnames";
-import './TabList.css';
-import NavRouterLink from "./NavRouterLink";
-var NavRouterList = function (_a) {
-    var tabKey = _a.tabKey, className = _a.className, itemClassName = _a.itemClassName, children = _a.children;
-    var dispatch = useDispatch();
-    var list = useSelector(selectTabList(tabKey));
-    var tabCloseHandler = function (id) { return dispatch(tabRemovedAction(id, tabKey)); };
-    return (React.createElement("ul", { className: classNames('nav', className) },
-        list.map(function (tab) { return (React.createElement(NavRouterLink, { to: tab.to || '', key: tab.id, id: tab.id, title: tab.title, className: itemClassName, icon: tab.icon, disabled: tab.disabled, canClose: tab.canClose, onClose: function () { return tabCloseHandler(tab.id); } })); }),
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
+const index_1 = require("./index");
+const react_redux_1 = require("react-redux");
+const classnames_1 = __importDefault(require("classnames"));
+require("./TabList.css");
+const NavRouterLink_1 = __importDefault(require("./NavRouterLink"));
+const NavRouterList = ({ tabKey, className, itemClassName, children }) => {
+    const dispatch = (0, react_redux_1.useDispatch)();
+    const list = (0, react_redux_1.useSelector)((0, index_1.selectTabList)(tabKey));
+    const tabCloseHandler = (id) => dispatch((0, index_1.tabRemovedAction)(id, tabKey));
+    return (react_1.default.createElement("ul", { className: (0, classnames_1.default)('nav', className) },
+        list.map(tab => (react_1.default.createElement(NavRouterLink_1.default, { to: tab.to || '', key: tab.id, id: tab.id, title: tab.title, className: itemClassName, icon: tab.icon, disabled: tab.disabled, canClose: tab.canClose, onClose: () => tabCloseHandler(tab.id) }))),
         children));
 };
-export default NavRouterList;
+exports.default = NavRouterList;
 //# sourceMappingURL=NavRouterList.js.map

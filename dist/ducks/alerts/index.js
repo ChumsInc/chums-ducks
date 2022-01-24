@@ -1,59 +1,49 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-export var defaultAlert = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.alertContextFilter = exports.selectAlertListByContext = exports.alertListByContextSelector = exports.selectAlertList = exports.alertListSelector = exports.onErrorAction = exports.dismissContextAlertAction = exports.dismissContextAlert = exports.dismissAlertAction = exports.addAlertAction = exports.alertDismissedByContext = exports.alertDismissed = exports.alertAdded = exports.defaultAlert = void 0;
+exports.defaultAlert = {
     canDismiss: true,
     color: "danger"
 };
-export var alertAdded = 'alerts/alertAdded';
-export var alertDismissed = 'alerts/alertDismissed';
-export var alertDismissedByContext = 'alerts/alertDismissedByContext';
-export var addAlertAction = function (alert) {
-    return ({
-        type: alertAdded,
-        payload: {
-            alert: __assign(__assign({}, defaultAlert), alert)
-        },
-        meta: alert.context,
-    });
+exports.alertAdded = 'alerts/alertAdded';
+exports.alertDismissed = 'alerts/alertDismissed';
+exports.alertDismissedByContext = 'alerts/alertDismissedByContext';
+const addAlertAction = (alert) => ({
+    type: exports.alertAdded,
+    payload: {
+        alert: {
+            ...exports.defaultAlert,
+            ...alert,
+        }
+    },
+    meta: alert.context,
+});
+exports.addAlertAction = addAlertAction;
+const buildAlert = (err, context) => ({ message: err.message, title: err.name, context, color: 'danger' });
+const dismissAlertAction = (id) => ({ type: exports.alertDismissed, payload: { id } });
+exports.dismissAlertAction = dismissAlertAction;
+const dismissContextAlert = (context) => ({ type: exports.alertDismissedByContext, payload: { context } });
+exports.dismissContextAlert = dismissContextAlert;
+const dismissContextAlertAction = (context) => ({ type: exports.alertDismissedByContext, payload: { context } });
+exports.dismissContextAlertAction = dismissContextAlertAction;
+const onErrorAction = (err, context) => (0, exports.addAlertAction)(buildAlert(err, context));
+exports.onErrorAction = onErrorAction;
+const alertListSelector = (state) => state.alerts.list;
+exports.alertListSelector = alertListSelector;
+exports.selectAlertList = exports.alertListSelector;
+const alertListByContextSelector = (context) => (state) => state.alerts.list.filter(alert => alert.context === context);
+exports.alertListByContextSelector = alertListByContextSelector;
+exports.selectAlertListByContext = exports.alertListByContextSelector;
+const alertContextFilter = (list, context) => {
+    return list.filter(al => al.context === context);
 };
-var buildAlert = function (err, context) { return ({ message: err.message, title: err.name, context: context, color: 'danger' }); };
-export var dismissAlertAction = function (id) { return ({ type: alertDismissed, payload: { id: id } }); };
-export var dismissContextAlert = function (context) { return ({ type: alertDismissedByContext, payload: { context: context } }); };
-export var dismissContextAlertAction = function (context) { return ({ type: alertDismissedByContext, payload: { context: context } }); };
-export var onErrorAction = function (err, context) {
-    return addAlertAction(buildAlert(err, context));
-};
-export var alertListSelector = function (state) { return state.alerts.list; };
-export var selectAlertList = alertListSelector;
-export var alertListByContextSelector = function (context) { return function (state) { return state.alerts.list.filter(function (alert) { return alert.context === context; }); }; };
-export var selectAlertListByContext = alertListByContextSelector;
-export var alertContextFilter = function (list, context) {
-    return list.filter(function (al) { return al.context === context; });
-};
-var initialState = { counter: 0, list: [] };
-var alertIDSort = function (a, b) { return a.id - b.id; };
-var addAlert = function (state, action) {
-    var counter = state.counter, list = state.list;
-    var payload = action.payload;
-    var _a = payload || {}, alert = _a.alert, error = _a.error, context = _a.context;
+exports.alertContextFilter = alertContextFilter;
+const initialState = { counter: 0, list: [] };
+const alertIDSort = (a, b) => a.id - b.id;
+const addAlert = (state, action) => {
+    const { counter, list } = state;
+    const { payload } = action;
+    let { alert, error, context } = payload || {};
     if (error && !alert) {
         alert = buildAlert(error, context);
     }
@@ -63,53 +53,61 @@ var addAlert = function (state, action) {
     if (alert.context) {
         context = alert.context;
     }
-    var contextAlert = (context ? alertContextFilter(list, context) : [])[0];
+    const [contextAlert] = context ? (0, exports.alertContextFilter)(list, context) : [];
     if (!contextAlert) {
         return {
             counter: counter + 1,
-            list: __spreadArray(__spreadArray([], list, true), [
-                __assign(__assign({}, alert), { id: counter, count: 1, timestamp: new Date().valueOf() })
-            ], false).sort(alertIDSort)
+            list: [
+                ...list,
+                { ...alert, id: counter, count: 1, timestamp: new Date().valueOf() }
+            ].sort(alertIDSort)
         };
     }
     return {
-        counter: counter,
-        list: __spreadArray(__spreadArray([], list.filter(function (alert) { return alert.id !== contextAlert.id; }), true), list.filter(function (alert) { return alert.id === contextAlert.id; })
-            .map(function (alert) {
-            return __assign(__assign(__assign({}, alert), payload === null || payload === void 0 ? void 0 : payload.alert), { count: alert.count + 1, timestamp: new Date().valueOf() });
-        }), true).sort(alertIDSort),
+        counter,
+        list: [
+            ...list.filter(alert => alert.id !== contextAlert.id),
+            ...list.filter(alert => alert.id === contextAlert.id)
+                .map(alert => {
+                return {
+                    ...alert,
+                    ...payload?.alert,
+                    count: alert.count + 1,
+                    timestamp: new Date().valueOf()
+                };
+            }),
+        ].sort(alertIDSort),
     };
 };
-var alertReducer = function (state, action) {
-    if (state === void 0) { state = initialState; }
-    var type = action.type, payload = action.payload;
-    var counter = state.counter, list = state.list;
+const alertReducer = (state = initialState, action) => {
+    const { type, payload } = action;
+    const { counter, list } = state;
     switch (type) {
-        case alertAdded: {
+        case exports.alertAdded: {
             return addAlert(state, action);
         }
-        case alertDismissed:
-            if ((payload === null || payload === void 0 ? void 0 : payload.id) === undefined) {
+        case exports.alertDismissed:
+            if (payload?.id === undefined) {
                 return state;
             }
             return {
-                counter: counter,
-                list: __spreadArray([], list.filter(function (alert) { return alert.id !== (payload === null || payload === void 0 ? void 0 : payload.id); }), true).sort(alertIDSort)
+                counter,
+                list: [...list.filter(alert => alert.id !== payload?.id)].sort(alertIDSort)
             };
-        case alertDismissedByContext:
-            if (!(payload === null || payload === void 0 ? void 0 : payload.context)) {
+        case exports.alertDismissedByContext:
+            if (!payload?.context) {
                 return state;
             }
             return {
-                counter: counter,
-                list: __spreadArray([], list.filter(function (alert) { return alert.context !== (payload === null || payload === void 0 ? void 0 : payload.context); }), true).sort(alertIDSort)
+                counter,
+                list: [...list.filter(alert => alert.context !== payload?.context)].sort(alertIDSort)
             };
         default:
-            if (payload === null || payload === void 0 ? void 0 : payload.error) {
+            if (payload?.error) {
                 return addAlert(state, action);
             }
             return state;
     }
 };
-export default alertReducer;
+exports.default = alertReducer;
 //# sourceMappingURL=index.js.map
