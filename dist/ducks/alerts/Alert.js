@@ -1,25 +1,28 @@
-import React from "react";
-import classNames from 'classnames';
-import numeral from "numeral";
-import Badge from "../../components/Badge";
-var Alert = function (_a) {
-    var _b;
-    var message = _a.message, _c = _a.color, color = _c === void 0 ? 'primary' : _c, title = _a.title, _d = _a.className, className = _d === void 0 ? '' : _d, context = _a.context, _e = _a.count, count = _e === void 0 ? 0 : _e, _f = _a.canDismiss, canDismiss = _f === void 0 ? true : _f, onDismiss = _a.onDismiss, children = _a.children;
-    var elClassName = (_b = {},
-        _b["alert-" + color] = !!color,
-        _b['alert-dismissible'] = canDismiss,
-        _b);
-    return (React.createElement("div", { className: classNames('alert my-3', elClassName, className) },
-        !!context && (React.createElement("strong", { className: "me-1" },
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
+const classnames_1 = __importDefault(require("classnames"));
+const numeral_1 = __importDefault(require("numeral"));
+const Badge_1 = __importDefault(require("../../components/Badge"));
+const Alert = ({ message, color = 'primary', title, className = '', context, count = 0, canDismiss = true, onDismiss, children }) => {
+    const elClassName = {
+        [`alert-${color}`]: !!color,
+        'alert-dismissible': canDismiss,
+    };
+    return (react_1.default.createElement("div", { className: (0, classnames_1.default)('alert my-3', elClassName, className) },
+        !!context && (react_1.default.createElement("strong", { className: "me-1" },
             "[",
             context,
             "]")),
-        !!title && (React.createElement("strong", { className: "me-1" },
+        !!title && (react_1.default.createElement("strong", { className: "me-1" },
             title,
             ":")),
         message || children || null,
-        !!count && count > 1 && (React.createElement(Badge, { color: color, className: "mx-3" }, numeral(count).format('0,0'))),
-        canDismiss && typeof onDismiss === 'function' && (React.createElement("button", { type: "button", "aria-label": "close", onClick: onDismiss, className: "btn-close" }))));
+        !!count && count > 1 && (react_1.default.createElement(Badge_1.default, { color: color, className: "mx-3" }, (0, numeral_1.default)(count).format('0,0'))),
+        canDismiss && typeof onDismiss === 'function' && (react_1.default.createElement("button", { type: "button", "aria-label": "close", onClick: onDismiss, className: "btn-close" }))));
 };
-export default Alert;
+exports.default = Alert;
 //# sourceMappingURL=Alert.js.map

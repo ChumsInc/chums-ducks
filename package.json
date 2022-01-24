@@ -31,6 +31,7 @@
     "@babel/preset-env": "^7.12.17",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.12.1",
+    "@tsconfig/node14": "^1.0.1",
     "@types/classnames": "^2.2.11",
     "@types/lodash.debounce": "^4.0.6",
     "@types/node": "^16.4.0",

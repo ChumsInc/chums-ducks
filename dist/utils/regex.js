@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Returns a regular expression that is used by the
  * subsequence search engine.
@@ -6,9 +7,10 @@
  * @return {RegExp}     Regular expression based off input search string
  * @see https://git.io/v7LGt
  */
-export var getRegex = function (str, flags) {
-    if (flags === void 0) { flags = 'i'; }
-    var split = str.split('').map(function (char) {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getRegex = void 0;
+const getRegex = (str, flags = 'i') => {
+    const split = str.split('').map(char => {
         //escape special chars
         if ('*' === char ||
             '.' === char ||
@@ -26,7 +28,8 @@ export var getRegex = function (str, flags) {
             char = '\\' + char;
         return '(' + char + ')';
     });
-    var string = '^(.*?)' + split.join('(.*?)') + '(.*?)(.*)$';
+    const string = '^(.*?)' + split.join('(.*?)') + '(.*?)(.*)$';
     return new RegExp(string, flags);
 };
+exports.getRegex = getRegex;
 //# sourceMappingURL=regex.js.map

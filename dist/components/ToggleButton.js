@@ -1,17 +1,19 @@
-import React from "react";
-import classNames from "classnames";
-var ToggleButton = function (_a) {
-    var _b;
-    var id = _a.id, _c = _a.type, type = _c === void 0 ? 'checkbox' : _c, checked = _a.checked, _d = _a.color, color = _d === void 0 ? 'primary' : _d, size = _a.size, className = _a.className, onClick = _a.onClick, children = _a.children;
-    var btnClassName = classNames(className, (_b = {
-            btn: true
-        },
-        _b["btn-" + size] = !!size,
-        _b["btn-outline-" + color] = !!color,
-        _b));
-    return (React.createElement(React.Fragment, null,
-        React.createElement("input", { type: type, className: "btn-check", id: id, autoComplete: "off", onChange: onClick, checked: checked }),
-        React.createElement("label", { htmlFor: id, className: btnClassName }, children)));
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-export default ToggleButton;
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
+const classnames_1 = __importDefault(require("classnames"));
+const ToggleButton = ({ id, type = 'checkbox', checked, color = 'primary', size, className, onClick, children, }) => {
+    const btnClassName = (0, classnames_1.default)(className, {
+        btn: true,
+        [`btn-${size}`]: !!size,
+        [`btn-outline-${color}`]: !!color,
+    });
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement("input", { type: type, className: "btn-check", id: id, autoComplete: "off", onChange: onClick, checked: checked }),
+        react_1.default.createElement("label", { htmlFor: id, className: btnClassName }, children)));
+};
+exports.default = ToggleButton;
 //# sourceMappingURL=ToggleButton.js.map

@@ -1,66 +1,52 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-import React from 'react';
-import Input from "./Input";
-export var formatInputDate = function (date) {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.dateFromInputValue = exports.inputDate = exports.formatInputDate = void 0;
+const react_1 = __importDefault(require("react"));
+const Input_1 = __importDefault(require("./Input"));
+const formatInputDate = (date) => {
     return [
         String(date.getFullYear()).padStart(4, '0'),
         String(date.getMonth() + 1).padStart(2, '0'),
         String(date.getDate()).padStart(2, '0')
     ].join('-');
 };
-export var inputDate = function (date) {
+exports.formatInputDate = formatInputDate;
+const inputDate = (date) => {
     if (date instanceof Date) {
-        return formatInputDate(date);
+        return (0, exports.formatInputDate)(date);
     }
     if (typeof date === 'number') {
-        return formatInputDate(new Date(date));
+        return (0, exports.formatInputDate)(new Date(date));
     }
     if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-        var d_1 = dateFromInputValue(date);
-        return d_1 instanceof Date ? formatInputDate(d_1) : '';
+        const d = (0, exports.dateFromInputValue)(date);
+        return d instanceof Date ? (0, exports.formatInputDate)(d) : '';
     }
-    var d = new Date(date);
+    const d = new Date(date);
     if (!isNaN(d.valueOf())) {
-        return formatInputDate(d);
+        return (0, exports.formatInputDate)(d);
     }
     return '';
 };
-export var dateFromInputValue = function (value) {
-    var date = new Date(value);
+exports.inputDate = inputDate;
+const dateFromInputValue = (value) => {
+    const date = new Date(value);
     if (isNaN(date.valueOf())) {
         return null;
     }
     return new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
 };
-var DateInput = function (_a) {
-    var date = _a.date, value = _a.value, onChangeDate = _a.onChangeDate, onChange = _a.onChange, rest = __rest(_a, ["date", "value", "onChangeDate", "onChange"]);
-    var dateValue = inputDate(date || value || new Date());
-    var changeHandler = function (ev) {
+exports.dateFromInputValue = dateFromInputValue;
+const DateInput = ({ date, value, onChangeDate, onChange, ...rest }) => {
+    const dateValue = (0, exports.inputDate)(date || value || new Date());
+    const changeHandler = (ev) => {
         if (onChangeDate) {
-            var date_1 = dateFromInputValue(ev.target.value);
-            if (date_1) {
-                return onChangeDate(date_1);
+            const date = (0, exports.dateFromInputValue)(ev.target.value);
+            if (date) {
+                return onChangeDate(date);
             }
             return;
         }
@@ -68,7 +54,7 @@ var DateInput = function (_a) {
             return onChange(ev);
         }
     };
-    return (React.createElement(Input, __assign({ type: "date", value: dateValue }, rest, { onChange: changeHandler })));
+    return (react_1.default.createElement(Input_1.default, { type: "date", value: dateValue, ...rest, onChange: changeHandler }));
 };
-export default DateInput;
+exports.default = DateInput;
 //# sourceMappingURL=DateInput.js.map

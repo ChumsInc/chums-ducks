@@ -1,13 +1,36 @@
-import React, { createRef, useEffect, useState } from "react";
-import classNames from "classnames";
-import { noop } from "../utils";
-var Modal = function (_a) {
-    var title = _a.title, _b = _a.size, size = _b === void 0 ? 'md' : _b, header = _a.header, footer = _a.footer, _c = _a.canClose, canClose = _c === void 0 ? true : _c, scrollable = _a.scrollable, centered = _a.centered, staticBackdrop = _a.staticBackdrop, dialogClassName = _a.dialogClassName, _d = _a.visible, visible = _d === void 0 ? true : _d, _e = _a.onClose, onClose = _e === void 0 ? noop : _e, children = _a.children;
-    var modalRef = createRef();
-    var fadeTimer = 0;
-    var _f = useState(false), showModal = _f[0], setShowModal = _f[1];
-    var _g = useState(visible ? 'block' : 'none'), display = _g[0], setDisplay = _g[1];
-    useEffect(function () {
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importStar(require("react"));
+const classnames_1 = __importDefault(require("classnames"));
+const utils_1 = require("../utils");
+const Modal = ({ title, size = 'md', header, footer, canClose = true, scrollable, centered, staticBackdrop, dialogClassName, visible = true, onClose = utils_1.noop, children, }) => {
+    const modalRef = (0, react_1.createRef)();
+    let fadeTimer = 0;
+    const [showModal, setShowModal] = (0, react_1.useState)(false);
+    const [display, setDisplay] = (0, react_1.useState)(visible ? 'block' : 'none');
+    (0, react_1.useEffect)(() => {
         if (visible) {
             delayShowingModal();
         }
@@ -15,11 +38,10 @@ var Modal = function (_a) {
             delayClose();
         }
     }, [visible]);
-    var showBackdrop = function (state) {
-        var _a;
-        (_a = document.querySelector('.modal-backdrop')) === null || _a === void 0 ? void 0 : _a.classList.toggle('show', state);
+    const showBackdrop = (state) => {
+        document.querySelector('.modal-backdrop')?.classList.toggle('show', state);
     };
-    var closeHandler = function (ev) {
+    const closeHandler = (ev) => {
         if (!canClose) {
             return;
         }
@@ -28,70 +50,67 @@ var Modal = function (_a) {
         }
         delayClose();
     };
-    var onClickBackdrop = function (ev) {
-        var target = ev.target;
+    const onClickBackdrop = (ev) => {
+        const target = ev.target;
         if (!staticBackdrop && target && target.classList.contains('modal')) {
             closeHandler();
         }
     };
-    var onEscape = function (ev) {
+    const onEscape = (ev) => {
         if (ev.key === 'Escape') {
             closeHandler();
         }
     };
-    var delayShowingModal = function () {
+    const delayShowingModal = () => {
         setDisplay('block');
-        document.querySelectorAll('body').forEach(function (body) {
+        document.querySelectorAll('body').forEach(body => {
             body.classList.toggle('modal-open', true);
-            var div = document.createElement('div');
+            const div = document.createElement('div');
             div.className = 'modal-backdrop fade';
             body.appendChild(div);
         });
         clearTimeout(fadeTimer);
-        fadeTimer = window.setTimeout(function () {
+        fadeTimer = window.setTimeout(() => {
             showBackdrop(true);
             setShowModal(true);
         }, 300);
     };
-    var delayClose = function () {
+    const delayClose = () => {
         clearTimeout(fadeTimer);
         setShowModal(false);
         showBackdrop(false);
-        fadeTimer = window.setTimeout(function () {
-            var _a, _b;
-            (_a = document.querySelector('.modal-backdrop')) === null || _a === void 0 ? void 0 : _a.remove();
-            (_b = document.querySelector('body')) === null || _b === void 0 ? void 0 : _b.classList.toggle('modal-open', false);
+        fadeTimer = window.setTimeout(() => {
+            document.querySelector('.modal-backdrop')?.remove();
+            document.querySelector('body')?.classList.toggle('modal-open', false);
             setDisplay('none');
             onClose();
         }, 300);
     };
-    useEffect(function () {
-        return function () {
-            var _a, _b;
+    (0, react_1.useEffect)(() => {
+        return () => {
             clearTimeout(fadeTimer);
-            (_a = document.querySelector('body')) === null || _a === void 0 ? void 0 : _a.classList.toggle('modal-open', false);
-            (_b = document.querySelector('.modal-backdrop')) === null || _b === void 0 ? void 0 : _b.remove();
+            document.querySelector('body')?.classList.toggle('modal-open', false);
+            document.querySelector('.modal-backdrop')?.remove();
         };
     }, []);
-    useEffect(function () {
-        var _a;
+    (0, react_1.useEffect)(() => {
         if (showModal) {
-            (_a = modalRef.current) === null || _a === void 0 ? void 0 : _a.focus();
+            modalRef.current?.focus();
         }
     }, [showModal]);
-    var className = {
+    const className = {
         'modal-dialog-scrollable': scrollable,
         'modal-dialog-centered': centered,
     };
-    return (React.createElement("div", { className: classNames("modal fade", { show: showModal }), tabIndex: -1, ref: modalRef, style: { display: display }, onClick: onClickBackdrop, onKeyDown: onEscape },
-        React.createElement("div", { className: classNames("modal-dialog", "modal-" + size, className, dialogClassName) },
-            React.createElement("div", { className: "modal-content" },
+    return (react_1.default.createElement("div", { className: (0, classnames_1.default)("modal fade", { show: showModal }), tabIndex: -1, ref: modalRef, style: { display: display }, onClick: onClickBackdrop, onKeyDown: onEscape },
+        react_1.default.createElement("div", { className: (0, classnames_1.default)("modal-dialog", `modal-${size}`, className, dialogClassName) },
+            react_1.default.createElement("div", { className: "modal-content" },
                 !!header && header,
-                !header && (!!title || canClose) && (React.createElement("div", { className: "modal-header" },
-                    React.createElement("h5", { className: "modal-title" }, title || 'Modal Title'),
-                    canClose && (React.createElement("button", { type: "button", className: "btn-close", onClick: closeHandler, "aria-label": "Close" })))),
-                React.createElement("div", { className: "modal-body" }, children || 'modal body goes here'),
+                !header && (!!title || canClose) && (react_1.default.createElement("div", { className: "modal-header" },
+                    react_1.default.createElement("h5", { className: "modal-title" }, title || 'Modal Title'),
+                    canClose && (react_1.default.createElement("button", { type: "button", className: "btn-close", onClick: closeHandler, "aria-label": "Close" })))),
+                react_1.default.createElement("div", { className: "modal-body" }, children || 'modal body goes here'),
                 !!footer && footer))));
 };
-export default Modal;
+exports.default = Modal;
 //# sourceMappingURL=Modal.js.map

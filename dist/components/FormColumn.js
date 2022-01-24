@@ -1,20 +1,23 @@
-import React from "react";
-import classNames from "classnames";
-var FormColumn = function (_a) {
-    var _b, _c;
-    var label = _a.label, _d = _a.width, width = _d === void 0 ? 8 : _d, className = _a.className, children = _a.children;
-    var labelClassName = (_b = {},
-        _b["col-" + (12 - width)] = !!width,
-        _b['col-auto'] = !width,
-        _b['form-label'] = true,
-        _b);
-    var containerClassName = (_c = {},
-        _c["col-" + width] = !!width,
-        _c['col'] = !width,
-        _c);
-    return (React.createElement("div", { className: classNames('row g-3', className) },
-        React.createElement("label", { className: classNames(labelClassName) }, label),
-        React.createElement("div", { className: classNames(containerClassName) }, children)));
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-export default FormColumn;
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
+const classnames_1 = __importDefault(require("classnames"));
+const FormColumn = ({ label, width = 8, className, children }) => {
+    const labelClassName = {
+        [`col-${12 - width}`]: !!width,
+        'col-auto': !width,
+        'form-label': true,
+    };
+    const containerClassName = {
+        [`col-${width}`]: !!width,
+        'col': !width,
+    };
+    return (react_1.default.createElement("div", { className: (0, classnames_1.default)('row g-3', className) },
+        react_1.default.createElement("label", { className: (0, classnames_1.default)(labelClassName) }, label),
+        react_1.default.createElement("div", { className: (0, classnames_1.default)(containerClassName) }, children)));
+};
+exports.default = FormColumn;
 //# sourceMappingURL=FormColumn.js.map

@@ -1,14 +1,18 @@
-import React from "react";
-import TextArea from "./TextArea";
-var FieldTextArea = function (_a) {
-    var _b = _a.field, field = _b === void 0 ? '' : _b, value = _a.value, placeholder = _a.placeholder, required = _a.required, readOnly = _a.readOnly, disabled = _a.disabled, onChange = _a.onChange;
-    var changeHandler = function (ev) {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
+const TextArea_1 = __importDefault(require("./TextArea"));
+const FieldTextArea = ({ field = '', value, placeholder, required, readOnly, disabled, onChange }) => {
+    const changeHandler = (ev) => {
         if (readOnly || !onChange) {
             return;
         }
-        onChange({ field: field, value: ev.target.value });
+        onChange({ field, value: ev.target.value });
     };
-    return (React.createElement(TextArea, { value: value, onChange: changeHandler, placeholder: placeholder, required: required, readOnly: readOnly, disabled: disabled }));
+    return (react_1.default.createElement(TextArea_1.default, { value: value, onChange: changeHandler, placeholder: placeholder, required: required, readOnly: readOnly, disabled: disabled }));
 };
-export default FieldTextArea;
+exports.default = FieldTextArea;
 //# sourceMappingURL=FieldTextArea.js.map
