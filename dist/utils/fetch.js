@@ -3,12 +3,9 @@
  * Created by steve on 8/24/2016.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildPath = exports.fetchDELETE = exports.fetchPOST = exports.fetchHTML = exports.fetchJSON = exports.fetchOptions = exports.Response = exports.Request = exports.Headers = void 0;
+exports.buildPath = exports.fetchDELETE = exports.fetchPOST = exports.fetchHTML = exports.fetchJSON = exports.fetchOptions = void 0;
 require("isomorphic-fetch");
 const path_to_regexp_1 = require("path-to-regexp");
-exports.Headers = self.Headers;
-exports.Request = self.Request;
-exports.Response = self.Response;
 exports.fetchOptions = {
     PostJSON: (object, options) => {
         options = options || {};
