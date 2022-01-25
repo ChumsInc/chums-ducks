@@ -2,13 +2,13 @@
  * Created by steve on 8/24/2016.
  */
 
-import 'isomorphic-fetch';
+import 'whatwg-fetch';
 import {compile} from 'path-to-regexp';
 
-
-export const Headers = self.Headers;
-export const Request = self.Request;
-export const Response = self.Response;
+// export default self.fetch.bind(self);
+// export const Headers = self.Headers;
+// export const Request = self.Request;
+// export const Response = self.Response;
 
 export const fetchOptions = {
     PostJSON: (object?:Object, options?:RequestInit):RequestInit => {
