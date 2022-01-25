@@ -4,9 +4,8 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildPath = exports.fetchDELETE = exports.fetchPOST = exports.fetchHTML = exports.fetchJSON = exports.fetchOptions = exports.Response = exports.Request = exports.Headers = void 0;
-require("whatwg-fetch");
+require("isomorphic-fetch");
 const path_to_regexp_1 = require("path-to-regexp");
-exports.default = self.fetch.bind(self);
 exports.Headers = self.Headers;
 exports.Request = self.Request;
 exports.Response = self.Response;

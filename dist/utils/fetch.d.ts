@@ -1,9 +1,7 @@
 /**
  * Created by steve on 8/24/2016.
  */
-import 'whatwg-fetch';
-declare const _default: ((input: RequestInfo, init?: RequestInit | undefined) => Promise<Response>) & typeof fetch;
-export default _default;
+import 'isomorphic-fetch';
 export declare const Headers: {
     new (init?: HeadersInit | undefined): Headers;
     prototype: Headers;

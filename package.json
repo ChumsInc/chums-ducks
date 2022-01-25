@@ -10,7 +10,7 @@
     "copy-css": "copyfiles --verbose --up 1 src/**/*.css dist/ && copyfiles --verbose --up 1 src/**/*.scss dist/",
     "clean": "rimraf dist/",
     "compile": "tsc",
-    "build": "npm run clean && npm run compile && npm run copy-css"
+    "build": "npm run clean && npm run compile"
   },
   "browserslist": {
     "production": [
@@ -33,6 +33,7 @@
     "@babel/preset-typescript": "^7.12.1",
     "@tsconfig/node14": "^1.0.1",
     "@types/classnames": "^2.2.11",
+    "@types/isomorphic-fetch": "^0.0.35",
     "@types/lodash.debounce": "^4.0.6",
     "@types/node": "^16.4.0",
     "@types/numeral": "^2.0.1",
@@ -90,6 +91,7 @@
     }
   },
   "dependencies": {
+    "isomorphic-fetch": "^3.0.0",
     "path-to-regexp": "^6.2.0",
     "styled-components": "^5.3.3",
     "whatwg-fetch": "^3.6.2"
