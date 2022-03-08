@@ -12,7 +12,7 @@ export interface InputProps extends InputHTMLAttributes<any> {
 }
 
 const Input: React.FC<InputProps> = ({
-                                         bsSize = 'sm',
+                                         bsSize = '',
                                          fuzzyList,
                                          myRef,
                                          type = 'text',

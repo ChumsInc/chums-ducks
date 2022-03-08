@@ -31,7 +31,7 @@ const classnames_1 = __importDefault(require("classnames"));
 const utils_1 = require("../utils");
 const noop = () => {
 };
-const Input = ({ bsSize = 'sm', fuzzyList, myRef, type = 'text', className, value, onChange = noop, ...rest }) => {
+const Input = ({ bsSize = '', fuzzyList, myRef, type = 'text', className, value, onChange = noop, ...rest }) => {
     const inputRef = myRef || (0, react_1.useRef)(null);
     const inputClassName = {
         'form-control': true,

@@ -30,7 +30,7 @@ const react_1 = __importStar(require("react"));
 const classnames_1 = __importDefault(require("classnames"));
 const noop = () => {
 };
-const TextArea = ({ bsSize = 'sm', myRef, className, value, onChange = noop, ...rest }) => {
+const TextArea = ({ bsSize = '', myRef, className, value, onChange = noop, ...rest }) => {
     const inputRef = (0, react_1.useRef)(null);
     const inputClassName = {
         'form-control': true,

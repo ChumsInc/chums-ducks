@@ -23,7 +23,7 @@ export interface DebouncedInputProps extends InputHTMLAttributes<any> {
 }
 
 const DebouncedInput: React.FC<DebouncedInputProps> = ({
-                                         bsSize = 'sm',
+                                         bsSize = '',
                                          wait = 350,
                                          fuzzyList,
                                          myRef,

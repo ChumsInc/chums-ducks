@@ -21,7 +21,7 @@ export interface DebouncedTextAreaProps extends TextareaHTMLAttributes<any> {
 }
 
 const DebouncedTextArea: React.FC<DebouncedTextAreaProps> = ({
-                                               bsSize = 'sm',
+                                               bsSize = '',
                                                wait = 350,
                                                myRef,
                                                className,

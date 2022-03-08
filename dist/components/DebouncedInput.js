@@ -32,7 +32,7 @@ const lodash_debounce_1 = __importDefault(require("lodash.debounce"));
 const utils_1 = require("../utils");
 const noop = () => {
 };
-const DebouncedInput = ({ bsSize = 'sm', wait = 350, fuzzyList, myRef, type = 'text', className, value, onChange = noop, onBlur, ...rest }) => {
+const DebouncedInput = ({ bsSize = '', wait = 350, fuzzyList, myRef, type = 'text', className, value, onChange = noop, onBlur, ...rest }) => {
     let _debounced;
     const delayedChange = (0, react_1.useCallback)(_debounced = (0, lodash_debounce_1.default)((ev) => onChange(ev), wait), []);
     const inputRef = (0, react_1.useRef)(null);

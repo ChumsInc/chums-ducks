@@ -31,7 +31,7 @@ const classnames_1 = __importDefault(require("classnames"));
 const lodash_debounce_1 = __importDefault(require("lodash.debounce"));
 const noop = () => {
 };
-const DebouncedTextArea = ({ bsSize = 'sm', wait = 350, myRef, className, value, onChange = noop, onBlur, ...rest }) => {
+const DebouncedTextArea = ({ bsSize = '', wait = 350, myRef, className, value, onChange = noop, onBlur, ...rest }) => {
     let _debounced;
     const delayedChange = (0, react_1.useCallback)((0, lodash_debounce_1.default)((ev) => {
         console.log('useCallback (debounced)', ev.target, ev.target.value);

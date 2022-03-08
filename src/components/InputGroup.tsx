@@ -5,7 +5,7 @@ interface InputGroupProps {
     bsSize?: 'sm'|'lg',
     className?: string|object,
 }
-const InputGroup:React.FC<InputGroupProps> = ({bsSize = 'sm', className, children}) => {
+const InputGroup:React.FC<InputGroupProps> = ({bsSize = '', className, children}) => {
     return (
         <div className={classNames('input-group', {[`input-group-${bsSize}`]: !!bsSize}, className)}>
             {children}

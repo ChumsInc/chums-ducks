@@ -10,7 +10,7 @@ export interface TextAreaProps extends TextareaHTMLAttributes<any> {
 }
 
 const TextArea: React.FC<TextAreaProps> = ({
-                                               bsSize = 'sm',
+                                               bsSize = '',
                                                myRef,
                                                className,
                                                value,
