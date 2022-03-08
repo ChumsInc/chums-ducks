@@ -46,7 +46,7 @@ const DebouncedInput = ({ bsSize = '', wait = 350, fuzzyList, myRef, type = 'tex
         setLocalValue(String(value));
     }, [value]);
     const inputClassName = {
-        'form-control': true,
+        'form-control': !/form-control-plaintext/.test(className || ''),
         [`form-control-${bsSize}`]: !!bsSize,
     };
     const changeHandler = (ev) => {

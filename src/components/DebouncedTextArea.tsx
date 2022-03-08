@@ -50,7 +50,7 @@ const DebouncedTextArea: React.FC<DebouncedTextAreaProps> = ({
     }, [value]);
 
     const inputClassName = {
-        'form-control': true,
+        'form-control': !/form-control-plaintext/.test(className || ''),
         [`form-control-${bsSize}`]: !!bsSize,
     }
 

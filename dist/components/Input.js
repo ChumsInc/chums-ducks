@@ -34,7 +34,7 @@ const noop = () => {
 const Input = ({ bsSize = '', fuzzyList, myRef, type = 'text', className, value, onChange = noop, ...rest }) => {
     const inputRef = myRef || (0, react_1.useRef)(null);
     const inputClassName = {
-        'form-control': true,
+        'form-control': !/form-control-plaintext/.test(className || ''),
         [`form-control-${bsSize}`]: !!bsSize,
     };
     const changeHandler = (ev) => {

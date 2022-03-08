@@ -48,7 +48,7 @@ const DebouncedTextArea = ({ bsSize = '', wait = 350, myRef, className, value, o
         setLocalValue(String(value));
     }, [value]);
     const inputClassName = {
-        'form-control': true,
+        'form-control': !/form-control-plaintext/.test(className || ''),
         [`form-control-${bsSize}`]: !!bsSize,
     };
     const changeHandler = (ev) => {

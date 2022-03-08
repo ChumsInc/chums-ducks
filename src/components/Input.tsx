@@ -24,7 +24,7 @@ const Input: React.FC<InputProps> = ({
     const inputRef = myRef || useRef<HTMLInputElement>(null);
 
     const inputClassName = {
-        'form-control': true,
+        'form-control': !/form-control-plaintext/.test(className || ''),
         [`form-control-${bsSize}`]: !!bsSize,
     }
 

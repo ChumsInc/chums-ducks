@@ -33,7 +33,7 @@ const noop = () => {
 const TextArea = ({ bsSize = '', myRef, className, value, onChange = noop, ...rest }) => {
     const inputRef = (0, react_1.useRef)(null);
     const inputClassName = {
-        'form-control': true,
+        'form-control': !/form-control-plaintext/.test(className || ''),
         [`form-control-${bsSize}`]: !!bsSize,
     };
     return (react_1.default.createElement("textarea", { className: (0, classnames_1.default)(inputClassName, className), value: value || '', 

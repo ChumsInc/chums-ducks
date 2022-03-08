@@ -20,7 +20,7 @@ const TextArea: React.FC<TextAreaProps> = ({
 
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const inputClassName = {
-        'form-control': true,
+        'form-control': !/form-control-plaintext/.test(className || ''),
         [`form-control-${bsSize}`]: !!bsSize,
     }
 
