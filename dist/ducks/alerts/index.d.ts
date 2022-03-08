@@ -1,7 +1,7 @@
 import { RootStateOrAny } from "react-redux";
 import { ActionInterface, ActionPayload } from "../types";
 import { BasicAlert } from "../../types";
-export interface Alert extends BasicAlert {
+export interface AlertInterface extends BasicAlert {
     id: number;
     count: number;
     timestamp: number;
@@ -9,7 +9,7 @@ export interface Alert extends BasicAlert {
 export declare const defaultAlert: BasicAlert;
 export interface AlertListState {
     counter: number;
-    list: Alert[];
+    list: AlertInterface[];
 }
 export interface AlertPayload extends ActionPayload {
     id?: number;
@@ -29,10 +29,10 @@ export declare const dismissAlertAction: (id: number) => AlertAction;
 export declare const dismissContextAlert: (context: string) => AlertAction;
 export declare const dismissContextAlertAction: (context: string) => AlertAction;
 export declare const onErrorAction: (err: Error, context?: string | undefined) => AlertAction;
-export declare const alertListSelector: (state: RootState) => Alert[];
-export declare const selectAlertList: (state: RootState) => Alert[];
-export declare const alertListByContextSelector: (context: string) => (state: RootState) => Alert[];
-export declare const selectAlertListByContext: (context: string) => (state: RootState) => Alert[];
-export declare const alertContextFilter: (list: Alert[], context: string) => Alert[];
+export declare const alertListSelector: (state: RootState) => AlertInterface[];
+export declare const selectAlertList: (state: RootState) => AlertInterface[];
+export declare const alertListByContextSelector: (context: string) => (state: RootState) => AlertInterface[];
+export declare const selectAlertListByContext: (context: string) => (state: RootState) => AlertInterface[];
+export declare const alertContextFilter: (list: AlertInterface[], context: string) => AlertInterface[];
 declare const alertReducer: (state: AlertListState | undefined, action: AlertAction) => AlertListState;
 export default alertReducer;

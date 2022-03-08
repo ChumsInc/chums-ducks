@@ -2,7 +2,7 @@ import {RootStateOrAny} from "react-redux";
 import {ActionInterface, ActionPayload} from "../types";
 import {BasicAlert} from "../../types";
 
-export interface Alert extends BasicAlert {
+export interface AlertInterface extends BasicAlert {
     id: number,
     count: number,
     timestamp: number,
@@ -15,7 +15,7 @@ export const defaultAlert:BasicAlert = {
 
 export interface AlertListState {
     counter: number,
-    list: Alert[],
+    list: AlertInterface[],
 }
 
 export interface AlertPayload extends ActionPayload {
@@ -59,20 +59,20 @@ export const onErrorAction = (err: Error, context?: string): AlertAction =>
     addAlertAction(buildAlert(err, context));
 
 
-export const alertListSelector = (state: RootState): Alert[] => state.alerts.list;
+export const alertListSelector = (state: RootState): AlertInterface[] => state.alerts.list;
 export const selectAlertList = alertListSelector;
 
-export const alertListByContextSelector = (context: string) => (state:RootState):Alert[] => state.alerts.list.filter(alert => alert.context === context)
+export const alertListByContextSelector = (context: string) => (state:RootState):AlertInterface[] => state.alerts.list.filter(alert => alert.context === context)
 export const selectAlertListByContext = alertListByContextSelector;
 
-export const alertContextFilter = (list:Alert[], context:string):Alert[] => {
+export const alertContextFilter = (list:AlertInterface[], context:string):AlertInterface[] => {
     return list.filter(al => al.context === context);
 }
 
 
 const initialState: AlertListState = {counter: 0, list: []}
 
-const alertIDSort = (a:Alert, b:Alert) => a.id - b.id;
+const alertIDSort = (a:AlertInterface, b:AlertInterface) => a.id - b.id;
 
 const addAlert = (state:AlertListState, action:AlertAction):AlertListState => {
     const {counter, list} = state;

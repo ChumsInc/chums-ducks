@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {currentPageSelector, rowsPerPageSelector, setPageAction, calcPages} from "./index";
+import {calcPages, selectCurrentPage, selectRowsPerPage, setPageAction} from "./index";
 import Pagination from "./Pagination";
 
 export interface PaginationDuckProps {
@@ -19,8 +19,8 @@ const PaginationDuck: React.FC<PaginationDuckProps> = ({
 
     const dispatch = useDispatch();
 
-    const page = useSelector(currentPageSelector(pageKey));
-    const rowsPerPage = useSelector(rowsPerPageSelector(pageKey));
+    const page = useSelector(selectCurrentPage(pageKey));
+    const rowsPerPage = useSelector(selectRowsPerPage(pageKey));
     const pages = calcPages(dataLength, rowsPerPage) || 1;
 
     // if the current page has exceeded the number of pages, then reset to page 1

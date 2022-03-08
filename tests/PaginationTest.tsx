@@ -43,7 +43,7 @@ const testTableSorter = ({field, ascending}: TestSorterProps) => (a: TableDataRo
 const colors: BootstrapColor[] = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark',];
 
 const buildDataSet = (): TableDataRow[] => {
-    return new Array(1000)
+    return new Array(10000)
         .fill(null)
         .map((el, index) => ({
             id: index,

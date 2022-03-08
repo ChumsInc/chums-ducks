@@ -40,12 +40,22 @@ export const addPageSetAction = ({key = 'app', current = 1, rowsPerPage = 25}:Pa
 
 export const selectCurrentPage = (key:string) => (state: RootState): number => state.pages[key]?.current ?? 1;
 export const selectRowsPerPage = (key:string) => (state: RootState): number => state.pages[key]?.rowsPerPage ?? 25;
+
 export const selectPagedData = (key: string, data: any[]) => (state:RootState):any[] => {
     if (!state.pages[key]) {
         return data;
     }
     const {current, rowsPerPage} = state.pages[key] || {};
     return data.filter((row, index) => Math.ceil((index + 1) / rowsPerPage) === current);
+}
+
+
+export const selectPageFilter = (key:string) => (state:RootState):(row:any, index:number) => boolean => {
+    if (!state.pages[key]) {
+        return () => true;
+    }
+    const {current = 1, rowsPerPage = 25} = state.pages[key] || {};
+    return filterPage(current, rowsPerPage);
 }
 
 export const currentPageSelector = selectCurrentPage;

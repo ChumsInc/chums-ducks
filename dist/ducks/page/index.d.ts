@@ -30,6 +30,7 @@ export declare const addPageSetAction: ({ key, current, rowsPerPage }: PageSetAc
 export declare const selectCurrentPage: (key: string) => (state: RootState) => number;
 export declare const selectRowsPerPage: (key: string) => (state: RootState) => number;
 export declare const selectPagedData: (key: string, data: any[]) => (state: RootState) => any[];
+export declare const selectPageFilter: (key: string) => (state: RootState) => (row: any, index: number) => boolean;
 export declare const currentPageSelector: (key: string) => (state: RootState) => number;
 export declare const rowsPerPageSelector: (key: string) => (state: RootState) => number;
 export declare const pagedDataSelector: (key: string, data: any[]) => (state: RootState) => any[];

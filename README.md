@@ -351,13 +351,13 @@ export declare const dismissAlertAction: (id: number) => AlertAction;
 export declare const dismissContextAlert: (context: string) => AlertAction;
 export declare const onErrorAction: (err: Error, context?: string | undefined) => AlertAction;
 
-export declare const alertListSelector: (state: RootState) => Alert[];
-export declare const selectAlertList: (state: RootState) => Alert[];
-export declare const alertListByContextSelector: (context: string) => (state: RootState) => Alert[];
-export declare const alertContextFilter: (list: Alert[], context: string) => Alert[];
+export declare const alertListSelector: (state: RootState) => AlertInterface[];
+export declare const selectAlertList: (state: RootState) => AlertInterface[];
+export declare const alertListByContextSelector: (context: string) => (state: RootState) => AlertInterface[];
+export declare const alertContextFilter: (list: AlertInterface[], context: string) => AlertInterface[];
 
 ```
-#### ducks/alerts/Alert.tsx
+#### ducks/alerts/AlertInterface.tsx
 Not a connected component... <em>maybe it should live in components?</em>
 ```ts
 export interface Props extends BasicAlert {
@@ -366,10 +366,10 @@ export interface Props extends BasicAlert {
 }
 ```
 ```tsx
-<Alert color={danger} title="Oops!"
+<AlertInterface color={danger} title="Oops!"
        context="employee/saveEmployeeClockAction" count={3} onDismiss={dismissHandler}>
     Saving the timeclock action failed!
-</Alert>
+</AlertInterface>
 ```
 
 #### ducks/alerts/AlertList.tsx

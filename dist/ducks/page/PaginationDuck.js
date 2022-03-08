@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -28,8 +32,8 @@ const index_1 = require("./index");
 const Pagination_1 = __importDefault(require("./Pagination"));
 const PaginationDuck = ({ pageKey = 'app', dataLength, ...props }) => {
     const dispatch = (0, react_redux_1.useDispatch)();
-    const page = (0, react_redux_1.useSelector)((0, index_1.currentPageSelector)(pageKey));
-    const rowsPerPage = (0, react_redux_1.useSelector)((0, index_1.rowsPerPageSelector)(pageKey));
+    const page = (0, react_redux_1.useSelector)((0, index_1.selectCurrentPage)(pageKey));
+    const rowsPerPage = (0, react_redux_1.useSelector)((0, index_1.selectRowsPerPage)(pageKey));
     const pages = (0, index_1.calcPages)(dataLength, rowsPerPage) || 1;
     // if the current page has exceeded the number of pages, then reset to page 1
     (0, react_1.useEffect)(() => {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pagedDataSelector = exports.rowsPerPageSelector = exports.currentPageSelector = exports.selectPagedData = exports.selectRowsPerPage = exports.selectCurrentPage = exports.addPageSetAction = exports.setRowsPerPageAction = exports.setPageAction = exports.calcPages = exports.filterPage = exports.defaultRowsPerPageValues = exports.rowsPerPageChanged = exports.currentPageChanged = exports.addPageSet = void 0;
+exports.pagedDataSelector = exports.rowsPerPageSelector = exports.currentPageSelector = exports.selectPageFilter = exports.selectPagedData = exports.selectRowsPerPage = exports.selectCurrentPage = exports.addPageSetAction = exports.setRowsPerPageAction = exports.setPageAction = exports.calcPages = exports.filterPage = exports.defaultRowsPerPageValues = exports.rowsPerPageChanged = exports.currentPageChanged = exports.addPageSet = void 0;
 exports.addPageSet = 'page/pageSetAdded';
 exports.currentPageChanged = 'page/currentPageChanged';
 exports.rowsPerPageChanged = 'page/rowsPerPageChanged';
@@ -27,6 +27,14 @@ const selectPagedData = (key, data) => (state) => {
     return data.filter((row, index) => Math.ceil((index + 1) / rowsPerPage) === current);
 };
 exports.selectPagedData = selectPagedData;
+const selectPageFilter = (key) => (state) => {
+    if (!state.pages[key]) {
+        return () => true;
+    }
+    const { current = 1, rowsPerPage = 25 } = state.pages[key] || {};
+    return (0, exports.filterPage)(current, rowsPerPage);
+};
+exports.selectPageFilter = selectPageFilter;
 exports.currentPageSelector = exports.selectCurrentPage;
 exports.rowsPerPageSelector = exports.selectRowsPerPage;
 exports.pagedDataSelector = exports.selectPagedData;
