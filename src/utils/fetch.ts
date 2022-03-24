@@ -39,7 +39,7 @@ export const fetchOptions = {
     }
 };
 
-async function handleJSONResponse(res:Response) {
+async function handleJSONResponse<T>(res:Response):Promise<T|undefined> {
     if (!res.ok) {
         const text = await res.text();
         return Promise.reject(new Error(text));
@@ -52,7 +52,7 @@ async function handleJSONResponse(res:Response) {
     return json;
 }
 
-export async function fetchJSON(url:string, options:RequestInit = {}) {
+export async function fetchJSON<T>(url:string, options:RequestInit = {}):Promise<T|undefined> {
     try {
         if (!!options?.method && ['POST', 'PUT'].includes(options.method.toUpperCase())) {
             const headers = options?.headers || {};
@@ -66,17 +66,21 @@ export async function fetchJSON(url:string, options:RequestInit = {}) {
             }
         }
         const res = await fetch(url, {credentials: 'same-origin', ...options});
-        return await handleJSONResponse(res);
+        return await handleJSONResponse<T>(res);
     } catch(err:unknown) {
         if (err instanceof Error) {
             console.log("fetchJSON()", err.message);
             return Promise.reject(err);
         }
         console.error("fetchJSON()", err);
+        if (typeof err === 'string') {
+            return Promise.reject(new Error(err));
+        }
+        return Promise.reject(err);
     }
 }
 
-export async function fetchHTML(url:string, options: RequestInit = {}) {
+export async function fetchHTML(url:string, options: RequestInit = {}):Promise<string|undefined> {
     try {
         const res = await fetch(url, {credentials: 'same-origin', ...options});
         if (!res.ok) {
@@ -90,32 +94,45 @@ export async function fetchHTML(url:string, options: RequestInit = {}) {
             return Promise.reject(err);
         }
         console.error("fetchHTML()", err)
+        if (typeof err === 'string') {
+            return Promise.reject(new Error(err));
+        }
+        return Promise.reject(err);
     }
 }
 
-export async function fetchPOST(url:string, body:Object, options: RequestInit = {}) {
+export async function fetchPOST<T>(url:string, body:Object, options: RequestInit = {}):Promise<T|undefined> {
     try {
-        const res = await fetch(url, fetchOptions.PostJSON(body, options));
-        return await handleJSONResponse(res);
+        const _options = fetchOptions.PostJSON(body, options);
+        return await fetchJSON(url, _options);
     } catch(err:unknown) {
         if (err instanceof Error) {
             console.log("fetchPOST()", err.message);
             return Promise.reject(err);
         }
         console.error('fetchPOST()', err);
+        if (typeof err === 'string') {
+            return Promise.reject(new Error(err));
+        }
+        return Promise.reject(err);
+
     }
 }
 
-export async function fetchDELETE(url:string, options: RequestInit = {}) {
+export async function fetchDELETE<T>(url:string, options: RequestInit = {}):Promise<T|undefined> {
     try {
-        const res = await fetch(url, fetchOptions.Delete(options));
-        return await handleJSONResponse(res);
+        const _options = fetchOptions.PostJSON(options);
+        return await fetchJSON<T>(url, _options);
     } catch(err:unknown) {
         if (err instanceof Error) {
             console.log("fetchDELETE()", err.message);
             return Promise.reject(err);
         }
         console.log('fetchDELETE', err);
+        if (typeof err === 'string') {
+            return Promise.reject(new Error(err));
+        }
+        return Promise.reject(err);
     }
 }
 

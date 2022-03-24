@@ -73,6 +73,10 @@ async function fetchJSON(url, options = {}) {
             return Promise.reject(err);
         }
         console.error("fetchJSON()", err);
+        if (typeof err === 'string') {
+            return Promise.reject(new Error(err));
+        }
+        return Promise.reject(err);
     }
 }
 exports.fetchJSON = fetchJSON;
@@ -91,13 +95,17 @@ async function fetchHTML(url, options = {}) {
             return Promise.reject(err);
         }
         console.error("fetchHTML()", err);
+        if (typeof err === 'string') {
+            return Promise.reject(new Error(err));
+        }
+        return Promise.reject(err);
     }
 }
 exports.fetchHTML = fetchHTML;
 async function fetchPOST(url, body, options = {}) {
     try {
-        const res = await fetch(url, exports.fetchOptions.PostJSON(body, options));
-        return await handleJSONResponse(res);
+        const _options = exports.fetchOptions.PostJSON(body, options);
+        return await fetchJSON(url, _options);
     }
     catch (err) {
         if (err instanceof Error) {
@@ -105,13 +113,17 @@ async function fetchPOST(url, body, options = {}) {
             return Promise.reject(err);
         }
         console.error('fetchPOST()', err);
+        if (typeof err === 'string') {
+            return Promise.reject(new Error(err));
+        }
+        return Promise.reject(err);
     }
 }
 exports.fetchPOST = fetchPOST;
 async function fetchDELETE(url, options = {}) {
     try {
-        const res = await fetch(url, exports.fetchOptions.Delete(options));
-        return await handleJSONResponse(res);
+        const _options = exports.fetchOptions.PostJSON(options);
+        return await fetchJSON(url, _options);
     }
     catch (err) {
         if (err instanceof Error) {
@@ -119,6 +131,10 @@ async function fetchDELETE(url, options = {}) {
             return Promise.reject(err);
         }
         console.log('fetchDELETE', err);
+        if (typeof err === 'string') {
+            return Promise.reject(new Error(err));
+        }
+        return Promise.reject(err);
     }
 }
 exports.fetchDELETE = fetchDELETE;
