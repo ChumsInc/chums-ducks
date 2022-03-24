@@ -49,7 +49,7 @@ async function handleJSONResponse(res) {
         console.warn(json.error);
         return Promise.reject(new Error(json.error));
     }
-    return json;
+    return json || {};
 }
 async function fetchJSON(url, options = {}) {
     try {

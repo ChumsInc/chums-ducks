@@ -39,7 +39,7 @@ export const fetchOptions = {
     }
 };
 
-async function handleJSONResponse<T = void>(res:Response):Promise<T|undefined> {
+async function handleJSONResponse<T = any>(res:Response):Promise<T> {
     if (!res.ok) {
         const text = await res.text();
         return Promise.reject(new Error(text));
@@ -49,10 +49,10 @@ async function handleJSONResponse<T = void>(res:Response):Promise<T|undefined> {
         console.warn(json.error);
         return Promise.reject(new Error(json.error));
     }
-    return json;
+    return json || {};
 }
 
-export async function fetchJSON<T = void>(url:string, options:RequestInit = {}):Promise<T|undefined> {
+export async function fetchJSON<T = void>(url:string, options:RequestInit = {}):Promise<T> {
     try {
         if (!!options?.method && ['POST', 'PUT'].includes(options.method.toUpperCase())) {
             const headers = options?.headers || {};
@@ -101,7 +101,7 @@ export async function fetchHTML(url:string, options: RequestInit = {}):Promise<s
     }
 }
 
-export async function fetchPOST<T = void>(url:string, body:Object, options: RequestInit = {}):Promise<T|undefined> {
+export async function fetchPOST<T = void>(url:string, body:Object, options: RequestInit = {}):Promise<T> {
     try {
         const _options = fetchOptions.PostJSON(body, options);
         return await fetchJSON(url, _options);
@@ -119,7 +119,7 @@ export async function fetchPOST<T = void>(url:string, body:Object, options: Requ
     }
 }
 
-export async function fetchDELETE<T = void>(url:string, options: RequestInit = {}):Promise<T|undefined> {
+export async function fetchDELETE<T = void>(url:string, options: RequestInit = {}):Promise<T> {
     try {
         const _options = fetchOptions.PostJSON(options);
         return await fetchJSON<T>(url, _options);
