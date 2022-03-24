@@ -10,7 +10,8 @@
     "copy-css": "copyfiles --verbose --up 1 src/**/*.css dist/ && copyfiles --verbose --up 1 src/**/*.scss dist/",
     "clean": "rimraf dist/",
     "compile": "tsc",
-    "build": "npm run clean && npm run compile"
+    "build": "npm run clean && npm run compile",
+    "version": "auto-changelog -p"
   },
   "browserslist": {
     "production": [
@@ -42,6 +43,7 @@
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.8",
     "@types/styled-components": "^5.1.21",
+    "auto-changelog": "^2.4.0",
     "babel-loader": "^8.1.0",
     "bootstrap": "^5.0.0-beta2",
     "bootstrap-icons": "^1.4.0",
