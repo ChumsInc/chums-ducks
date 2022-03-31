@@ -17,6 +17,7 @@ import {Input, LoadingProgressBar, ToggleButton} from "../src/components";
 import {BootstrapColor, ErrorBoundary, SortableTable, SpinnerButton} from "../src";
 import numeral from "numeral";
 import {languages} from './languages'
+import ItemDataList from "../src/components/ItemDataList";
 
 
 interface TableDataRow {
@@ -120,6 +121,7 @@ const PaginationTest: React.FC = () => {
     }
 
     const [language, setLanguage] = useState('');
+    const [search, setSearch] = useState('');
 
     const tableClickHandler = (row: TableDataRow) => dispatch(addAlertAction({
         message: JSON.stringify(row),
@@ -178,11 +180,16 @@ const PaginationTest: React.FC = () => {
                     </SpinnerButton>
                 </div>
                 <div className="col-auto">
-                    <Input type="text" id="default" list="languages" fuzzyList value={language}
+                    <Input type="text" id="default" list="languages" fuzzyList value={language} bsSize="sm"
                            onChange={(ev) => setLanguage(ev.target.value)}/>
                     <datalist id="languages">
                         {languages.map((val, index) => (<option key={index} value={val}/>))}
                     </datalist>
+                </div>
+                <div className="col-auto">
+                    <Input type="text" list="item-search" value={search} bsSize="sm" name="item"
+                           onChange={(ev) => setSearch(ev.target.value)}/>
+                    <ItemDataList id="item-search" search={search} delay={50} />
                 </div>
                 <div className="col-auto">
                     <ToggleButton id={'test-toggle'} size="sm" color="success" checked={toggleCheck}
