@@ -9,7 +9,7 @@ import {
     tabAddedAction,
     TabList,
     tabListCreatedAction,
-    tabSelector
+    tabSelector, tabToggleStatusAction
 } from "../src";
 import {useDispatch, useSelector} from "react-redux";
 import PaginationTest from "./PaginationTest";
@@ -20,6 +20,7 @@ const tabs: Tab[] = [
     {id: 'pagination', title: 'Pagination Test', icon: 'bi-signpost-split-fill', active: true},
     {id: 'modal', title: 'Modal Test', },
     {id: 'disabled-item', title: 'Disabled Item', disabled: true},
+    {id: 'test-disabled-tab', title: 'Disabled Test Tab', disabled: true},
     {id: 'form', title: 'Form Test', canClose: true},
 ]
 const tempTab: Tab = {id: 'temp-tab', title: 'Temporary Tab', active: false, canClose: true};
@@ -37,6 +38,13 @@ const App: React.FC = () => {
         dispatch(tabAddedAction(tempTab, tabSetId));
     }
     const [navType, setNavType] = useState('tab');
+
+    const [isTabEnabled, setIsTabEnabled] = useState(false);
+    useEffect(() => {
+        console.log(`\n...setting 'test-disabled-tab' to disabled: ${JSON.stringify(!isTabEnabled)}`);
+        dispatch(tabToggleStatusAction('test-disabled-tab', tabSetId, isTabEnabled));
+        console.log(`dispatch completed: ${JSON.stringify(!isTabEnabled)}\n\n`);
+    }, [isTabEnabled]);
 
     return (
         <div>
@@ -66,6 +74,7 @@ const App: React.FC = () => {
                     <FormCheck label="Tabs" checked={navType === 'tab'} onClick={() => setNavType('tab')} type="radio" inline/>
                     <FormCheck label="Pills" checked={navType === 'pill'} onClick={() => setNavType('pill')} type="radio" inline/>
                     <FormCheck label="Navs" checked={navType === ''} onClick={() => setNavType('')} type="radio" inline/>
+                    <FormCheck label="Toggle Test Tab" checked={isTabEnabled} onClick={() => setIsTabEnabled(!isTabEnabled)} type="checkbox" inline />
                 </div>
             </div>
             <ErrorBoundary>

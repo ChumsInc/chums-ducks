@@ -608,7 +608,7 @@ export declare const tabSelector: (id: string, key?: string) => (state: RootStat
 ```
 #### ducks/tabs/NavItem.tsx
 ```ts
-export interface NavItemProps extends Tab {
+export interface TabItemProps extends Tab {
     className?: string | object,
     onSelect: (id?: string) => void,
     onClose?: (id?: string) => void,

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {selectCurrentTab, selectTabList, tabRemovedAction, tabSelectedAction} from "./index";
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
@@ -6,7 +6,7 @@ import NavItem from "./NavItem";
 import {noop} from "../../utils";
 import styled from "styled-components";
 
-const StyledNavList = styled.ul`
+export const StyledNavList = styled.ul`
     &.nav-tabs {
       .nav-item {
         .nav-link {
@@ -40,10 +40,6 @@ const NavList: React.FC<NavListProps> = ({
     const dispatch = useDispatch();
     const list = useSelector(selectTabList(tabKey))
     const selected = useSelector(selectCurrentTab(tabKey));
-
-    useEffect(() => {
-
-    }, [])
 
     const tabClickHandler = (id: string) => {
         dispatch(tabSelectedAction(id, tabKey));

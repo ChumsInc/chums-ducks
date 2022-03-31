@@ -1,15 +1,15 @@
-import React, {MouseEvent} from "react";
+import React from "react";
 import classNames from "classnames";
 import {Tab} from "./index";
 
 
-export interface NavItemProps extends Tab {
+export interface TabItemProps extends Tab {
     className?: string | object,
     onSelect: (id?: string) => void,
     onClose?: (id?: string) => void,
 }
 
-const NavItem: React.FC<NavItemProps> = ({
+const TabItem: React.FC<TabItemProps> = ({
                                              id,
                                              title,
                                              icon,
@@ -21,18 +21,14 @@ const NavItem: React.FC<NavItemProps> = ({
                                              onClose,
 
                                          }) => {
-    const clickHandler = (ev: MouseEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
+    const clickHandler = () => {
         if (disabled || active) {
             return;
         }
         onSelect(id);
     };
 
-    const onClickClose = (ev: MouseEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
+    const onClickClose = () => {
         if (canClose && !!onClose) {
             onClose(id);
         }
@@ -41,16 +37,15 @@ const NavItem: React.FC<NavItemProps> = ({
     console.log(`tab:${id} is disabled: ${JSON.stringify(disabled)}`);
     return (
         <li className="nav-item">
-            <a className={classNames('nav-link', className, {active, disabled})}
-               tabIndex={disabled ? -1 : 0}
-               href="#" onClick={clickHandler}>
+            <button className={classNames('nav-link', className, {active, disabled})}
+                    tabIndex={disabled ? -1 : 0} onClick={clickHandler}>
                 {!!icon && <span className={classNames('nav-item-icon me-1', icon)}/>}
                 <span className="nav-item-text">{title}</span>
                 {canClose && (
                     <span aria-label="Close" onClick={onClickClose} className="ms-2 bi-x-lg"/>
                 )}
-            </a>
+            </button>
         </li>
     )
 }
-export default React.memo(NavItem);
+export default React.memo(TabItem);
