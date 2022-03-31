@@ -1,4 +1,5 @@
 import React from 'react';
+export declare const StyledNavList: import("styled-components").StyledComponent<"ul", any, {}, never>;
 export interface NavListProps {
     tabKey: string;
     className?: string | object;

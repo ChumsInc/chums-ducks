@@ -1,40 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tabSelector = exports.selectTabById = exports.selectedTabSelector = exports.selectCurrentTab = exports.tabListSelector = exports.selectTabList = exports.tabDisabledAction = exports.tabRemovedAction = exports.tabAddedAction = exports.tabSelectedAction = exports.tabListCreatedAction = exports.tabDisabled = exports.tabRemoved = exports.tabAdded = exports.tabSelected = exports.tabListCreated = void 0;
+exports.tabSelector = exports.selectTabById = exports.selectedTabSelector = exports.selectCurrentTab = exports.tabListSelector = exports.selectTabList = exports.tabToggleStatusAction = exports.tabRemovedAction = exports.tabAddedAction = exports.tabSelectedAction = exports.tabListCreatedAction = exports.tabsToggleTabStatus = exports.tabsTabRemoved = exports.tabsTabAdded = exports.tabsTabSelected = exports.tabsListCreated = void 0;
 const initialState = {
     app: { list: [], selected: '' },
 };
 const defaultTabsKey = 'app';
-exports.tabListCreated = 'tabs/tabs-created';
-exports.tabSelected = 'tabs/tab-selected';
-exports.tabAdded = 'tabs/tab-added';
-exports.tabRemoved = 'tabs/tab-removed';
-exports.tabDisabled = 'tabs/tab-disabled';
+exports.tabsListCreated = 'tabs/list-created';
+exports.tabsTabSelected = 'tabs/tab-selected';
+exports.tabsTabAdded = 'tabs/tab-added';
+exports.tabsTabRemoved = 'tabs/tab-removed';
+exports.tabsToggleTabStatus = 'tabs/toggle-tab-status';
 const tabListCreatedAction = (list, key = defaultTabsKey, selectedId) => ({
-    type: exports.tabListCreated,
+    type: exports.tabsListCreated,
     payload: { key, list, id: selectedId }
 });
 exports.tabListCreatedAction = tabListCreatedAction;
 const tabSelectedAction = (id, key = defaultTabsKey) => ({
-    type: exports.tabSelected,
+    type: exports.tabsTabSelected,
     payload: { key, id }
 });
 exports.tabSelectedAction = tabSelectedAction;
 const tabAddedAction = (tab, key = defaultTabsKey) => ({
-    type: exports.tabAdded,
+    type: exports.tabsTabAdded,
     payload: { key, tab }
 });
 exports.tabAddedAction = tabAddedAction;
 const tabRemovedAction = (id, key = defaultTabsKey) => ({
-    type: exports.tabRemoved,
+    type: exports.tabsTabRemoved,
     payload: { key, id }
 });
 exports.tabRemovedAction = tabRemovedAction;
-const tabDisabledAction = (id, key = defaultTabsKey) => ({
-    type: exports.tabDisabled,
-    payload: { key, id }
+const tabToggleStatusAction = (id, key = defaultTabsKey, force) => ({
+    type: exports.tabsToggleTabStatus,
+    payload: { key, id, status: force }
 });
-exports.tabDisabledAction = tabDisabledAction;
+exports.tabToggleStatusAction = tabToggleStatusAction;
 const selectTabList = (key = defaultTabsKey) => (state) => {
     if (!state.tabs[key]) {
         return [];
@@ -84,7 +84,7 @@ const nextTabId = (tabSet, id) => {
 const tabsReducer = (state = initialState, action) => {
     const { type, payload } = action;
     switch (type) {
-        case exports.tabListCreated:
+        case exports.tabsListCreated:
             if (!state[payload.key]) {
                 const { list = [], id = '' } = payload;
                 return {
@@ -96,7 +96,7 @@ const tabsReducer = (state = initialState, action) => {
                 };
             }
             return state;
-        case exports.tabAdded:
+        case exports.tabsTabAdded:
             if (state[payload.key] && payload?.tab) {
                 return {
                     ...state,
@@ -107,7 +107,7 @@ const tabsReducer = (state = initialState, action) => {
                 };
             }
             return state;
-        case exports.tabRemoved:
+        case exports.tabsTabRemoved:
             if (state[payload.key] && payload?.id) {
                 const list = state[payload.key].list.filter(tab => tab.id !== payload.id);
                 const selected = nextTabId(state[payload.key], payload.id);
@@ -120,19 +120,24 @@ const tabsReducer = (state = initialState, action) => {
                 };
             }
             return state;
-        case exports.tabDisabled:
+        case exports.tabsToggleTabStatus:
             if (state[payload.key] && payload?.id) {
-                const selected = nextTabId(state[payload.key], payload.id);
+                const tabSet = { ...state[payload.key] };
+                tabSet.list
+                    .filter(tab => tab.id === payload.id)
+                    .forEach(tab => {
+                    tab.disabled = payload.status !== undefined ? !payload.status : !tab.disabled;
+                });
+                if (tabSet.selected === payload.id) {
+                    tabSet.selected = nextTabId(tabSet, payload.id);
+                }
                 return {
                     ...state,
-                    [payload.key]: {
-                        list: state[payload.key].list.map(tab => ({ ...tab, disabled: tab.id === payload.id })),
-                        selected: selected,
-                    }
+                    [payload.key]: tabSet
                 };
             }
             return state;
-        case exports.tabSelected:
+        case exports.tabsTabSelected:
             if (state[payload.key] && payload?.id) {
                 return {
                     ...state,
