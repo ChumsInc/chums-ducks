@@ -11,7 +11,7 @@
     "clean": "rimraf dist/",
     "compile": "tsc",
     "build": "npm run clean && npm run compile",
-    "version": "auto-changelog -p"
+    "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "browserslist": {
     "production": [
@@ -99,5 +99,10 @@
   },
   "optionalDependencies": {
     "react-router-dom": "^5.3.0"
+  },
+  "auto-changelog": {
+    "template": "keepachangelog",
+    "unreleased": true,
+    "commitLimit": false
   }
 }
