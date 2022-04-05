@@ -81,71 +81,79 @@ const nextTabId = (tabSet, id) => {
     }
     return id;
 };
+const modifyTabSet = (state, key, tabsModifier) => {
+    if (!state[key]) {
+        return state;
+    }
+    return {
+        ...state,
+        [key]: tabsModifier(state[key]),
+    };
+};
+const addTabSetReducer = (list, id) => {
+    return {
+        list: [...list],
+        selected: id || (list.length === 0 ? '' : list[0].id)
+    };
+};
+const addTabReducer = (tab) => (tabs) => {
+    if (tabs.list.filter(t => t.id === tab.id).length) {
+        return tabs;
+    }
+    return {
+        list: [...tabs.list, tab],
+        selected: tabs.selected,
+    };
+};
+const removeTabReducer = (id) => (tabs) => {
+    const list = [...tabs.list.filter(t => t.id !== id)];
+    return {
+        list,
+        selected: tabs.selected === id ? nextTabId({ ...tabs, list }, id) : tabs.selected
+    };
+};
+const toggleTabDisabledReducer = (id, force) => (tabs) => {
+    const list = tabs.list.map(tab => {
+        if (tab.id !== id) {
+            return tab;
+        }
+        return {
+            ...tab,
+            disabled: force === undefined ? !tab.disabled : force
+        };
+    });
+    return {
+        list,
+        selected: tabs.selected === id ? nextTabId({ ...tabs, list }, id) : tabs.selected
+    };
+};
 const tabsReducer = (state = initialState, action) => {
     const { type, payload } = action;
     switch (type) {
         case exports.tabsListCreated:
             if (!state[payload.key]) {
                 const { list = [], id = '' } = payload;
-                return {
-                    ...state,
-                    [payload.key]: {
-                        list: [...list],
-                        selected: id || (list.length === 0 ? '' : list[0].id),
-                    }
-                };
+                return modifyTabSet(state, payload.key, () => addTabSetReducer(list, id));
             }
             return state;
         case exports.tabsTabAdded:
-            if (state[payload.key] && payload?.tab) {
-                return {
-                    ...state,
-                    [payload.key]: {
-                        list: [...state[payload.key].list, payload.tab],
-                        selected: state[payload.key].selected,
-                    }
-                };
+            if (payload?.tab) {
+                return modifyTabSet(state, payload.key, addTabReducer(payload.tab));
             }
             return state;
         case exports.tabsTabRemoved:
-            if (state[payload.key] && payload?.id) {
-                const list = state[payload.key].list.filter(tab => tab.id !== payload.id);
-                const selected = nextTabId(state[payload.key], payload.id);
-                return {
-                    ...state,
-                    [payload.key]: {
-                        list: [...list],
-                        selected: selected,
-                    }
-                };
+            if (payload?.id) {
+                return modifyTabSet(state, payload.key, removeTabReducer(payload.id));
             }
             return state;
         case exports.tabsToggleTabStatus:
-            if (state[payload.key] && payload?.id) {
-                const tabSet = { ...state[payload.key] };
-                tabSet.list
-                    .filter(tab => tab.id === payload.id)
-                    .forEach(tab => {
-                    tab.disabled = payload.status !== undefined ? !payload.status : !tab.disabled;
-                });
-                if (tabSet.selected === payload.id) {
-                    tabSet.selected = nextTabId(tabSet, payload.id);
-                }
-                return {
-                    ...state,
-                    [payload.key]: tabSet
-                };
+            if (payload?.id) {
+                return modifyTabSet(state, payload.key, toggleTabDisabledReducer(payload.id));
             }
             return state;
         case exports.tabsTabSelected:
-            if (state[payload.key] && payload?.id) {
-                return {
-                    ...state,
-                    [payload.key]: {
-                        list: state[payload.key].list,
-                        selected: payload.id
-                    }
-                };
+            if (payload?.id) {
+                return modifyTabSet(state, payload.key, (tabs) => ({ ...tabs, selected: payload.id || tabs.list[0].id || '' }));
             }
             return state;
         default:
