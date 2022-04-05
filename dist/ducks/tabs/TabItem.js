@@ -17,7 +17,6 @@ const TabItem = ({ id, title, icon, active, canClose, disabled, className, onSel
             onClose(id);
         }
     };
-    console.log(`tab:${id} is disabled: ${JSON.stringify(disabled)}`);
     return (react_1.default.createElement("li", { className: "nav-item" },
         react_1.default.createElement("button", { className: (0, classnames_1.default)('nav-link', className, { active, disabled }), tabIndex: disabled ? -1 : 0, onClick: clickHandler },
             !!icon && react_1.default.createElement("span", { className: (0, classnames_1.default)('nav-item-icon me-1', icon) }),
