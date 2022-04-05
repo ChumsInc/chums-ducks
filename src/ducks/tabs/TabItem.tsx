@@ -34,7 +34,6 @@ const TabItem: React.FC<TabItemProps> = ({
         }
     }
 
-    console.log(`tab:${id} is disabled: ${JSON.stringify(disabled)}`);
     return (
         <li className="nav-item">
             <button className={classNames('nav-link', className, {active, disabled})}

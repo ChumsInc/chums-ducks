@@ -33,7 +33,6 @@ const DebouncedTextArea: React.FC<DebouncedTextAreaProps> = ({
 
     let _debounced: ReturnType<typeof debounce> | undefined;
     const delayedChange = useCallback(debounce((ev: ChangeEvent<HTMLTextAreaElement>) => {
-        console.log('useCallback (debounced)', ev.target, ev.target.value)
         onChange(ev)
     }, wait), []);
     const inputRef = useRef<HTMLTextAreaElement>(null);

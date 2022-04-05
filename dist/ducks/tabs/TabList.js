@@ -20,7 +20,6 @@ const TabList = ({ tabKey, className, itemClassName, onSelectTab, children }) =>
         }
     };
     const tabCloseHandler = (id) => dispatch((0, index_1.tabRemovedAction)(id, tabKey));
-    console.log(`TabList ${tabKey}: ${JSON.stringify(list.map(({ id, disabled }) => ({ id, disabled })))}`);
     return (react_1.default.createElement(NavList_1.StyledNavList, { className: (0, classnames_1.default)('nav nav-tabs', className) },
         list.map(tab => (react_1.default.createElement(TabItem_1.default, { key: tab.id, id: tab.id, title: tab.title, className: itemClassName, icon: tab.icon, onSelect: () => tabClickHandler(tab.id), disabled: tab.disabled, active: tab.id === selected, canClose: tab.canClose, onClose: () => tabCloseHandler(tab.id) }))),
         children));

@@ -38,7 +38,6 @@ const NavItem: React.FC<NavItemProps> = ({
         }
     }
 
-    console.log(`tab:${id} is disabled: ${JSON.stringify(disabled)}`);
     return (
         <li className="nav-item">
             <a className={classNames('nav-link', className, {active, disabled})}

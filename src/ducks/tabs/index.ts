@@ -122,17 +122,18 @@ const nextTabId = (tabSet: TabSet, id: string) => {
     return id;
 }
 
-const modifyTabSet = (state:TabsState, key: string, tabsModifier: (tabs:TabSet) => TabSet):TabsState => {
+const modifyTabSet = (state:TabsState, key: string, tabsModifier: (any:any) => TabSet):TabsState => {
     if (!state[key]) {
         return state;
     }
+    const tabSet = tabsModifier(state[key]);
     return {
         ...state,
-        [key]: tabsModifier(state[key]),
+        [key]: tabSet,
     }
 }
 
-const addTabSetReducer = (list:Tab[], id?:string) =>   {
+const addTabSetReducer = (list:Tab[], id?:string) => {
     return {
         list: [...list],
         selected: id || (list.length === 0 ? '' : list[0].id)
@@ -164,7 +165,7 @@ const toggleTabDisabledReducer = (id:string, force?:boolean) => (tabs:TabSet):Ta
         }
         return {
             ...tab,
-            disabled: force === undefined ? !tab.disabled : force
+            disabled: force === undefined ? !tab.disabled : !force
         };
     });
     return {
@@ -180,7 +181,10 @@ const tabsReducer = (state: TabsState = initialState, action: TabAction): TabsSt
     case tabsListCreated:
         if (!state[payload.key]) {
             const {list = [], id = ''} = payload;
-            return modifyTabSet(state, payload.key, () => addTabSetReducer(list, id));
+            return {
+                ...state,
+                [payload.key]: addTabSetReducer(list, id)
+            }
         }
         return state;
     case tabsTabAdded:
@@ -195,7 +199,7 @@ const tabsReducer = (state: TabsState = initialState, action: TabAction): TabsSt
         return state;
     case tabsToggleTabStatus:
         if (payload?.id) {
-            return modifyTabSet(state, payload.key, toggleTabDisabledReducer(payload.id));
+            return modifyTabSet(state, payload.key, toggleTabDisabledReducer(payload.id, payload.status));
         }
         return state;
     case tabsTabSelected:
