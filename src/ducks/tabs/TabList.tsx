@@ -26,6 +26,7 @@ const TabList: React.FC<NavListProps> = ({
 
     const tabCloseHandler = (id: string) => dispatch(tabRemovedAction(id, tabKey));
 
+    console.log(`TabList ${tabKey}: ${JSON.stringify(list.map(({id, disabled}) => ({id, disabled})))}`);
     return (
         <StyledNavList className={classNames('nav nav-tabs', className)}>
             {list.map(tab => (
