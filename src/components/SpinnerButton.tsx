@@ -4,10 +4,7 @@ import classNames from "classnames";
 // import './SpinnerButton.css';
 import styled from 'styled-components';
 
-const Spinner = styled.span`
-    height: 1em;
-    width: 1em;   
-`;
+
 
 export interface SpinnerButtonProps extends ButtonHTMLAttributes<any> {
     spinning?: boolean,
@@ -32,20 +29,23 @@ const SpinnerButton: React.FC<SpinnerButtonProps> = ({
         btn: true,
         [`btn-${size}`]: !!size,
         [`btn-${color}`]: !!color,
+        ['px-3']: !spinning
     });
     const spinnerClassName = classNames({
         [`spinner-${spinnerType}`]: !!spinnerType,
         [`spinner-${spinnerType}-sm`]: !size || ['sm'].includes(size),
-        "me-1": !spinnerAfter,
-        "ms-1": spinnerAfter,
-        "invisible": !spinning,
+        // "me-1": !spinnerAfter,
+        // "ms-1": spinnerAfter,
+        // "d-none": !spinning,
     });
 
     return (
         <button className={btnClassName} disabled={spinning || disabled} {...rest}>
-            {!spinnerAfter && <Spinner className={spinnerClassName} role="status" aria-hidden="true"/>}
+            {spinning && !spinnerAfter && <span className={spinnerClassName} role="status" aria-hidden="true"/>}
+            {!spinnerAfter && <span className="me-1" />}
             {children}
-            {spinnerAfter && <Spinner className={spinnerClassName} role="status" aria-hidden="true"/>}
+            {spinnerAfter && <span className="me-1" />}
+            {spinning && spinnerAfter && <span className={spinnerClassName} role="status" aria-hidden="true"/>}
         </button>
     );
 }
