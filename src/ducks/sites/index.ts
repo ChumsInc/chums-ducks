@@ -1,5 +1,5 @@
 import {Action, combineReducers} from "redux";
-import {RootStateOrAny} from "react-redux";
+
 
 
 export interface Site {
@@ -23,7 +23,7 @@ export interface SiteState {
     selected: Site,
 }
 
-interface RootState extends RootStateOrAny {
+interface RootStateWithSites {
     sites: SiteState,
 }
 
@@ -31,7 +31,7 @@ export const siteSelected = 'site/selected';
 
 export const siteSelectedAction = (site:Site = defaultSite):SiteAction => ({type: siteSelected, payload: {site}});
 
-export const currentSiteSelector = (state:RootState) => state.sites.selected;
+export const currentSiteSelector = (state:RootStateWithSites) => state.sites.selected;
 
 const selected = (state:Site = {...defaultSite}, action:SiteAction) => {
     const {type, payload} = action;

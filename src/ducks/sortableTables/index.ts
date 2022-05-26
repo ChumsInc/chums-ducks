@@ -1,7 +1,6 @@
 
 import {ActionInterface, ActionPayload} from "../types";
 import {ReactElement} from "react";
-import {RootStateOrAny} from "react-redux";
 
 export interface SortableTableInterface {
     key: string,
@@ -36,15 +35,15 @@ export interface SortableTableField {
     colSpan?: number,
 }
 
-interface RootState extends RootStateOrAny {
+interface RootStateWithTables {
     sortableTables: SortableTablesState,
 }
 
 export const tablesSortChanged = 'tables/categorySortChanged';
 export const tablesTableAdded = 'tables/tableAdded';
 
-export const sortableTableSelector = (key:string) => (state:RootState):SortableTableInterface => state.sortableTables[key] || {key, field: '', ascending: false};
-export const selectTableSort = sortableTableSelector;
+export const selectTableSort = (key:string) => (state:RootStateWithTables):SortableTableInterface => state.sortableTables[key] || {key, field: '', ascending: false};
+export const sortableTableSelector = selectTableSort;
 
 
 export const sortChangedAction = ({key, field, ascending}:SortableTableInterface):SortableTablesAction => ({

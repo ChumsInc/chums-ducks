@@ -1,4 +1,3 @@
-import {RootStateOrAny} from "react-redux";
 import {ActionInterface, ActionPayload} from "../types";
 import {BasicAlert} from "../../types";
 
@@ -27,7 +26,7 @@ export interface AlertAction extends ActionInterface {
     payload?: AlertPayload,
 }
 
-interface RootState extends RootStateOrAny {
+interface RootStateWithAlerts {
     alerts: AlertListState
 }
 
@@ -59,10 +58,10 @@ export const onErrorAction = (err: Error, context?: string): AlertAction =>
     addAlertAction(buildAlert(err, context));
 
 
-export const alertListSelector = (state: RootState): AlertInterface[] => state.alerts.list;
+export const alertListSelector = (state: RootStateWithAlerts): AlertInterface[] => state.alerts.list;
 export const selectAlertList = alertListSelector;
 
-export const alertListByContextSelector = (context: string) => (state:RootState):AlertInterface[] => state.alerts.list.filter(alert => alert.context === context)
+export const alertListByContextSelector = (context: string) => (state:RootStateWithAlerts):AlertInterface[] => state.alerts.list.filter(alert => alert.context === context)
 export const selectAlertListByContext = alertListByContextSelector;
 
 export const alertContextFilter = (list:AlertInterface[], context:string):AlertInterface[] => {

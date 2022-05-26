@@ -1,5 +1,4 @@
 import { ActionInterface, ActionPayload } from "../types";
-import { RootStateOrAny } from "react-redux";
 export interface PageSetAction extends ActionPayload {
     key: string;
     current?: number;
@@ -15,7 +14,7 @@ export interface KeyedPageState {
 export interface PageState {
     [key: string]: KeyedPageState;
 }
-interface RootState extends RootStateOrAny {
+interface RootStateWithPages {
     pages: PageState;
 }
 export declare const addPageSet = "page/pageSetAdded";
@@ -27,12 +26,12 @@ export declare const calcPages: (rows: number, rowsPerPage: number) => number;
 export declare const setPageAction: ({ current, key }: PageSetAction) => PageAction;
 export declare const setRowsPerPageAction: ({ rowsPerPage, key }: PageSetAction) => PageAction;
 export declare const addPageSetAction: ({ key, current, rowsPerPage }: PageSetAction) => PageAction;
-export declare const selectCurrentPage: (key: string) => (state: RootState) => number;
-export declare const selectRowsPerPage: (key: string) => (state: RootState) => number;
-export declare const selectPagedData: (key: string, data: any[]) => (state: RootState) => any[];
-export declare const selectPageFilter: (key: string) => (state: RootState) => (row: any, index: number) => boolean;
-export declare const currentPageSelector: (key: string) => (state: RootState) => number;
-export declare const rowsPerPageSelector: (key: string) => (state: RootState) => number;
-export declare const pagedDataSelector: (key: string, data: any[]) => (state: RootState) => any[];
+export declare const selectCurrentPage: (key: string) => (state: RootStateWithPages) => number;
+export declare const selectRowsPerPage: (key: string) => (state: RootStateWithPages) => number;
+export declare const selectPagedData: (key: string, data: any[]) => (state: RootStateWithPages) => any[];
+export declare const selectPageFilter: (key: string) => (state: RootStateWithPages) => (row: any, index: number) => boolean;
+export declare const currentPageSelector: (key: string) => (state: RootStateWithPages) => number;
+export declare const rowsPerPageSelector: (key: string) => (state: RootStateWithPages) => number;
+export declare const pagedDataSelector: (key: string, data: any[]) => (state: RootStateWithPages) => any[];
 declare const pageReducer: (state: PageState | undefined, action: PageAction) => PageState;
 export default pageReducer;

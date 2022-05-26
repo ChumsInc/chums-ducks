@@ -3,8 +3,8 @@
  */
 import 'isomorphic-fetch';
 export declare const fetchOptions: {
-    PostJSON: (object?: Object | undefined, options?: RequestInit | undefined) => RequestInit;
-    Delete: (options?: RequestInit | undefined) => RequestInit;
+    PostJSON: (object?: Object, options?: RequestInit) => RequestInit;
+    Delete: (options?: RequestInit) => RequestInit;
 };
 export declare function fetchJSON<T = any>(url: string, options?: RequestInit): Promise<T>;
 export declare function fetchHTML(url: string, options?: RequestInit): Promise<string | undefined>;

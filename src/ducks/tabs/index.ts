@@ -1,5 +1,5 @@
 import {ActionInterface, ActionPayload} from "../types";
-import {RootStateOrAny} from "react-redux";
+
 
 
 export interface Tab {
@@ -33,7 +33,7 @@ export interface TabsState {
     [key: string]: TabSet
 }
 
-interface RootState extends RootStateOrAny {
+interface RootStateWithTabs {
     tabs: TabsState
 }
 
@@ -75,7 +75,7 @@ export const tabToggleStatusAction = (id: string, key: string = defaultTabsKey, 
     payload: {key, id, status: force}
 })
 
-export const selectTabList = (key: string = defaultTabsKey) => (state: RootState) => {
+export const selectTabList = (key: string = defaultTabsKey) => (state: RootStateWithTabs) => {
     if (!state.tabs[key]) {
         return [];
     }
@@ -83,7 +83,7 @@ export const selectTabList = (key: string = defaultTabsKey) => (state: RootState
 }
 export const tabListSelector = selectTabList;
 
-export const selectCurrentTab = (key: string = defaultTabsKey) => (state: RootState): string => {
+export const selectCurrentTab = (key: string = defaultTabsKey) => (state: RootStateWithTabs): string => {
     if (!state.tabs[key]) {
         return '';
     }
@@ -93,7 +93,7 @@ export const selectCurrentTab = (key: string = defaultTabsKey) => (state: RootSt
 }
 export const selectedTabSelector = selectCurrentTab;
 
-export const selectTabById = (id: string, key: string = defaultTabsKey) => (state: RootState): Tab => {
+export const selectTabById = (id: string, key: string = defaultTabsKey) => (state: RootStateWithTabs): Tab => {
     if (!state.tabs[key]) {
         return {id: '', title: ''};
     }

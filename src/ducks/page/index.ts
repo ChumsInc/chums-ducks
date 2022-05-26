@@ -1,6 +1,6 @@
 
 import {ActionInterface, ActionPayload} from "../types";
-import {RootStateOrAny} from "react-redux";
+
 
 export interface PageSetAction extends ActionPayload {
     key: string,
@@ -20,7 +20,7 @@ export interface PageState {
     [key:string] : KeyedPageState
 }
 
-interface RootState extends RootStateOrAny {
+interface RootStateWithPages {
     pages: PageState,
 }
 
@@ -38,10 +38,10 @@ export const setRowsPerPageAction = ({rowsPerPage, key = 'app'}:PageSetAction): 
 export const addPageSetAction = ({key = 'app', current = 1, rowsPerPage = 25}:PageSetAction): PageAction => ({type: addPageSet, payload: {key, current, rowsPerPage}});
 
 
-export const selectCurrentPage = (key:string) => (state: RootState): number => state.pages[key]?.current ?? 1;
-export const selectRowsPerPage = (key:string) => (state: RootState): number => state.pages[key]?.rowsPerPage ?? 25;
+export const selectCurrentPage = (key:string) => (state: RootStateWithPages): number => state.pages[key]?.current ?? 1;
+export const selectRowsPerPage = (key:string) => (state: RootStateWithPages): number => state.pages[key]?.rowsPerPage ?? 25;
 
-export const selectPagedData = (key: string, data: any[]) => (state:RootState):any[] => {
+export const selectPagedData = (key: string, data: any[]) => (state:RootStateWithPages):any[] => {
     if (!state.pages[key]) {
         return data;
     }
@@ -50,7 +50,7 @@ export const selectPagedData = (key: string, data: any[]) => (state:RootState):a
 }
 
 
-export const selectPageFilter = (key:string) => (state:RootState):(row:any, index:number) => boolean => {
+export const selectPageFilter = (key:string) => (state:RootStateWithPages):(row:any, index:number) => boolean => {
     if (!state.pages[key]) {
         return () => true;
     }

@@ -6,6 +6,7 @@ export interface Props {
     text?: string;
     className?: string | object;
     description?: string;
+    children?: React.ReactNode;
 }
 declare const Badge: React.FC<Props>;
 export default Badge;

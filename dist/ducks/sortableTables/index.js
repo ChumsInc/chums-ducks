@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tableAddedAction = exports.sortChangedAction = exports.selectTableSort = exports.sortableTableSelector = exports.tablesTableAdded = exports.tablesSortChanged = void 0;
+exports.tableAddedAction = exports.sortChangedAction = exports.sortableTableSelector = exports.selectTableSort = exports.tablesTableAdded = exports.tablesSortChanged = void 0;
 exports.tablesSortChanged = 'tables/categorySortChanged';
 exports.tablesTableAdded = 'tables/tableAdded';
-const sortableTableSelector = (key) => (state) => state.sortableTables[key] || { key, field: '', ascending: false };
-exports.sortableTableSelector = sortableTableSelector;
-exports.selectTableSort = exports.sortableTableSelector;
+const selectTableSort = (key) => (state) => state.sortableTables[key] || { key, field: '', ascending: false };
+exports.selectTableSort = selectTableSort;
+exports.sortableTableSelector = exports.selectTableSort;
 const sortChangedAction = ({ key, field, ascending }) => ({
     type: exports.tablesSortChanged,
     payload: { key, field, ascending }

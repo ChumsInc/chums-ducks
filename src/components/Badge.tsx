@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import classNames from "classnames";
 import {BootstrapBGColor} from "../types";
 
@@ -8,6 +8,7 @@ export interface Props {
     text?: string,
     className?: string | object,
     description?: string,
+    children?: React.ReactNode
 }
 
 const Badge: React.FC<Props> = ({
