@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const Spinner = styled.span`
     height: 1em;
-    width: 1em;
+    width: 1em;   
 `;
 
 export interface SpinnerButtonProps extends ButtonHTMLAttributes<any> {
@@ -37,14 +37,15 @@ const SpinnerButton: React.FC<SpinnerButtonProps> = ({
         [`spinner-${spinnerType}`]: !!spinnerType,
         [`spinner-${spinnerType}-sm`]: !size || ['sm'].includes(size),
         "me-1": !spinnerAfter,
-        "ms-1": spinnerAfter
+        "ms-1": spinnerAfter,
+        "invisible": !spinning,
     });
 
     return (
         <button className={btnClassName} disabled={spinning || disabled} {...rest}>
-            {spinning && !spinnerAfter && <Spinner className={spinnerClassName} role="status" aria-hidden="true"/>}
+            {!spinnerAfter && <Spinner className={spinnerClassName} role="status" aria-hidden="true"/>}
             {children}
-            {spinning && spinnerAfter && <Spinner className={spinnerClassName} role="status" aria-hidden="true"/>}
+            {spinnerAfter && <Spinner className={spinnerClassName} role="status" aria-hidden="true"/>}
         </button>
     );
 }

@@ -9,7 +9,7 @@ const classnames_1 = __importDefault(require("classnames"));
 const styled_components_1 = __importDefault(require("styled-components"));
 const Spinner = styled_components_1.default.span `
     height: 1em;
-    width: 1em;
+    width: 1em;   
 `;
 const SpinnerButton = ({ spinning = false, spinnerType = 'border', spinnerAfter = false, color = 'primary', size, className, children, disabled, ...rest }) => {
     const btnClassName = (0, classnames_1.default)(className, {
@@ -21,12 +21,13 @@ const SpinnerButton = ({ spinning = false, spinnerType = 'border', spinnerAfter 
         [`spinner-${spinnerType}`]: !!spinnerType,
         [`spinner-${spinnerType}-sm`]: !size || ['sm'].includes(size),
         "me-1": !spinnerAfter,
-        "ms-1": spinnerAfter
+        "ms-1": spinnerAfter,
+        "invisible": !spinning,
     });
     return (react_1.default.createElement("button", { className: btnClassName, disabled: spinning || disabled, ...rest },
-        spinning && !spinnerAfter && react_1.default.createElement(Spinner, { className: spinnerClassName, role: "status", "aria-hidden": "true" }),
+        !spinnerAfter && react_1.default.createElement(Spinner, { className: spinnerClassName, role: "status", "aria-hidden": "true" }),
         children,
-        spinning && spinnerAfter && react_1.default.createElement(Spinner, { className: spinnerClassName, role: "status", "aria-hidden": "true" })));
+        spinnerAfter && react_1.default.createElement(Spinner, { className: spinnerClassName, role: "status", "aria-hidden": "true" })));
 };
 exports.default = SpinnerButton;
 //# sourceMappingURL=SpinnerButton.js.map
