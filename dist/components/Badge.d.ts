@@ -5,6 +5,7 @@ export interface Props {
     pill?: boolean;
     text?: string;
     className?: string | object;
+    colorCode?: string;
     description?: string;
     children?: React.ReactNode;
 }
