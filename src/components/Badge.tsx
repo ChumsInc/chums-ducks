@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React from 'react';
 import classNames from "classnames";
 import {BootstrapBGColor} from "../types";
 
@@ -7,6 +7,7 @@ export interface Props {
     pill?: boolean,
     text?: string,
     className?: string | object,
+    colorCode?: string,
     description?: string,
     children?: React.ReactNode
 }
@@ -16,6 +17,7 @@ const Badge: React.FC<Props> = ({
                                     pill,
                                     text,
                                     className,
+                                    colorCode,
                                     description,
                                     children
                                 }) => {
@@ -25,8 +27,13 @@ const Badge: React.FC<Props> = ({
         [`bg-${color}`]: !!color,
     }
 
+    const style: React.CSSProperties = {};
+    if (color === 'custom' && !!colorCode) {
+        style.backgroundColor = colorCode;
+    }
+
     return (
-        <span className={classNames(_className, className)}>
+        <span className={classNames(_className, className)} style={style}>
             {text || children || ''}
             {!!description && (<span className="visually-hidden">{description}</span>)}
         </span>
