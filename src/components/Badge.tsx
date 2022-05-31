@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from "classnames";
 import {BootstrapBGColor} from "../types";
+import {default as tinyColor} from 'tinycolor2';
 
 export interface Props {
     color: BootstrapBGColor,
@@ -21,10 +22,13 @@ const Badge: React.FC<Props> = ({
                                     description,
                                     children
                                 }) => {
+    const c = tinyColor(colorCode);
     const _className = {
         'badge': true,
         'badge-pill': pill,
         [`bg-${color}`]: !!color,
+        'text-list': !!colorCode && c.isDark(),
+        'text-dark': !!colorCode && !c.isDark(),
     }
 
     const style: React.CSSProperties = {};

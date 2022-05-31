@@ -92,9 +92,11 @@
     }
   },
   "dependencies": {
+    "@types/tinycolor2": "^1.4.3",
     "isomorphic-fetch": "^3.0.0",
     "path-to-regexp": "^6.2.0",
     "styled-components": "^5.3.3",
+    "tinycolor2": "^1.4.2",
     "whatwg-fetch": "^3.6.2"
   },
   "optionalDependencies": {
