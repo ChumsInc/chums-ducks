@@ -20,11 +20,11 @@ const FormColumn: React.FC<FormColumnProps> = ({
         [`col-${12 - width}`]: !!width,
         'col-auto': !width,
         'form-label': true,
-        [`align-items-${align}`]: !className?.includes('align-items') && !!align,
     }
     const containerClassName = {
         [`col-${width}`]: !!width,
         'col': !width,
+        [`align-items-${align}`]: !className?.includes('align-items') && !!align,
     }
     return (
         <div className={classNames('row g-3', className)}>
