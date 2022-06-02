@@ -1,17 +1,26 @@
-import React from "react";
+import React, {ReactNode} from "react";
 import classNames from "classnames";
 
 interface FormColumnProps {
     label: string,
     width?: number,
     className?: string,
+    align?: 'start'|'end'|'center'|'baseline'|'stretch',
+    children: ReactNode
 }
 
-const FormColumn:React.FC<FormColumnProps> = ({label, width = 8, className, children}) => {
+const FormColumn: React.FC<FormColumnProps> = ({
+                                                   label,
+                                                   width = 8,
+                                                   className,
+                                                   align = 'baseline',
+                                                   children
+                                               }) => {
     const labelClassName = {
         [`col-${12 - width}`]: !!width,
         'col-auto': !width,
         'form-label': true,
+        [`align-items-${align}`]: !className?.includes('align-items') && !!align,
     }
     const containerClassName = {
         [`col-${width}`]: !!width,

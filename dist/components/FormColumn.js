@@ -5,11 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
 const classnames_1 = __importDefault(require("classnames"));
-const FormColumn = ({ label, width = 8, className, children }) => {
+const FormColumn = ({ label, width = 8, className, align = 'baseline', children }) => {
     const labelClassName = {
         [`col-${12 - width}`]: !!width,
         'col-auto': !width,
         'form-label': true,
+        [`align-items-${align}`]: !className?.includes('align-items') && !!align,
     };
     const containerClassName = {
         [`col-${width}`]: !!width,
