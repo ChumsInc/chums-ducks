@@ -16,6 +16,9 @@ const FormColumn: React.FC<FormColumnProps> = ({
                                                    align = 'baseline',
                                                    children
                                                }) => {
+    const parentClassName = {
+        [`align-items-${align}`]: !className?.includes('align-items') && !!align,
+    }
     const labelClassName = {
         [`col-${12 - width}`]: !!width,
         'col-auto': !width,
@@ -24,10 +27,10 @@ const FormColumn: React.FC<FormColumnProps> = ({
     const containerClassName = {
         [`col-${width}`]: !!width,
         'col': !width,
-        [`align-items-${align}`]: !className?.includes('align-items') && !!align,
+
     }
     return (
-        <div className={classNames('row g-3', className)}>
+        <div className={classNames('row g-3', parentClassName, className)}>
             <label className={classNames(labelClassName)}>{label}</label>
             <div className={classNames(containerClassName)}>
                 {children}

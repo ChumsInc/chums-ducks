@@ -6,6 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
 const classnames_1 = __importDefault(require("classnames"));
 const FormColumn = ({ label, width = 8, className, align = 'baseline', children }) => {
+    const parentClassName = {
+        [`align-items-${align}`]: !className?.includes('align-items') && !!align,
+    };
     const labelClassName = {
         [`col-${12 - width}`]: !!width,
         'col-auto': !width,
@@ -14,9 +17,8 @@ const FormColumn = ({ label, width = 8, className, align = 'baseline', children 
     const containerClassName = {
         [`col-${width}`]: !!width,
         'col': !width,
-        [`align-items-${align}`]: !className?.includes('align-items') && !!align,
     };
-    return (react_1.default.createElement("div", { className: (0, classnames_1.default)('row g-3', className) },
+    return (react_1.default.createElement("div", { className: (0, classnames_1.default)('row g-3', parentClassName, className) },
         react_1.default.createElement("label", { className: (0, classnames_1.default)(labelClassName) }, label),
         react_1.default.createElement("div", { className: (0, classnames_1.default)(containerClassName) }, children)));
 };
