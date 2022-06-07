@@ -1,6 +1,7 @@
 export interface ActionPayload {
     error?: Error,
     context?: string,
+    clearContext?: string,
 }
 
 export interface ActionInterface {

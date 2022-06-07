@@ -142,6 +142,12 @@ const alertReducer = (state: AlertListState = initialState, action: AlertAction)
         if (payload?.error) {
             return addAlert(state, action);
         }
+        if (payload?.clearContext) {
+            return {
+                counter,
+                list: [...list.filter(alert => alert.context !== payload.clearContext)].sort(alertIDSort)
+            }
+        }
         return state;
     }
 }
