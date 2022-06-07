@@ -17,6 +17,7 @@ export {default as ProgressBar} from './ProgressBar';
 export {default as Select} from './Select';
 export {default as Spinner} from './Spinner';
 export {default as SpinnerButton} from './SpinnerButton';
+export {default as StatusButtonGroup} from './StatusButtonGroup';
 export {default as TextArea} from './TextArea';
 export {default as ToggleButton} from './ToggleButton';
 export {default as DebouncedTextArea} from './DebouncedTextArea';
