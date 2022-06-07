@@ -2,7 +2,7 @@ import React, {ReactNode} from "react";
 import classNames from "classnames";
 
 interface FormColumnProps {
-    label: string,
+    label: string|ReactNode,
     width?: number,
     className?: string,
     align?: 'start'|'end'|'center'|'baseline'|'stretch',
