@@ -5,15 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
 const classnames_1 = __importDefault(require("classnames"));
-const tinycolor2_1 = __importDefault(require("tinycolor2"));
+const color_1 = require("../utils/color");
 const Badge = ({ color, pill, text, className, colorCode, description, children }) => {
-    const c = (0, tinycolor2_1.default)(colorCode);
+    const isLight = !!colorCode ? (0, color_1.isLightColor)(colorCode) : null;
     const _className = {
         'badge': true,
         'badge-pill': pill,
         [`bg-${color}`]: !!color,
-        'text-list': !!colorCode && c.isDark(),
-        'text-dark': !!colorCode && !c.isDark(),
+        'text-light': !!colorCode && !isLight,
+        'text-dark': !!colorCode && isLight,
     };
     const style = {};
     if (color === 'custom' && !!colorCode) {
