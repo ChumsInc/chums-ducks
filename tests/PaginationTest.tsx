@@ -18,6 +18,7 @@ import {BootstrapColor, ErrorBoundary, SortableTable, SpinnerButton} from "../sr
 import numeral from "numeral";
 import {languages} from './languages'
 import ItemDataList from "../src/components/ItemDataList";
+import Badge from "../src/components/Badge";
 
 
 interface TableDataRow {
@@ -194,6 +195,14 @@ const PaginationTest: React.FC = () => {
                 <div className="col-auto">
                     <ToggleButton id={'test-toggle'} size="sm" color="success" checked={toggleCheck}
                                   onClick={onClickToggle}>Toggle this muthafucka!</ToggleButton>
+                </div>
+                <div className="col-auto">
+                    <Badge color="custom" colorCode="rgb(168,168,168)">rgb(168,168,168);</Badge>
+                    <Badge color="custom" colorCode="#a9a8a8">#a9a8a8</Badge>
+                    <Badge color="custom" colorCode="rgb(78, 155, 91)">rgb(78, 155, 91);</Badge>
+                    <Badge color="custom" colorCode="#4e9b5b">#4e9b5b</Badge>
+                    <Badge color="custom" colorCode="rgb(206, 14, 45)"> rgb(206, 14, 45);</Badge>
+                    <Badge color="custom" colorCode="#ce0e2d">#ce0e2d</Badge>
                 </div>
             </div>
             <AlertList/>
