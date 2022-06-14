@@ -8,6 +8,8 @@ export interface ToggleButtonProps {
     size?: BootstrapButtonSize;
     className?: string;
     onClick: () => void;
+    disabled?: boolean;
+    children?: React.ReactNode;
 }
 declare const ToggleButton: React.FC<ToggleButtonProps>;
 export default ToggleButton;
