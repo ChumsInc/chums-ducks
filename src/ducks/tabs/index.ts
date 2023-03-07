@@ -150,6 +150,10 @@ const addTabReducer = (tab:Tab) => (tabs: TabSet):TabSet => {
     }
 }
 
+const updateTabReducer = (list:Tab[], selected: string) => (tab:TabSet) => {
+
+}
+
 const removeTabReducer = (id:string) => (tabs:TabSet):TabSet => {
     const list = [...tabs.list.filter(t => t.id !== id)];
     return {

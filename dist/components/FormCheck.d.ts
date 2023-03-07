@@ -1,11 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
 export interface FormCheckProps {
     id?: string;
     label: string;
     checked: boolean;
     onClick: () => void;
     inline?: boolean;
-    className?: string | object;
+    className?: string | classNames.ArgumentArray;
     type: 'radio' | 'checkbox';
     disabled?: boolean;
 }

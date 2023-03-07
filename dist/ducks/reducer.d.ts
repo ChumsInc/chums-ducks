@@ -4,5 +4,5 @@ declare const rootReducer: import("redux").Reducer<import("redux").CombinedState
     sortableTables: import("./sortableTables").SortableTablesState;
     tabs: import("./tabs").TabsState;
 }>, import("./alerts").AlertAction | import("./page").PageAction | import("./sortableTables").SortableTablesAction | import("./tabs").TabAction>;
-export declare type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;

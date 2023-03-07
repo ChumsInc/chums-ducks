@@ -8,7 +8,7 @@ export interface FormCheckProps {
     checked: boolean,
     onClick: () => void,
     inline?: boolean,
-    className?: string | object,
+    className?: string | classNames.ArgumentArray,
     type: 'radio' | 'checkbox',
     disabled?: boolean,
 }

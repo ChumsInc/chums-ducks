@@ -106,6 +106,8 @@ const addTabReducer = (tab) => (tabs) => {
         selected: tabs.selected,
     };
 };
+const updateTabReducer = (list, selected) => (tab) => {
+};
 const removeTabReducer = (id) => (tabs) => {
     const list = [...tabs.list.filter(t => t.id !== id)];
     return {
